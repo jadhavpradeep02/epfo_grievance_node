@@ -1,0 +1,9 @@
+{
+    "port": "3000",
+    "dbhost": "localhost",
+    "dbuser": "pradeep",
+    "dbpassword": "pradeep",
+    "dbname": "epfo_grievance",
+    "secret": "883fce42c08c0a2f2e1f6a872792f2e554b130f366e3dbcf435b318ede38416ff5cca7c814a3684d661c12574cb3468a8242e5fec65872f4d3843442336be43b",
+    "refresh_secret": "ae52a0354a0438e292b90955f61c7ef37ca5c1ba1013ad3aef046120e09e021494d2e7a919494fd4c3f5a8ae3539923189900d671b9cb3098d3526db8eec5655"
+}
