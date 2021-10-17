@@ -16,6 +16,7 @@ app.use((req, res, next) => {
     }
 })
 
+// Temporary text for comparing
 //allow all urls for cors related error
 app.use(cors({ origin: "*" }));
 

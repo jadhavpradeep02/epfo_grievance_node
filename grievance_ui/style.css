@@ -1,0 +1,66 @@
+/* CSS HEX */
+body{
+
+    --vermilion: #bf4e30ff;
+    --laurel-green: #c6ccb2ff;
+    --sacramento-state-green: #093824ff;
+    --lavender-web: #e5eafaff;
+    --aquamarine: #78fecfff;
+
+    --front-red: #bf4e30ff;
+    --darker-background: #c6ccb2ff;
+    --front-green: #093824ff;
+    --main-background: #e5eafaff;
+    --highlight-color: #78fecfff;
+
+    --bb: #bebbbbff;
+    --dd: #444054ff;
+    --ddd: #2f243aff;
+    --bbb: #fac9b8ff;
+    --bbbb: #db8a74ff;
+
+/* CSS HEX */
+--eerie-black: #131515ff;
+--jet: #2b2c28ff;
+--persian-green: #339989ff;
+--middle-blue-green: #7de2d1ff;
+--snow: #fffafbff;
+
+/* CSS HSL */
+--eerie-black: hsla(180, 5%, 8%, 1);
+--jet: hsla(75, 5%, 16%, 1);
+--persian-green: hsla(171, 50%, 40%, 1);
+--middle-blue-green: hsla(170, 64%, 69%, 1);
+--snow: hsla(348, 100%, 99%, 1);
+
+--dark-full: #131515ff;
+--dark-mid: #2b2c28ff;
+--full-green: #339989ff;
+--middle-green: #7de2d1ff;
+--primary-background: #fffafbff;
+
+/* CSS HEX */
+--oxford-blue: #011638ff;
+--charcoal: #364156ff;
+--light-gray: #cdcdcdff;
+--honeydew: #dff8ebff;
+--british-racing-green: #214e34ff;
+
+
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+.main-container{
+   
+}
+
+.calendar__overlay-frame{
+    border-color: var(--charcoal);
+}
+
+body{
+    background-color: var(--light-gray);
+    padding: 0px;
+    margin: 0px;
+}
