@@ -21,6 +21,11 @@ const addNewVisitor = async (visitorData) => {
     return resp.json(); // parses JSON response into native JavaScript objects
 }
 
+const fetchVisitors = async () => {
+    const userData = await fetch(APIConfig.getVisitors())
+    return resp.json();
+}
+
 export const VisitorService = {
     addNewVisitor: addNewVisitor
 }

@@ -62,7 +62,39 @@ nav{
 }
 
 .options-container{
-        margin: 16px 16px 0;
-        text-align: center;
-      }
+    margin: 16px 16px 0;
+    text-align: center;
+}
+
+/* Results table */
+
+.table {
+    display: grid;
+    grid-template-columns: 16.5% 16.5% 16.5% 16.5% 16.5% 16.5%; 
+    max-width: 900px;
+    width: 100%;
+    margin: auto;
+}
+
+.table > div {
+  margin: 0px;
+  background: #cccccc;
+  padding: 5px;
+  border: 1px solid #dddddd;
+  word-break: break-word;
+  text-overflow: ellipsis;
+}
+
+.table .header{
+    font-weight: bold;
+    background: gray;
+}
+
+/* .table > div:nth-child(6n+2) {
+  background: white;
+}
+
+.table > div:nth-child(6n+3) {
+  background: gray;
+} */
 `;
