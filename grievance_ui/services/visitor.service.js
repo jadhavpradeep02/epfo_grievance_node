@@ -1,6 +1,6 @@
-import { APIConfig } from "../configs/api.config";
+import { APIConfigOnline as APIConfig } from "../configs/api.config";
 
-const addNewVisitor = async (visitorData) => {
+export const addNewVisitor = async (visitorData) => {
     /* axios.post(
         APIConfig.addVisitor(),
         visitorData
@@ -21,11 +21,11 @@ const addNewVisitor = async (visitorData) => {
     return resp.json(); // parses JSON response into native JavaScript objects
 }
 
-const fetchVisitors = async () => {
-    const userData = await fetch(APIConfig.getVisitors())
-    return resp.json();
+export const fetchVisitors = async () => {
+    const userData = await fetch(APIConfig.getAllVisitors());
+    return userData.json();
 }
 
-export const VisitorService = {
-    addNewVisitor: addNewVisitor
-}
+/* export const VisitorService = {
+    addNewVisitor: addNewVisitor,
+} */

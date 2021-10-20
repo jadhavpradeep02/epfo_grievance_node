@@ -1,12 +1,21 @@
 import { LitElement, html, css } from "lit";
 import "@lion/button/define";
 import { commonStyles } from "../commonStyles";
-import { rows, cols } from "../../mocks/dummyData.js";
+import { cols } from "../../mocks/dummyData.js";
+import { fetchVisitors } from "../../services/visitor.service";
 
 export class LauncherScreen extends LitElement {
   static properties = {
     noSearchString: false,
+    userData: [],
+    rows: []
   };
+
+  constructor(){
+    super();
+    this.rows = [];
+    this.loadVisitors();
+  }
 
   static styles = [
     commonStyles,
@@ -21,6 +30,12 @@ export class LauncherScreen extends LitElement {
       }
     `,
   ];
+
+  async loadVisitors(){
+    this.rows = await fetchVisitors();
+    console.log(this.rows)
+    // this.rows = this.users;
+  }
 
   renderError() {
     if (this.noSearchString) {
@@ -45,12 +60,17 @@ export class LauncherScreen extends LitElement {
   }
 
   renderVisitorsTable() {
-    return html` <div class="table">
+    if(this.rows.length){
+      return html` <div class="table">
       ${cols.map((col) => html`<div class="header">${col.header}</div>`)}
-      ${cols.map((col) => {
-        return rows.map((row) => html`<div>${row[col.path]}</div>`);
+      ${this.rows.map((row) => {
+        return cols.map((col) => html`<div>${row[col.path]}</div>`);
       })}
     </div>`;
+    }  else {
+      html `<span>ille</span>`
+    }
+    
   }
 
   render() {
