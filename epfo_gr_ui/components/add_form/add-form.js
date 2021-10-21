@@ -36,20 +36,6 @@ export class AddForm extends LitElement {
         border: none;
       }
 
-      input[type="text"],
-      input[type="number"]{
-        min-width: 300px;
-      }
-
-      input, select {
-        height: 2em;
-        font-weight: 400;
-        font-size: 1rem;
-        line-height: 1.5;
-        padding-left: 10px;
-        border: 1px solid #ced4da;
-        vertical-align: middle;
-      }
       label[for]{
         display: inline-block;
         vertical-align: middle;

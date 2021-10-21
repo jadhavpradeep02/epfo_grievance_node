@@ -19,3 +19,27 @@ export const APIConfigOnline = {
     updateVisitor: (visitorId) => OnlineBaseUR + '/visitor/'+visitorId,
     deleteVisitor: (visitorId) => OnlineBaseUR + '/api/visitor/delete?visitor_id='+visitorId
 }
+
+export const addVisitorURL = () => {
+    return onlineMode ? OnlineBaseUR + '/visitor' : formUrlBase() + '/api/visitor/add';
+}
+
+export const getAllVisitorsUrl = () => {
+    return onlineMode ? `${OnlineBaseUR}/visitor` : `${formUrlBase()}/api/visitor`;
+}
+
+export const updateVisitorUrl = (visitorId) => {
+    return onlineMode ? `${OnlineBaseUR}'/visitor/'${visitorId}` : `${formUrlBase()}/api/visitor/update${visitorId}`;
+}
+
+export const deleteUserUrl = (visitorId) => {
+    return onlineMode ? `${OnlineBaseUR}'/visitor/'${visitorId}` : `${formUrlBase()}/api/visitor/delete?visitor_id=${visitorId}`;
+}
+
+export const setServer = (strServer) => {
+    if(strServer === "local"){
+        onlineMode = false;
+    } else {
+        onlineMode = true;
+    }
+}

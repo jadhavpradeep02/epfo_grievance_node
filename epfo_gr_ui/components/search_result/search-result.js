@@ -1,15 +1,29 @@
 import {LitElement, html, css} from 'lit';
 import '@lion/button/define';
 import { commonStyles } from '../commonStyles';
+import { cols } from "../../mocks/dummyData.js";
+import { VisitorService } from '../../services/visitor.service';
+import '../spinner.js';
 
 export class SearchResult extends LitElement {
 
   static properties = {
     noSearchResult: true,
+    rows: [],
+    loading: true
   };
 
   static styles = [
-    commonStyles
+    commonStyles,
+    css `
+     .search-result {
+        padding: 2em 1em;
+      }
+
+      .spinner-container{
+        text-align: center;
+      }
+    `
   ];
 
   constructor(){
@@ -25,21 +39,30 @@ export class SearchResult extends LitElement {
       }
   }
 
-  /* onSearch(event){
-    this.noSearchString = false;
-    if(this.renderRoot.querySelector('#search').value){
+  edirVisitor(visitor_id){
+    // Show edit page with this visitor
+  }
 
-    } else {
-        this.noSearchString = true;
+  renderVisitorsTable() {
+    if(this.rows.length){
+      return html` <div class="table">
+      ${cols.map((col) => col.header ? html`<div class="header">${col.header}</div>` : html `` )}
+      ${this.rows.map((row) => {
+        return cols.map((col) => col.path ? html`<div>${row[col.path]}</div>` : html `<ing-button @click=${() => this.edirVisitor(row.visitor_id)}></ing-button>`);
+      })}
+    </div>`;
+    }  else {
+      html `<span>ille</span>`
     }
-  } */
+  }
 
   render() {
     return html`
       <div class="launch-block">
-      ${this.renderError()}
-        <table>
-        </table>
+        <div class="search-result">
+          <h3>Recent Visitors:</h3>
+          ${this.loading ? html `<div class="spinner-container"><loading-spinner></loading-spinner></div>` : this.renderVisitorsTable() } 
+        </div>
       </div>
       
     `;
