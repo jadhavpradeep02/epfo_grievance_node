@@ -1,9 +1,10 @@
 import {LitElement, html, css} from 'lit';
 import '@lion/button/define';
 import { commonStyles } from '../commonStyles';
-import { cols } from "../../mocks/dummyData.js";
+import { columnDefinition } from '../../configs/table.config';
 import { VisitorService } from '../../services/visitor.service';
 import '../spinner.js';
+import Fontawesome from 'lit-fontawesome';
 
 export class SearchResult extends LitElement {
 
@@ -15,13 +16,26 @@ export class SearchResult extends LitElement {
 
   static styles = [
     commonStyles,
+    Fontawesome,
     css `
      .search-result {
-        padding: 2em 1em;
+        padding: 2em 2em;
       }
 
       .spinner-container{
         text-align: center;
+      }
+
+      .edit-cell{
+        text-align: center;
+        font-size: 1.5em;
+        color: var(--british-racing-green);
+      }
+
+      .edit-icon:hover{
+        color: white;
+        cursor: pointer;
+        text-shadow: 4px 2px 2px rgba(150, 150, 150, 1);
       }
     `
   ];
@@ -46,9 +60,9 @@ export class SearchResult extends LitElement {
   renderVisitorsTable() {
     if(this.rows.length){
       return html` <div class="table">
-      ${cols.map((col) => col.header ? html`<div class="header">${col.header}</div>` : html `` )}
+      ${columnDefinition.map((col) => col.header ? html`<div class="header">${col.header}</div>` : html `<div class="header"></div>` )}
       ${this.rows.map((row) => {
-        return cols.map((col) => col.path ? html`<div>${row[col.path]}</div>` : html `<ing-button @click=${() => this.edirVisitor(row.visitor_id)}></ing-button>`);
+        return columnDefinition.map((col) => col.path ? html`<div>${row[col.path]}</div>` : html `<div class="edit-cell" title="Edit user" @click=${() => this.edirVisitor(row.visitor_id)}><i class="fas fa-edit edit-icon"></i></div>`);
       })}
     </div>`;
     }  else {

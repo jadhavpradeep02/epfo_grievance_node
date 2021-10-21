@@ -86,24 +86,24 @@ nav{
 
 .table {
     display: grid;
-    grid-template-columns: 16.5% 16.5% 16.5% 16.5% 16.5% 16.5%; 
-    max-width: 900px;
+    grid-template-columns: 14% 14% 14% 14% 14% 14% 14% ; 
     width: 100%;
     margin: auto;
 }
 
 .table > div {
   margin: 0px;
-  background: #cccccc;
+  background: var(--honeydew);
   padding: 5px;
-  border: 1px solid #dddddd;
+  border: 1px solid var(--light-gray);
   word-break: break-word;
   text-overflow: ellipsis;
 }
 
 .table .header{
     font-weight: bold;
-    background: gray;
+    background: var(--british-racing-green);
+    color: white;
 }
 
 /* .table > div:nth-child(6n+2) {
