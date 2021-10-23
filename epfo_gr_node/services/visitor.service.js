@@ -8,6 +8,7 @@ service.getAllVisitors = getAllVisitors;
 service.addVisitor = addVisitor;
 service.updateVisitor = updateVisitor;
 service.deleteVisitor = deleteVisitor;
+service.searchVisitor = searchVisitor;
 
 module.exports = service;
 
@@ -126,6 +127,42 @@ function deleteVisitor(req) {
         deferred.resolve(response);
     });
     return deferred.promise;
+}
+
+function searchVisitor(req) {
+    var deferred = Q.defer();
+    let LIMIT = 100; //default limit set as 100
+    console.log(req);
+    let column = setSearchColumn(req.body);
+    let value = req.body.value;
+
+    select_query = 'select v.visitor_id, visitor_name, visitor_mobile, visitor_email, uan, pf_account_no, establishment_name, created_at, grievance_category, no_of_visit, attended_at_level, grievance_details, status from visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id WHERE ' + column + ' like "%' + value + '%"';
+
+    if(req.limit) {
+        select_query += ' LIMIT ' + req.limit;
+    }
+    console.log(select_query);
+    connection.query(select_query, (err, rows) => {
+
+        if(err) throw deferred.reject(err);
+        console.log('The data from users table are: \n', rows);
+        deferred.resolve(rows);
+    });
+    return deferred.promise;
+}
+
+function setSearchColumn(req) {
+    let column = "";
+    if(req.by == "phone") {
+        column = "visitor_mobile";
+    } else if (req.by == "email") {
+        column = "visitor_email";
+    } else if (req.by == "uan") {
+        column = "uan";
+    } else if (req.by == "epfo") {
+        column = "pf_account_no";
+    }
+    return column;
 }
 
 function getCurrentDateTime() {

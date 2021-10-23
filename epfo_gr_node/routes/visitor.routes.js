@@ -9,6 +9,7 @@ router.get('/', authenticate, getAllVisitors);
 router.post('/add', authenticate,  addVisitor);
 router.put('/update', authenticate, updateVisitor);
 router.delete('/delete', authenticate, deleteVisitor);
+router.post('/search', authenticate, searchVisitor);
 
 module.exports = router;
 
@@ -38,6 +39,14 @@ function updateVisitor(req, res) {
 
 function deleteVisitor(req, res) {
     visitorService.deleteVisitor(req).then(function (response) {
+        res.send(response);
+    }).catch(function (err) {
+        res.send(err);
+    });
+}
+
+function searchVisitor(req, res) {
+    visitorService.searchVisitor(req).then(function (response) {
         res.send(response);
     }).catch(function (err) {
         res.send(err);

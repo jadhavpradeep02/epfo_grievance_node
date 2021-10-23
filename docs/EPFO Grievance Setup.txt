@@ -1,0 +1,212 @@
+Required Softwares:
+MySql
+NodeJs
+
+Steps to setup api code:
+1. Install NodeJs
+2. Unzip folder epfo_gr_node.zip into any folder
+3. Go to epfo_gr_node folder
+4. Open Command Prompt inside that folder (type "cmd" in folder path and enter)
+5. Install dependent libraries by using command "npm install"
+6. Run the node server application by using "npm start"
+
+Database Commands:
+
+create table users (
+   user_id INT NOT NULL AUTO_INCREMENT,
+   username VARCHAR(100) NOT NULL,
+   email VARCHAR(100) NOT NULL,
+   password VARCHAR(100) NOT NULL,
+   role varchar(40) NOT NULL,
+   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+   PRIMARY KEY ( user_id )
+);
+
+create table visitors (
+   visitor_id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+   visitor_name VARCHAR(100) NOT NULL,
+   visitor_mobile VARCHAR(20) NOT NULL,
+   visitor_email VARCHAR(60) NOT NULL,
+   uan VARCHAR(20) NOT NULL,
+   pf_account_no VARCHAR(50) NOT NULL,
+   establishment_name VARCHAR(100),
+   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   PRIMARY KEY ( visitor_id )
+) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+create table grievance (
+	grievance_id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+	visitor_id BIGINT(20) UNSIGNED NOT NULL,
+	grievance_category VARCHAR(100) NOT NULL,
+	no_of_visit INT(10),
+	attended_at_level VARCHAR(100),
+	grievance_details VARCHAR(500),
+	status VARCHAR(20),
+	visited_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY ( grievance_id ),
+	FOREIGN KEY ( visitor_id ) REFERENCES visitors(visitor_id) ON DELETE CASCADE
+) ENGINE=INNODB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8;
+
+
+insert into users values ("pradeep", "jadhavpradeep02@gmail.com", "pradeep", "admin",date());
+insert into users values ("sunil", "sunilchivate@gmail.com", "sunil", "admin",date());
+insert into users values ("suhas", "suhassanmukh@gmail.com", "suhas", "admin",date());
+
+INSERT INTO visitors (visitor_id, visitor_name, visitor_mobile, visitor_email, uan, pf_account_no, establishment_name, created_at) VALUES (NULL,"Mohan","9867153742","mohan@abc.com","1122334455","MH/BAN/0002/25788/29882","9/10/2021 0:24:16");
+
+INSERT INTO visitors (visitor_id, visitor_name, visitor_mobile, visitor_email, uan, pf_account_no, establishment_name, created_at) VALUES (NULL,'Amol Kumar', '9867452312', 'amol.kumar@gmail.com', '112233445566771', 'MH/BAN/0002/25788/12234', 'Infosys', now());
+
+INSERT INTO grievance (grievance_id, visitor_id, grievance_category, no_of_visit, attended_at_level, grievance_details, status, visited_at) VALUES (NULL, 1, "Normal", 1, "Clerk", "Pension not started", "Pending", now())
+
+INSERT INTO grievance (grievance_id, visitor_id, grievance_category, no_of_visit, attended_at_level, grievance_details, status, visited_at) VALUES (NULL, 2, "Major", 1, "Clerk", "PF Transfer not started", "Pending", now())
+
+###########  API Details ########################
+Login API: http://localhost:3000/api/user/login
+Request Body:
+{
+    "username": "pradeep",
+    "password": "pradeep"
+}
+Response Body:
+{
+    "message": "Login Successful.",
+    "response": {
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InByYWRlZXAiLCJyb2xlIjoiYWRtaW4iLCJlbWFpbCI6ImphZGhhdnByYWRlZXAwMkBnbWFpbC5jb20iLCJpYXQiOjE2MzM4NTc1MzUsImV4cCI6MTYzMzg2MTEzNX0.uyqa-Ff9C4V4PExF5GCve7_XhGpl5PYWV8FGcP7m5aM",
+        "user": {
+            "username": "pradeep",
+            "role": "admin",
+            "email": "jadhavpradeep02@gmail.com"
+        }
+    }
+}
+
+GET Visitor API: http://localhost:3000/api/visitor
+with Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InByYWRlZXAiLCJyb2xlIjoiYWRtaW4iLCJlbWFpbCI6ImphZGhhdnByYWRlZXAwMkBnbWFpbC5jb20iLCJpYXQiOjE2MzM4NTI2ODQsImV4cCI6MTYzMzg1NjI4NH0.qWWquy66Yf6N9jagGVMnr6kI3cU4O2LgZP1efbywaho
+
+No request body.
+
+Response Body: 
+[
+    {
+        "visitor_id": 1,
+        "visitor_name": "Mohan",
+        "visitor_mobile": "9867153742",
+        "visitor_email": "mohan@abc.com",
+        "uan": "1122334455",
+        "pf_account_no": "MH/BAN/0002/25788/29882",
+        "establishment_name": "IBM",
+        "created_at": "2021-10-08T18:58:50.000Z",
+        "grievance_category": "Normal",
+        "no_of_visit": 1,
+        "attended_at_level": "Clerk",
+        "grievance_details": "Pension not started",
+        "status": "Pending"
+    }
+]
+
+POST API: http://localhost:3000/api/visitor/add
+with Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InByYWRlZXAiLCJyb2xlIjoiYWRtaW4iLCJlbWFpbCI6ImphZGhhdnByYWRlZXAwMkBnbWFpbC5jb20iLCJpYXQiOjE2MzM4NTI2ODQsImV4cCI6MTYzMzg1NjI4NH0.qWWquy66Yf6N9jagGVMnr6kI3cU4O2LgZP1efbywaho
+
+Request Body:
+{
+    "visitor_name" : "Amol Kumar",
+    "visitor_mobile" : "9867452312",
+    "visitor_email" :   "amol.kumar@gmail.com",
+    "uan" : "112233445566771",
+    "pf_account_no" : "MH/BAN/0002/25788/12234",
+    "establishment_name" : "Infosys",
+    "grievance_category" : "Major",
+    "no_of_visit" : "1",
+    "attended_at_level" : "Clerk",
+    "grievance_details" : "Pension is pending",
+    "status" : "Not resolved"
+}
+
+Response:
+{
+    "status": "200",
+    "message": "Grievance and Visitor Added successfully"
+}
+
+PUT API: http://localhost:3000/api/visitor/update
+with Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InByYWRlZXAiLCJyb2xlIjoiYWRtaW4iLCJlbWFpbCI6ImphZGhhdnByYWRlZXAwMkBnbWFpbC5jb20iLCJpYXQiOjE2MzM4NTI2ODQsImV4cCI6MTYzMzg1NjI4NH0.qWWquy66Yf6N9jagGVMnr6kI3cU4O2LgZP1efbywaho
+
+Request Body:
+{
+    "visitor_name" : "Amol Kumar",
+    "visitor_mobile" : "9867452312",
+    "visitor_email" :   "amol.kumar@gmail.com",
+    "uan" : "112233445566771",
+    "pf_account_no" : "MH/BAN/0002/25788/12234",
+    "establishment_name" : "Infosys",
+    "grievance_category" : "Major",
+    "no_of_visit" : "1",
+    "attended_at_level" : "Clerk",
+    "grievance_details" : "Pension is pending",
+    "status" : "Not resolved"
+}
+Response Body:
+{
+    "status": "200",
+    "message": "Grievance and Visitor Updated successfully"
+}
+
+DELETE API: http://localhost:3000/api/visitor/delete?visitor_id=4
+with Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InByYWRlZXAiLCJyb2xlIjoiYWRtaW4iLCJlbWFpbCI6ImphZGhhdnByYWRlZXAwMkBnbWFpbC5jb20iLCJpYXQiOjE2MzM4NTI2ODQsImV4cCI6MTYzMzg1NjI4NH0.qWWquy66Yf6N9jagGVMnr6kI3cU4O2LgZP1efbywaho
+Request Body:
+NA
+Response Body:
+{
+    "status": "200",
+    "message": "Record deleted successfully"
+}
+
+DELETE API: http://localhost:3000/api/visitor/search
+with Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InByYWRlZXAiLCJyb2xlIjoiYWRtaW4iLCJlbWFpbCI6ImphZGhhdnByYWRlZXAwMkBnbWFpbC5jb20iLCJpYXQiOjE2MzM4NTI2ODQsImV4cCI6MTYzMzg1NjI4NH0.qWWquy66Yf6N9jagGVMnr6kI3cU4O2LgZP1efbywaho
+Request Body:
+{
+    "by":"epfo",
+    "value":"MH/BAN"
+}
+or {
+    "by":"phone",
+    "value":"9867"
+} 
+or  {
+    "by":"email",
+    "value":"amit@"
+}
+
+Response Body:
+[
+    {
+        "visitor_id": 1,
+        "visitor_name": "Mohan",
+        "visitor_mobile": "9867153742",
+        "visitor_email": "mohan@abc.com",
+        "uan": "1122334455",
+        "pf_account_no": "MH/BAN/0002/25788/29882",
+        "establishment_name": "IBM",
+        "created_at": "2021-10-08T18:58:50.000Z",
+        "grievance_category": "Normal",
+        "no_of_visit": 1,
+        "attended_at_level": "Clerk",
+        "grievance_details": "Pension not started",
+        "status": "Pending"
+    },
+    {
+        "visitor_id": 8,
+        "visitor_name": "Kunal Saha",
+        "visitor_mobile": "9867452314",
+        "visitor_email": "amit.saha@gmail.com",
+        "uan": "112233445566889",
+        "pf_account_no": "MH/BAN/0002/23145/87908",
+        "establishment_name": "TCS",
+        "created_at": "2021-10-10T09:51:50.000Z",
+        "grievance_category": "Minor",
+        "no_of_visit": 2,
+        "attended_at_level": "PF Inspector",
+        "grievance_details": "Action taken, will resolve within 1 week",
+        "status": "Inprogress"
+    }
+]
