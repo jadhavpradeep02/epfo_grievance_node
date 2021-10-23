@@ -40,6 +40,22 @@ button{
     margin: 2em;
 }
 
+input, select{
+    height: 2em;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.5;
+    padding-left: 10px;
+    border: 1px solid #ced4da;
+    vertical-align: middle;
+}
+
+input[type="text"],
+input[type="number"]{
+    min-width: 300px;
+    margin-bottom: 1em;
+}
+
 .search-form input{
     width: 80%;
     height: 3em;
@@ -70,24 +86,24 @@ nav{
 
 .table {
     display: grid;
-    grid-template-columns: 16.5% 16.5% 16.5% 16.5% 16.5% 16.5%; 
-    max-width: 900px;
+    grid-template-columns: 14% 14% 14% 14% 14% 14% 14% ; 
     width: 100%;
     margin: auto;
 }
 
 .table > div {
   margin: 0px;
-  background: #cccccc;
+  background: var(--honeydew);
   padding: 5px;
-  border: 1px solid #dddddd;
+  border: 1px solid var(--light-gray);
   word-break: break-word;
   text-overflow: ellipsis;
 }
 
 .table .header{
     font-weight: bold;
-    background: gray;
+    background: var(--british-racing-green);
+    color: white;
 }
 
 /* .table > div:nth-child(6n+2) {

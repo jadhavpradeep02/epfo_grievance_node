@@ -1,8 +1,8 @@
 import { LitElement, html, css } from "lit";
 import "@lion/button/define";
 import { commonStyles } from "../commonStyles";
-import { cols } from "../../mocks/dummyData.js";
-import { fetchVisitors } from "../../services/visitor.service";
+import '../search_result/search-result.js';
+import { VisitorService } from "../../services/visitor.service";
 
 export class LauncherScreen extends LitElement {
   static properties = {
@@ -24,16 +24,14 @@ export class LauncherScreen extends LitElement {
         text-align: center;
         padding: 2em;
       }
-
-      .search-result {
-        padding: 2em 1em;
-      }
     `,
   ];
 
   async loadVisitors(){
-    this.rows = await fetchVisitors();
+    this.loading = true;
+    this.rows = await VisitorService.fetchVisitors();
     console.log(this.rows)
+    this.loading = false;
     // this.rows = this.users;
   }
 
@@ -48,6 +46,7 @@ export class LauncherScreen extends LitElement {
   }
 
   onSearch(event) {
+    this.rows = [];
     this.noSearchString = false;
     if (this.renderRoot.querySelector("#search").value) {
     } else {
@@ -57,20 +56,6 @@ export class LauncherScreen extends LitElement {
 
   addEntry() {
     window.location.href = "#add";
-  }
-
-  renderVisitorsTable() {
-    if(this.rows.length){
-      return html` <div class="table">
-      ${cols.map((col) => html`<div class="header">${col.header}</div>`)}
-      ${this.rows.map((row) => {
-        return cols.map((col) => html`<div>${row[col.path]}</div>`);
-      })}
-    </div>`;
-    }  else {
-      html `<span>ille</span>`
-    }
-    
   }
 
   render() {
@@ -90,13 +75,7 @@ export class LauncherScreen extends LitElement {
         </form>
       </div>
       ${this.renderError()}
-      <div class="launch-block">
-        <!-- Search Result -->
-        <div class="search-result">
-          <h3>Recent Visitors:</h3>
-          ${this.renderVisitorsTable()}
-        </div>
-      </div>
+      <search-result .rows=${this.rows} .loading=${this.loading}></search-result>
     `;
   }
 }

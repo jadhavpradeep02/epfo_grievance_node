@@ -1,4 +1,5 @@
 import { LitElement, html } from "lit";
+import { AuthService } from "./services/authentication.service.js";
 export class RouterMixin extends LitElement {
   // Route definitions
   static properties = {
@@ -9,6 +10,12 @@ export class RouterMixin extends LitElement {
   constructor() {
     super();
     this.routes = [
+      {
+        key: 'login',
+        name: 'login Screen',
+        import: () => import("./components/login/login.js"),
+        render: () => html`<login-form></login-form>`,
+      },
       {
         key: "Home",
         name: "Hello World!",
@@ -34,11 +41,8 @@ export class RouterMixin extends LitElement {
   }
 
   router = (evt) => {
-    // debugger;
-    console.log('Window event >> ',window.location ,window.location.hash.slice(1)  );
     const url = window.location.hash.slice(1) || "/";
     this.navigateTo(url);
-    // routeResolved();
   };
 
   /**
@@ -50,14 +54,18 @@ export class RouterMixin extends LitElement {
    * route in the URL (and history).
    */
   async navigateTo(key) {
-    const route = this.routes.find((f) => f.key === key);
-    if (route) {
-      await route.import(); // Loads the ES Module asynchronously!
-      this.activeRoute = route;
+    if(!AuthService.checkAuth() && key !== 'login') {
+      this.navigateTo('login');
     } else {
-      // window.location.href = ''
-      await this.routes[0].import();
-      this.activeRoute = this.routes[0];
+      const route = this.routes.find((f) => f.key === key);
+      if (route) {
+        await route.import(); // Loads the ES Module asynchronously!
+        this.activeRoute = route;
+      } else {
+        // window.location.href = ''
+        await this.routes[1].import();
+        this.activeRoute = this.routes[1];
+      }
     }
   }
 

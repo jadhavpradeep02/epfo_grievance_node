@@ -1,12 +1,12 @@
-import { APIConfigOnline as APIConfig } from "../configs/api.config";
+import { addVisitorURL, deleteUserUrl, updateVisitorUrl, getAllVisitorsUrl } from "../configs/api.config";
 
-export const addNewVisitor = async (visitorData) => {
+const addNewVisitor = async (visitorData) => {
     /* axios.post(
         APIConfig.addVisitor(),
         visitorData
     ).then( response => console.log(response.data)); */
 
-    const resp = await fetch( APIConfig.addVisitor(), {
+    const resp = await fetch( addVisitorURL(), {
         method: 'POST',
         mode: 'cors',
         cache: 'no-cache',
@@ -21,11 +21,22 @@ export const addNewVisitor = async (visitorData) => {
     return resp.json(); // parses JSON response into native JavaScript objects
 }
 
-export const fetchVisitors = async () => {
-    const userData = await fetch(APIConfig.getAllVisitors());
+const fetchVisitors = async () => {
+    const userData = await fetch(getAllVisitorsUrl());
     return userData.json();
 }
 
-/* export const VisitorService = {
-    addNewVisitor: addNewVisitor,
-} */
+const deleteVisitor = async (visitor_id) => {
+    const userData = await fetch(deleteUserUrl());
+}
+
+const updateVisitor = async (visitor_id) => {
+    const userData = await fetch(updateVisitorUrl());
+}
+
+export const VisitorService = {
+    fetchVisitors,
+    addNewVisitor,
+    deleteVisitor,
+    updateVisitor
+}
