@@ -23,9 +23,10 @@ export class GrvncApp extends RouterMixin {
     super();
     this.addEventListener('navigateTo', (e) => {
       console.log(e);
-      if(e.detail.name){
+      window.location.href = `#${e.detail.name}`;
+      /* if(e.detail.name){
         this.navigateTo(e.detail.name);
-      }
+      } */
     });
   }
 

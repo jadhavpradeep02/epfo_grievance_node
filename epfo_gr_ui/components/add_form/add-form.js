@@ -4,103 +4,72 @@ import '@lion/input-datepicker/define';
 import '@lion/button/define';
 import { Required } from '@lion/form-core';
 import { VisitorService } from '../../services/visitor.service';
+import { formStyles } from './add-form.styles';
 
 export class AddForm extends LitElement {
 
   static properties = {
     noSearchString: false,
+    mode:''
   };
 
+  constructor(){
+    super();
+    this.addSuccess = this.addSuccess.bind(this);
+  }
+
+  connectedCallback() {
+    super.connectedCallback()
+  }
+
   static styles = [
-      commonStyles,
-      css`
-      form{
-        padding: 2em;
-        max-width: 800px;
-        margin: auto;
-      }
-      p label{
-        display: inline-block;
-        margin-bottom: 5px;
-      }
-      .datepicker{
-        width: 250px;
-      }
-      .datepicker button{
-        height: 35px;
-        margin: 0 0 0 10px;
-        font-size: 1.5em;
-        padding: 0px;
-        background-color: transparent;
-        line-height: 0px;
-        border: none;
-      }
+    commonStyles,
+    formStyles
+  ];
 
-      label[for]{
-        display: inline-block;
-        vertical-align: middle;
-        margin-right: 1em;
-        margin-left: 5px;
+  addSuccess(){
+    this.dispatchEvent( new CustomEvent('navigateTo',{ bubbles: true, composed: true, detail:{"name":"home"}}));
+  }
 
-      }
-      .nav{
-        text-align: left;
-      }
+  trySubmit(){
+    const form = this.shadowRoot.querySelector('form');
+    if(form.checkValidity()){
+      const rawFormData = new FormData(form);
+      const formData = Object.fromEntries(rawFormData.entries());
+      VisitorService.addNewVisitor(formData, this.addSuccess);
+    }
+  }
 
-      .nav a{
-        font-weight: bold;
-        font-size: 1em;
-        text-decoration: none;
-        margin-left: 8px;
-      }
+  isEdit(){
+    return this.mode ==='edit';
+  }
 
-      .form-row{
-        display: flex;
-      }
-
-      .form-label{
-        width: 50%;
-        display:inline-block;
-      }
-
-      .form-input{
-        width: 50%;
-        display:inline-block;
-      }
-
-      .form-submit{
-        min-width: 300px;
-        text-align: center;
-        display: inline-block;
-      }
-
-      /* Validaitions CSS */
-      .error-message {
-        display: none;
-      }
-
-      input:not(:focus):not(:placeholder-shown):invalid {
-        border-color: red;
-      }
-
-      input:not(:focus):not(:placeholder-shown):invalid ~ .error-message {
-        display: block; 
-      }
-
-      input:not(:focus):not(:placeholder-shown):valid {
-        border-color: green
-      }
-      `,
-    ];
-
-    trySubmit(){
-      const form = this.shadowRoot.querySelector('form');
-      if(form.checkValidity()){
-        const rawFormData = new FormData(form);
-        const formData = Object.fromEntries(rawFormData.entries());
-        VisitorService.addNewVisitor(formData);
+  preFillForm(){
+    const form = this.shadowRoot.querySelector('form');
+    let prefillData = VisitorService.getEditData();
+    let elem = null;
+    if(prefillData && form){
+      console.log('Prefilling', prefillData);
+      for(let key in prefillData)
+      {
+        if(prefillData.hasOwnProperty(key)){
+          elem = form.querySelector('[name='+key+']');
+          if(elem && elem.value === ""){
+            elem.value = (prefillData[key]);
+          } else {
+            console.log('Cannot fill : ', key, prefillData[key])
+          }
+        }
       }
     }
+  }
+
+  update(){
+    super.update();
+    if(this.mode && this.mode ==='edit'){
+      this.preFillForm();
+    }
+  }
 
   render() {
     return html`
@@ -116,7 +85,7 @@ export class AddForm extends LitElement {
           <input type="radio" id="miss" name="title" value="miss"/><label for="miss">Miss</label>
           <p>
             <label>First name</label><br>
-            <input type="text" name="first_name" required placeholder=" ">
+            <input type="text" name="visitor_name" required placeholder=" ">
           </p>
           <p>
             <label>Last name</label><br>
@@ -132,7 +101,7 @@ export class AddForm extends LitElement {
           </p>
           <p>
             <label>UAN</label><br>
-            <input type="number" name="uan" required placeholder=" ">
+            <input type="text" name="uan" required placeholder=" ">
           </p>
           <p>
             <label>PF Account Number</label><br>

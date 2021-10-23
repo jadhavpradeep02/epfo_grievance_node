@@ -56,7 +56,7 @@ input[type="number"]{
     margin-bottom: 1em;
 }
 
-.search-form input{
+.search-form input[type="text"]{
     width: 80%;
     height: 3em;
     font-weight: 400;
@@ -64,6 +64,13 @@ input[type="number"]{
     line-height: 1.5;
     padding-left: 10px;
     border: 1px solid #ced4da;
+}
+
+label[for]{
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 1em;
+  margin-left: 5px;
 }
 
 input:focus-visible{

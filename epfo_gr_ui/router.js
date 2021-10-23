@@ -29,6 +29,12 @@ export class RouterMixin extends LitElement {
         render: () => html`<add-form></add-form>`,
       },
       {
+        key: "edit",
+        name: "Edit Form",
+        import: () => import("./components/add_form/add-form.js"),
+        render: () => html`<add-form mode="edit"></add-form>`,
+      },
+      {
         key: "addlit",
         name: "Add Form",
         import: () => import("./components/add_form/add-form-lit.js"),
@@ -55,7 +61,8 @@ export class RouterMixin extends LitElement {
    */
   async navigateTo(key) {
     if(!AuthService.checkAuth() && key !== 'login') {
-      this.navigateTo('login');
+      //this.navigateTo('login');
+      window.location.href = `#login`
     } else {
       const route = this.routes.find((f) => f.key === key);
       if (route) {
@@ -76,7 +83,7 @@ export class RouterMixin extends LitElement {
   renderRoute() {
     if (this.activeRoute) {
       return this.activeRoute?.render();
-    } else {
+    }  else {
       window.location.href = "#home";
     }
   }

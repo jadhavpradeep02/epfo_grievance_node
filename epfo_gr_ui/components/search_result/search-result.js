@@ -53,8 +53,10 @@ export class SearchResult extends LitElement {
       }
   }
 
-  edirVisitor(visitor_id){
+  editVisitor(visitor){
     // Show edit page with this visitor
+    VisitorService.setForEdit(visitor);
+    this.dispatchEvent( new CustomEvent('navigateTo',{ bubbles: true, composed: true, detail:{"name":"edit"}}));
   }
 
   renderVisitorsTable() {
@@ -62,7 +64,7 @@ export class SearchResult extends LitElement {
       return html` <div class="table">
       ${columnDefinition.map((col) => col.header ? html`<div class="header">${col.header}</div>` : html `<div class="header"></div>` )}
       ${this.rows.map((row) => {
-        return columnDefinition.map((col) => col.path ? html`<div>${row[col.path]}</div>` : html `<div class="edit-cell" title="Edit user" @click=${() => this.edirVisitor(row.visitor_id)}><i class="fas fa-edit edit-icon"></i></div>`);
+        return columnDefinition.map((col) => col.path ? html`<div>${row[col.path]}</div>` : html `<div class="edit-cell" title="Edit user" @click=${() => this.editVisitor(row)}><i class="fas fa-edit edit-icon"></i></div>`);
       })}
     </div>`;
     }  else {

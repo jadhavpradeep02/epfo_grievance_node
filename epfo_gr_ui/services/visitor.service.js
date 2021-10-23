@@ -1,6 +1,9 @@
 import { addVisitorURL, deleteUserUrl, updateVisitorUrl, getAllVisitorsUrl } from "../configs/api.config";
+import { AuthService } from './authentication.service.js';
 
-const addNewVisitor = async (visitorData) => {
+let currentEditVisitor = null;
+
+const addNewVisitor = async (visitorData, callbackFn) => {
     /* axios.post(
         APIConfig.addVisitor(),
         visitorData
@@ -13,30 +16,68 @@ const addNewVisitor = async (visitorData) => {
         credentials: 'same-origin',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InByYWRlZXAiLCJyb2xlIjoiYWRtaW4iLCJlbWFpbCI6ImphZGhhdnByYWRlZXAwMkBnbWFpbC5jb20iLCJpYXQiOjE2MzM4NTI2ODQsImV4cCI6MTYzMzg1NjI4NH0.qWWquy66Yf6N9jagGVMnr6kI3cU4O2LgZP1efbywaho'
+          'Authorization': AuthService.addBearerAuth()
         },
         redirect: 'follow',
         body: JSON.stringify(visitorData)
-    });
+    }).then((respose) => respose.json())
+    .then((respjson) => {
+        if(respjson){
+            if(callbackFn){
+                callbackFn();
+            }
+        }
+    })
     return resp.json(); // parses JSON response into native JavaScript objects
+    
 }
 
 const fetchVisitors = async () => {
-    const userData = await fetch(getAllVisitorsUrl());
+    const userData = await fetch(getAllVisitorsUrl(),{
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': AuthService.addBearerAuth()
+        }
+    });
     return userData.json();
 }
 
 const deleteVisitor = async (visitor_id) => {
-    const userData = await fetch(deleteUserUrl());
+    const userData = await fetch(deleteUserUrl(),{
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': AuthService.addBearerAuth()
+        }
+    });
 }
 
 const updateVisitor = async (visitor_id) => {
-    const userData = await fetch(updateVisitorUrl());
+    const userData = await fetch(updateVisitorUrl(),{
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': AuthService.addBearerAuth()
+        }
+    });
+}
+
+const setForEdit = (visitor) => {
+    currentEditVisitor = {...visitor};
+}
+
+const getEditData = () => {
+    return currentEditVisitor;
+}
+
+const visitorUpdated = () => {
+    currentEditVisitor = null;
 }
 
 export const VisitorService = {
     fetchVisitors,
     addNewVisitor,
     deleteVisitor,
-    updateVisitor
+    updateVisitor,
+    setForEdit,
+    visitorUpdated,
+    getEditData
 }
