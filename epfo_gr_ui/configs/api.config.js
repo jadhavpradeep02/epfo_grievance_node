@@ -4,7 +4,7 @@ const OnlineBaseUR = 'https://61707f6123781c0017289a77.mockapi.io/api/';
 const BasePort= "3000";
 const onlineMode = false;
 
-const formUrlBase= () => BaseURL + ":" + BasePort;
+const formUrlBase = () => BaseURL + ":" + BasePort;
     
 /* export const APIConfigLocal = {
     addVisitor: () => formUrlBase() + '/api/visitor/add',
@@ -25,7 +25,7 @@ export const addVisitorURL = () => {
 }
 
 export const loginUrl = () => {
-    return onlineMode ? `${OnlineBaseUR}login` : `${formUrlBase}/api/user/login`;
+    return onlineMode ? `${OnlineBaseUR}login` : `${formUrlBase()}/api/user/login`;
 }
 
 export const getAllVisitorsUrl = () => {
@@ -41,7 +41,7 @@ export const deleteUserUrl = (visitorId) => {
 }
 
 export const searchUrl = () => {
-    return onlineMode ? `${OnlineBaseUR}visitor` : `${formUrlBase}/api/search`;
+    return onlineMode ? `${OnlineBaseUR}visitor` : `${formUrlBase()}/api/search`;
 }
 
 export const setServer = (strServer) => {

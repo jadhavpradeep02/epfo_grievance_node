@@ -20,7 +20,12 @@ const login = async (loginDetails, successFn, failFn) => {
     // await fetch()
     const checkResp = await fetch( loginUrl() , {
         method: 'POST',
-        body: JSON.stringify(loginDetails)
+        body: JSON.stringify(loginDetails),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        mode: 'cors',
+        'Access-Control-Allow-Origin': '*'
     }).then((response) => response.json())
     .then((jsonResp) => {
         if(jsonResp.token){
