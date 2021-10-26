@@ -52,7 +52,7 @@ export class LoginForm extends LitElement {
   }
 
   loginSuccess(data){
-    this.dispatchEvent( new CustomEvent('navigateTo',{ bubbles: true, composed: true, detail:{"name":"home"}}));
+    this.dispatchEvent( new CustomEvent('navigateTo',{ bubbles: true, composed: true, detail:{"name":"add"}}));
   }
 
   tryLogin(){

@@ -1,10 +1,12 @@
-import {LitElement, html, css} from 'lit';
+import {LitElement} from 'lit';
 import { commonStyles } from '../commonStyles';
 import '@lion/input-datepicker/define';
 import '@lion/button/define';
 import { Required } from '@lion/form-core';
 import { VisitorService } from '../../services/visitor.service';
 import { formStyles } from './add-form.styles';
+import { renderAddForm } from './add-form.template';
+import './../search-modal/search-modal.js';
 
 export class AddForm extends LitElement {
 
@@ -16,6 +18,9 @@ export class AddForm extends LitElement {
   constructor(){
     super();
     this.addSuccess = this.addSuccess.bind(this);
+    this.resetForm = this.resetForm.bind(this);
+    this.findby = this.findby.bind(this);
+    this.trySubmit = this.trySubmit.bind(this);
   }
 
   connectedCallback() {
@@ -64,6 +69,10 @@ export class AddForm extends LitElement {
     }
   }
 
+  resetForm(){
+
+  }
+
   update(){
     super.update();
     if(this.mode && this.mode ==='edit'){
@@ -71,99 +80,40 @@ export class AddForm extends LitElement {
     }
   }
 
-  render() {
-    return html`
-       <div class="nav">
-        <a class="link-button" href="#home"> Back </a>
-      </div>
-      <div class="launch-block form">
-        <form name="add-user-form" class="add-enrty-form">
-        <h2>Enter visitor details</h2>
-          <label>Title</label><br>
-          <input type="radio" id="mr" name="title" value="mr" checked/><label for="mr">Mrs</label>
-          <input type="radio" id="mrs" name="title" value="mrs"/><label for="mrs">Mrs</label>
-          <input type="radio" id="miss" name="title" value="miss"/><label for="miss">Miss</label>
-          <p>
-            <label>First name</label><br>
-            <input type="text" name="visitor_name" required placeholder=" ">
-          </p>
-          <p>
-            <label>Last name</label><br>
-            <input type="text" name="last_name" required placeholder=" ">
-          </p>
-          <p>
-            <label>Phone number</label><br>
-            <input type="tel" name="visitor_mobile" required placeholder=" ">
-          </p>
-          <p>
-            <label>Email</label><br>
-            <input type="email" name="visitor_email" required placeholder=" ">
-          </p>
-          <p>
-            <label>UAN</label><br>
-            <input type="text" name="uan" required placeholder=" ">
-          </p>
-          <p>
-            <label>PF Account Number</label><br>
-            <input type="text" name="pf_account_no" required placeholder=" ">
-          </p>
-          <p>
-            <label>Establishment Name</label><br>
-            <input type="text" name="establishment_name" required placeholder=" ">
-          </p>
-          <p>
-            <label>Grievance Category</label><br>
-            <select name="grievance_category" required placeholder=" ">
-              <option value="minor">Minor</option>
-              <option value="medior">Medior</option>
-              <option value="major">Major</option>
-            </select>
-          </p>
-          <p>
-            <label>Number of Visit</label><br>
-            <input type="number" name="no_of_visit" required placeholder=" ">
-          </p>
-          <p>
-            <label>Attendance at level</label><br>
-            <select name="attended_at_level" required placeholder=" ">
-              <option value="minor">Clerk</option>
-              <option value="medior">Supervisor</option>
-              <option value="major">Head Supervisor</option>
-            </select>
-          </p>
-          <p>
-            <label>Grievance Details</label><br>
-            <textarea rows="10" cols="50" name="grievance_details"></textarea>
-          </p>
-          <p>
-            <label>Status</label><br>
-            <select name="status" required>
-              <option value="minor">Not resolved</option>
-              <option value="medior">In progress</option>
-              <option value="major">Resolved</option>
-            </select>
-          </p>
+  async findby(type){
+    const form = this.shadowRoot.querySelector('form');
+    //form.uan.value
+    // form.visitor_mobile.value
+    // form.pf_account_no.value
+    if (this.renderRoot.querySelector('[name='+type+']').value) {
+      await fetch(searchUrl(), {
+        method: 'POST',
+        headers: {
+          Authorization: AuthService.addBearerAuth()
+        },
+        body: JSON.stringify({by: 'uan', value: this.renderRoot.querySelector("#search").value})
+      }).then((response) => response.json())
+      .then((respJSON) => {
+        this.rows = respJSON;
+      })
+    } else {
+      
+    }
+    //show modal
 
-          <!-- <p>
-          <lion-input-datepicker
-            name="datepicker"
-            class="datepicker"
-            .modelValue="${new Date('2020-12-12')}"
-            .validators="${[new Required()]}"
-            name="date_of_birth"
-          ></lion-input-datepicker>
-          </p> -->
-          <p>
-            <!-- <button type="submit">Add</button>
-            <button type="reset">Reset form</button> -->
-            <div class="options-container">
-              <lion-button class="form-submit" @click=${this.trySubmit}>Submit</lion-button>
-            </div>
-            
-          </p>
-      </form>
-    </div>
-    `;
+    const modal = this.shadowRoot.querySelector('search-modal');
+    modal.open = true;
+    modal.title = 'Search complete';
+    modal.text = `No Match found!`;
+    modal.clickAction = 'Continue with new'
+  }
+
+  render() {
+    return renderAddForm({
+      resetForm: this.resetForm,
+      findby: this.findby,
+      trySubmit: this.trySubmit
+    })
   }
 }
 

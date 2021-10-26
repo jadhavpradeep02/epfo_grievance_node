@@ -84,7 +84,7 @@ export class RouterMixin extends LitElement {
     if (this.activeRoute) {
       return this.activeRoute?.render();
     }  else {
-      window.location.href = "#home";
+      window.location.href = "#add";
     }
   }
 }

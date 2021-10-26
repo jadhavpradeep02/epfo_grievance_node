@@ -23,6 +23,16 @@ p label{
   border: none;
 }
 
+input.size_3{
+  min-width: initial;
+  max-width: 35px;
+}
+
+input.size_7{
+  min-width: initial;
+  max-width: 75px;
+}
+
 .nav{
   text-align: left;
 }
