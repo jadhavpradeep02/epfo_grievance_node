@@ -5,6 +5,12 @@ let loginData = {
     token: ''
 };
 
+let loginDataDemo = {
+    authenticated: true,
+    loggedIn: true,
+    token: 'sdfsdfsdfsd'
+};
+
 const clearLogin = () => {
     loginData = {
         authenticated: false,

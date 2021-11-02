@@ -1,32 +1,46 @@
 import {LitElement, html, css} from 'lit';
 
-export const renderAddForm = ({resetForm, findby, trySubmit}) => {
+export const renderError = (errorText) => {
+  if (errorText) {
+    return html`<div class="error-div">
+      ${errorText}
+    </div>`;
+  } else {
+    return "";
+  }
+}
+
+export const renderAddForm = ({resetForm, findby, trySubmit, error}) => {
     return html `
     <search-modal @button-click=${resetForm}></search-modal>
        <div class="nav">
         <a class="link-button" href="#home"> Back </a>
       </div>
+      ${renderError(error)}
       <div class="launch-block form">
         <form name="add-user-form" class="add-enrty-form">
         <h2>Enter visitor details</h2>
           <p>
             <label>UAN</label><br>
             <input type="text" name="uan" required placeholder=" ">
-            <lion-button class="find-button" @click=${() => findby('uan')}>Find</lion-button>
+            <a class="btn" @click=${() => findby('uan')}><i class="fas fa-search"></i></a>
           </p>
           <p>
             <label>PF Account Number</label><br>
-            <input type="text" maxlength="7" name="pf_account_no" required placeholder=" "><lion-button class="find-button" @click=${() => findby('epfo')}>Find</lion-button>
+            <input type="text" maxlength="7" name="pf_account_no" required placeholder=" ">
+            <a class="btn" @click=${() =>  findby('pf_account_no')}><i class="fas fa-search"></i></a>
             <br/><br/>
-            <span>PA</span> / <span>PUN</span> / <input type="text" maxlength="7" class="size_7" name="pf_account_no1" required placeholder=" ">
+            <!-- <span class="input-prefix">PA</span> 
+            / <span class="input-prefix">PUN</span> 
+            / <input type="text" maxlength="7" class="size_7" name="pf_account_no1" required placeholder=" ">
             / <input type="text" class="size_3" maxlength="3" name="pf_account_no2" required placeholder=" ">
-            /<input type="text" class="size_7" maxlength="7" name="pf_account_no3" required placeholder=" ">
+            /<input type="text" class="size_7" maxlength="7" name="pf_account_no3" required placeholder=" "> -->
             
           </p>
           <p>
             <label>Phone number</label><br>
             <input type="tel" name="visitor_mobile" required placeholder=" ">
-            <lion-button class="find-button" @click=${() => findby('phone')}>Find</lion-button>
+            <a class="btn" @click=${() => findby('visitor_mobile')}><i class="fas fa-search"></i></a>
           </p>
           <p>
             <label>Visitor name</label><br>

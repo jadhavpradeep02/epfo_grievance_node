@@ -41,7 +41,7 @@ export const deleteUserUrl = (visitorId) => {
 }
 
 export const searchUrl = () => {
-    return onlineMode ? `${OnlineBaseUR}visitor` : `${formUrlBase()}/api/search`;
+    return onlineMode ? `${OnlineBaseUR}visitor` : `${formUrlBase()}/api/visitor/search`;
 }
 
 export const setServer = (strServer) => {

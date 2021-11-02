@@ -161,7 +161,7 @@ Response Body:
     "message": "Record deleted successfully"
 }
 
-DELETE API: http://localhost:3000/api/visitor/search
+SEARCH API: http://localhost:3000/api/visitor/search
 with Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InByYWRlZXAiLCJyb2xlIjoiYWRtaW4iLCJlbWFpbCI6ImphZGhhdnByYWRlZXAwMkBnbWFpbC5jb20iLCJpYXQiOjE2MzM4NTI2ODQsImV4cCI6MTYzMzg1NjI4NH0.qWWquy66Yf6N9jagGVMnr6kI3cU4O2LgZP1efbywaho
 Request Body:
 {

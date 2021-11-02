@@ -1,4 +1,4 @@
-import {LitElement} from 'lit';
+import {LitElement, html} from 'lit';
 import { commonStyles } from '../commonStyles';
 import '@lion/input-datepicker/define';
 import '@lion/button/define';
@@ -7,12 +7,16 @@ import { VisitorService } from '../../services/visitor.service';
 import { formStyles } from './add-form.styles';
 import { renderAddForm } from './add-form.template';
 import './../search-modal/search-modal.js';
+import Fontawesome from 'lit-fontawesome';
+import { searchUrl } from '../../configs/api.config';
+import { AuthService } from '../../services/authentication.service';
 
 export class AddForm extends LitElement {
 
   static properties = {
     noSearchString: false,
-    mode:''
+    mode:'',
+    error: ''
   };
 
   constructor(){
@@ -28,6 +32,7 @@ export class AddForm extends LitElement {
   }
 
   static styles = [
+    Fontawesome,
     commonStyles,
     formStyles
   ];
@@ -80,40 +85,49 @@ export class AddForm extends LitElement {
     }
   }
 
-  async findby(type){
-    const form = this.shadowRoot.querySelector('form');
-    //form.uan.value
-    // form.visitor_mobile.value
-    // form.pf_account_no.value
-    if (this.renderRoot.querySelector('[name='+type+']').value) {
-      await fetch(searchUrl(), {
-        method: 'POST',
-        headers: {
-          Authorization: AuthService.addBearerAuth()
-        },
-        body: JSON.stringify({by: 'uan', value: this.renderRoot.querySelector("#search").value})
-      }).then((response) => response.json())
-      .then((respJSON) => {
-        this.rows = respJSON;
-      })
-    } else {
-      
-    }
-    //show modal
-
+  showSearchResultModal(){
+    debugger;
     const modal = this.shadowRoot.querySelector('search-modal');
     modal.open = true;
     modal.title = 'Search complete';
     modal.text = `No Match found!`;
     modal.clickAction = 'Continue with new'
+    modal.data = this.rows;
+    modal.text = modal.data.length + ' Entried found!'
+  }
+
+  async findby(type){
+    this.error = '';
+    const form = this.shadowRoot.querySelector('form');
+    if (form[type]?.value) { // this.renderRoot.querySelector('[name='+type+']').value
+      await fetch(searchUrl(), {
+        method: 'POST',
+        headers: {
+          Authorization: AuthService.addBearerAuth()
+        },
+        body: JSON.stringify({by: type, value: form[type]?.value})
+      }).then((response) => response.json())
+      .then((respJSON) => {
+        this.rows = respJSON;
+        this.showSearchResultModal();
+      })
+    } else {
+      this.error = 'Invalid search for type : ' + type;
+
+      // DEMO FUNCTION 
+      /* this.rows = await VisitorService.fetchVisitors();
+      this.showSearchResultModal(); */
+    }
   }
 
   render() {
-    return renderAddForm({
+    return html `
+    ${renderAddForm({
       resetForm: this.resetForm,
       findby: this.findby,
-      trySubmit: this.trySubmit
-    })
+      trySubmit: this.trySubmit,
+      error: this.error
+    })}`
   }
 }
 

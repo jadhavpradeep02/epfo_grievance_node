@@ -1,5 +1,6 @@
 import { LitElement, html, css } from "lit-element";
 import { classMap } from "lit/directives/class-map.js";
+import "../search_result/search-result.js";
 
 class SearchModal extends LitElement {
   static get styles() {
@@ -22,8 +23,8 @@ class SearchModal extends LitElement {
         align-items: center;
         display: flex;
         justify-content: center;
-        width: 100vh;
-        height: 100vw;
+        width: 100vw;
+        height: 100vh;
         opacity: 1;
         visibility: visible;
       }
@@ -55,23 +56,13 @@ class SearchModal extends LitElement {
       .action-section{
           width: 100%;
           text-align: center;
+          max-height: 800px;
+        overflow: scroll;
       }
       .content{
           margin: auto;
           padding: 20px;
       }
-      /* .dialog button {
-        background-color: #d81e5b;
-        color: white;
-        width: 100%;
-        font-size: 16px;
-        padding: 15px 32px;
-        border: none;
-        border-radius: 10px;
-        text-decoration: none;
-        display: inline-block;
-        margin-top: 10px;
-      } */
     `;
   }
   static get properties() {
@@ -80,6 +71,7 @@ class SearchModal extends LitElement {
       title: { type: String },
       text: { type: String },
       clickAction: { type: String },
+      data: { type: Object }
     };
   }
 
@@ -96,6 +88,7 @@ class SearchModal extends LitElement {
           <h1 id="title">${this.title}</h1>
           <div id="content" class="content">${this.text}</div>
           <div class="action-section">
+            <search-result .rows=${this.data}></search-result>
              <button @click=${this.handleClick}>${this.clickAction}</button>
           </div>
         </div>

@@ -51,7 +51,8 @@ input, select{
 }
 
 input[type="text"],
-input[type="number"]{
+input[type="number"],
+input[type="tel"]{
     min-width: 300px;
     margin-bottom: 1em;
 }
@@ -111,6 +112,17 @@ nav{
     font-weight: bold;
     background: var(--british-racing-green);
     color: white;
+}
+
+a.btn{
+    font-size: 1.7em;
+    margin: 5px 5px;
+    cursor: pointer;
+    color: var(--british-racing-green);
+}
+
+.input-prefix{
+    font-size: 1.7em;
 }
 
 /* .table > div:nth-child(6n+2) {
