@@ -3,14 +3,11 @@ import { css } from "lit-element";
 export const formStyles = css`
 form{
   padding: 2em;
-  max-width: 800px;
   margin: auto;
+  max-width: 600px;
 }
-p label{
-  display: inline-block;
-  margin-bottom: 5px;
-}
-.datepicker{
+
+/* .datepicker{
   width: 250px;
 }
 .datepicker button{
@@ -21,7 +18,7 @@ p label{
   background-color: transparent;
   line-height: 0px;
   border: none;
-}
+} */
 
 input.size_3{
   min-width: initial;
@@ -58,10 +55,28 @@ input.size_7{
   display:inline-block;
 }
 
+.form-element{
+  margin: 1em;
+}
+
+.form-element label{
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
 .form-submit{
   min-width: 300px;
   text-align: center;
   display: inline-block;
+}
+
+.input-and-search{
+  display: flex;
+  align-items: center;
+}
+
+.input-and-search.prefix{
+  color: #999999;
 }
 
 /* Validaitions CSS */
@@ -79,5 +94,10 @@ input:not(:focus):not(:placeholder-shown):invalid ~ .error-message {
 
 input:not(:focus):not(:placeholder-shown):valid {
   border-color: green
+}
+
+h2{
+    color: var(--british-racing-green);
+    text-align: center;
 }
 `;

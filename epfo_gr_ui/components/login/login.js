@@ -19,7 +19,8 @@ export class LoginForm extends LitElement {
     commonStyles,
     css`
     input {
-        width: 300px;
+      width: 300px;
+      margin-bottom: 1em;
     }
 
     .login-form{
@@ -27,6 +28,10 @@ export class LoginForm extends LitElement {
         text-align: center;
         padding: 2em;
         margin: 1em;
+    }
+
+    h3{
+      color: var(--british-racing-green);
     }
     `,
   ];
@@ -40,7 +45,8 @@ export class LoginForm extends LitElement {
   renderError() {
     if (this.invalidInput) {
       return html`<div class="error-div">
-        Invalid login details.
+        Error : Invalid login details.
+        <span @click=${() => {this.invalidInput = false}} class="error-close">X</span>
       </div>`;
     } else {
       return "";

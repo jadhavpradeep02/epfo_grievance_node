@@ -13,7 +13,7 @@ export const commonStyles = css `
 }
 
 .launch-block.form{
-    width: 60%;
+    width: 75%;
     min-width: 600px;
 }
 
@@ -33,11 +33,17 @@ button{
 
 .error-div{
     padding: 1em;
-    color: #842029;
-    background-color: #f8d7da;
-    border: 1px solid  #842029;
+    color: var(--error-text);
+    background-color: var(--error-background);
+    border: 1px solid  var(--error-border);
     border-radius: 5px;
     margin: 2em;
+}
+
+.error-close{
+    float: right;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 input, select{
@@ -52,9 +58,10 @@ input, select{
 
 input[type="text"],
 input[type="number"],
+input[type="password"],
+input[type="email"],
 input[type="tel"]{
-    min-width: 300px;
-    margin-bottom: 1em;
+    min-width: 325px;
 }
 
 .search-form input[type="text"]{
@@ -115,14 +122,14 @@ nav{
 }
 
 a.btn{
-    font-size: 1.7em;
-    margin: 5px 5px;
+    font-size: 1.5em;
+    margin: 0px 8px;
     cursor: pointer;
     color: var(--british-racing-green);
 }
 
 .input-prefix{
-    font-size: 1.7em;
+    font-size: 1em;
 }
 
 /* .table > div:nth-child(6n+2) {

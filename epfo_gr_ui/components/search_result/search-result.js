@@ -76,7 +76,6 @@ export class SearchResult extends LitElement {
     return html`
       <!-- <div class="launch-block"> -->
         <div class="search-result">
-          <h3>Recent Visitors:</h3>
           ${this.loading ? html `<div class="spinner-container"><loading-spinner></loading-spinner></div>` : this.renderVisitorsTable() } 
         </div>
       <!-- </div> -->

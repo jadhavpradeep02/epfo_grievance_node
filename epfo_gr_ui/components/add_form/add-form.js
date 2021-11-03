@@ -25,6 +25,7 @@ export class AddForm extends LitElement {
     this.resetForm = this.resetForm.bind(this);
     this.findby = this.findby.bind(this);
     this.trySubmit = this.trySubmit.bind(this);
+    this.closeError = this.closeError.bind(this);
   }
 
   connectedCallback() {
@@ -67,6 +68,12 @@ export class AddForm extends LitElement {
           if(elem && elem.value === ""){
             elem.value = (prefillData[key]);
           } else {
+            if(key === 'pf_account_no'){
+              let pfAccNo = prefillData[key].split('/');
+              form.pf_account_no1.value = pfAccNo[2]
+              form.pf_account_no2.value = pfAccNo[3]
+              form.pf_account_no3.value = pfAccNo[4]
+            }
             console.log('Cannot fill : ', key, prefillData[key])
           }
         }
@@ -85,8 +92,11 @@ export class AddForm extends LitElement {
     }
   }
 
+  closeError(){
+    this.error = '';
+  }
+
   showSearchResultModal(){
-    debugger;
     const modal = this.shadowRoot.querySelector('search-modal');
     modal.open = true;
     modal.title = 'Search complete';
@@ -99,13 +109,19 @@ export class AddForm extends LitElement {
   async findby(type){
     this.error = '';
     const form = this.shadowRoot.querySelector('form');
-    if (form[type]?.value) { // this.renderRoot.querySelector('[name='+type+']').value
+    let elementVal = form[type]?.value;
+    if(!elementVal && type === 'pf_account_no'){
+      if(form.pf_account_no1.value || form.pf_account_no2.value || form.pf_account_no3.value){
+        elementVal = `PAPUN${form.pf_account_no1.value}${form.pf_account_no2.value}${form.pf_account_no3.value}`;
+      }
+    }
+    if (elementVal) { // this.renderRoot.querySelector('[name='+type+']').value
       await fetch(searchUrl(), {
         method: 'POST',
         headers: {
           Authorization: AuthService.addBearerAuth()
         },
-        body: JSON.stringify({by: type, value: form[type]?.value})
+        body: JSON.stringify({by: type, value: elementVal})
       }).then((response) => response.json())
       .then((respJSON) => {
         this.rows = respJSON;
@@ -126,7 +142,8 @@ export class AddForm extends LitElement {
       resetForm: this.resetForm,
       findby: this.findby,
       trySubmit: this.trySubmit,
-      error: this.error
+      error: this.error,
+      closeError: this.closeError
     })}`
   }
 }

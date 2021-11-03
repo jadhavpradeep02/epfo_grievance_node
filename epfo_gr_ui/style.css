@@ -46,13 +46,12 @@ body{
 --honeydew: #dff8ebff;
 --british-racing-green: #214e34ff;
 
+--error-text: #db3a04;
+--error-background: #f9b8a2;
+--error-border: #db3a04;
 
 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
-}
-
-.main-container{
-   
 }
 
 .calendar__overlay-frame{
