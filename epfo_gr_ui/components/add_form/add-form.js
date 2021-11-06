@@ -119,8 +119,11 @@ export class AddForm extends LitElement {
       await fetch(searchUrl(), {
         method: 'POST',
         headers: {
+          'Content-Type': 'application/json',
           Authorization: AuthService.addBearerAuth()
         },
+        mode: 'cors',
+        'Access-Control-Allow-Origin': '*',
         body: JSON.stringify({by: type, value: elementVal})
       }).then((response) => response.json())
       .then((respJSON) => {

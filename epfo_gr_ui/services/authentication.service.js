@@ -34,13 +34,13 @@ const login = async (loginDetails, successFn, failFn) => {
         'Access-Control-Allow-Origin': '*'
     }).then((response) => response.json())
     .then((jsonResp) => {
-        if(jsonResp.token){
+        if(jsonResp.response.token){
             console.log(jsonResp);
-            console.log('Token : ', jsonResp, jsonResp.token)
+            console.log('Token : ', jsonResp, jsonResp.response.token)
             loginData = {
                 authenticated: true,
                 loggedIn: true,
-                token: jsonResp.token
+                token: jsonResp.response.token
             };
             successFn(jsonResp);
         } else {

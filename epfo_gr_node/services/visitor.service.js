@@ -52,37 +52,52 @@ function addVisitor(req) {
     let grievance_details = req.body.grievance_details;
     let status = req.body.status;
 
-    var insert_sql = `INSERT INTO visitors (visitor_id, visitor_name, visitor_mobile, visitor_email, uan, pf_account_no, establishment_name, created_at) VALUES (NULL, '${visitor_name}', '${visitor_mobile}', '${visitor_email}', '${uan}', '${pf_account_no}', '${establishment_name}', now())`;
-    console.log("insert query 1 -", insert_sql)
-    connection.query(insert_sql, function (err, result) {
-        if (err) throw err;
-        console.log('The data is inserted successfully into visitor table');
-        console.log("Last inserted id : ", result);
-        let visitor_id = result.insertId;
+    //before add new search for existing
+    var select_query = `SELECT * FROM visitors WHERE visitor_mobile= '${visitor_mobile}'`;
+    connection.query(select_query, function(err, data) {
+        if(data.length > 0) {
+            updateVisitor(req).then(response => {
+                let res = {};
+                res.status = "200";
+                res.message = "Grievance and Visitor Updated successfully";
+                deferred.resolve(res);
+            });
+        } else {
+            var insert_sql = `INSERT INTO visitors (visitor_id, visitor_name, visitor_mobile, visitor_email, uan, pf_account_no, establishment_name, created_at) VALUES (NULL, '${visitor_name}', '${visitor_mobile}', '${visitor_email}', '${uan}', '${pf_account_no}', '${establishment_name}', now())`;
+            console.log("insert query 1 -", insert_sql)
+            connection.query(insert_sql, function (err, result) {
+                if (err) throw err;
+                console.log('The data is inserted successfully into visitor table');
+                console.log("Last inserted id : ", result);
+                let visitor_id = result.insertId;
 
-        var insert_grievance = `INSERT INTO grievance (grievance_id, visitor_id, grievance_category, no_of_visit, attended_at_level, grievance_details, status, visited_at) VALUES (NULL, '${visitor_id}', '${grievance_category}', '${no_of_visit}', '${attended_at_level}', '${grievance_details}', '${status}', now())`;
-        console.log("insert query-", insert_grievance)
-        connection.query(insert_grievance, function(err, result) {
-            if (err) throw err;
-            console.log("Successfully inserted grievance: ")
-            response.status = "200";
-            response.message = "Grievance and Visitor Added successfully";
-            deferred.resolve(response);
-        })
+                var insert_grievance = `INSERT INTO grievance (grievance_id, visitor_id, grievance_category, no_of_visit, attended_at_level, grievance_details, status, visited_at) VALUES (NULL, '${visitor_id}', '${grievance_category}', '${no_of_visit}', '${attended_at_level}', '${grievance_details}', '${status}', now())`;
+                console.log("insert query-", insert_grievance)
+                connection.query(insert_grievance, function(err, result) {
+                    if (err) throw err;
+                    console.log("Successfully inserted grievance: ")
+                    response.status = "200";
+                    response.message = "Grievance and Visitor Added successfully";
+                    deferred.resolve(response);
+                })
+            });
+            return deferred.promise;
+        }
     });
     return deferred.promise;
+    
 }
 
 function updateVisitor(req) {
     var deferred = Q.defer();
     let response = {};
 
-    let visitor_id = req.body.visitor_id;
+    //let visitor_id = req.body.visitor_id;
     let visitor_name = req.body.visitor_name;
     let visitor_mobile = req.body.visitor_mobile;
     let visitor_email =   req.body.visitor_email;
     let uan = req.body.uan;
-    let pf_account_no = req.body.pf_account_no;
+    let pf_account_no = 'PA/PUN/' + req.body.pf_account_no1 +  req.body.pf_account_no2 + req.body.pf_account_no3;
     let establishment_name = req.body.establishment_name;
     let grievance_category = req.body.grievance_category;
     let no_of_visit = req.body.no_of_visit;
@@ -90,20 +105,25 @@ function updateVisitor(req) {
     let grievance_details = req.body.grievance_details;
     let status = req.body.status;
 
-    var update_sql = `UPDATE visitors SET visitor_name = '${visitor_name}', visitor_mobile = '${visitor_mobile}', visitor_email='${visitor_email}', uan='${uan}', pf_account_no='${pf_account_no}', establishment_name='${establishment_name}' where visitor_id = ${visitor_id}`;
+    var update_sql = `UPDATE visitors SET visitor_name = '${visitor_name}', visitor_mobile = '${visitor_mobile}', visitor_email='${visitor_email}', uan='${uan}', pf_account_no='${pf_account_no}', establishment_name='${establishment_name}' where visitor_mobile = '${visitor_mobile}'`;
     console.log("update query 1 -", update_sql)
     connection.query(update_sql, function (err, result) {
         if (err) throw err;
         console.log('The data is updated successfully into visitor table');
-
-        var update_grievance = `UPDATE grievance SET grievance_category='${grievance_category}', no_of_visit='${no_of_visit}', attended_at_level='${attended_at_level}', grievance_details='${grievance_details}', status='${status}' WHERE visitor_id= ${visitor_id}`;
-        console.log("update query-", update_grievance)
-        connection.query(update_grievance, function(err, result) {
-            if (err) throw err;
-            console.log("Successfully updated grievance: ")
-            response.status = "200";
-            response.message = "Grievance and Visitor Updated successfully";
-            deferred.resolve(response);
+        //get visitor_id from updated row
+        let select_row = `select visitor_id from visitors where visitor_mobile = '${visitor_mobile}'`;
+        connection.query(select_row, function (err, result) {
+            console.log(result[0]);
+            let visitor_id = result[0].visitor_id;
+            var update_grievance = `UPDATE grievance SET grievance_category='${grievance_category}', no_of_visit='${no_of_visit}', attended_at_level='${attended_at_level}', grievance_details='${grievance_details}', status='${status}' WHERE visitor_id= ${visitor_id}`;
+            console.log("update query-", update_grievance)
+            connection.query(update_grievance, function(err, result) {
+                if (err) throw err;
+                console.log("Successfully updated grievance: ")
+                response.status = "200";
+                response.message = "Grievance and Visitor Updated successfully";
+                deferred.resolve(response);
+            })
         })
     });
     return deferred.promise;
@@ -153,13 +173,13 @@ function searchVisitor(req) {
 
 function setSearchColumn(req) {
     let column = "";
-    if(req.by == "phone") {
+    if(req.by == "visitor_mobile") {
         column = "visitor_mobile";
-    } else if (req.by == "email") {
+    } else if (req.by == "visitor_email") {
         column = "visitor_email";
     } else if (req.by == "uan") {
         column = "uan";
-    } else if (req.by == "epfo") {
+    } else if (req.by == "pf_account_no") {
         column = "pf_account_no";
     }
     return column;
