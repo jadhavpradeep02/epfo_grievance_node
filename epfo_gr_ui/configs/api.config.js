@@ -2,7 +2,7 @@
 const BaseURL= 'http://localhost';
 const OnlineBaseUR = 'https://61707f6123781c0017289a77.mockapi.io/api/';
 const BasePort= "3000";
-const onlineMode = false;
+let onlineMode = false;
 
 const formUrlBase = () => BaseURL + ":" + BasePort;
     
@@ -20,8 +20,34 @@ export const APIConfigOnline = {
     deleteVisitor: (visitorId) => OnlineBaseUR + '/api/visitor/delete?visitor_id='+visitorId
 } */
 
+export const setLocal = () => {
+    onlineMode = false;
+}
+
+export const isOnline = () => {
+    return onlineMode === true;
+}
+
+export const toggleMode = () => {
+    console.log('Inside ToggleMode');
+    if(onlineMode){
+        onlineMode = false;
+    } else {
+        onlineMode = true;
+    }
+    console.log(onlineMode);
+}
+
+export const getMode = () => {
+    if(onlineMode){
+        return 'online'
+    } else {
+        return 'local'
+    }
+}
+
 export const addVisitorURL = () => {
-    return onlineMode ? OnlineBaseUR + '/visitor' : formUrlBase() + '/api/visitor/add';
+    return onlineMode ? OnlineBaseUR + 'visitor' : formUrlBase() + '/api/visitor/add';
 }
 
 export const loginUrl = () => {
@@ -32,12 +58,12 @@ export const getAllVisitorsUrl = () => {
     return onlineMode ? `${OnlineBaseUR}visitor` : `${formUrlBase()}/api/visitor`;
 }
 
-export const updateVisitorUrl = (visitorId) => {
-    return onlineMode ? `${OnlineBaseUR}visitor/'${visitorId}` : `${formUrlBase()}/api/visitor/update${visitorId}`;
+export const updateVisitorUrl = () => {
+    return onlineMode ? `${OnlineBaseUR}visitor/` : `${formUrlBase()}/api/visitor/update`;
 }
 
 export const deleteUserUrl = (visitorId) => {
-    return onlineMode ? `${OnlineBaseUR}visitor/'${visitorId}` : `${formUrlBase()}/api/visitor/delete?visitor_id=${visitorId}`;
+    return onlineMode ? `${OnlineBaseUR}visitor/${visitorId}` : `${formUrlBase()}/api/visitor/delete?visitor_id=${visitorId}`;
 }
 
 export const searchUrl = () => {

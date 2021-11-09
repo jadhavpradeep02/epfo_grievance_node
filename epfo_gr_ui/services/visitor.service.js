@@ -3,6 +3,17 @@ import { AuthService } from './authentication.service.js';
 
 let currentEditVisitor = null;
 
+const commonAPIConfig = {
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': AuthService.addBearerAuth()
+    },
+    redirect: 'follow',
+}
+
 const addNewVisitor = async (visitorData, callbackFn) => {
     /* axios.post(
         APIConfig.addVisitor(),
@@ -15,12 +26,13 @@ const addNewVisitor = async (visitorData, callbackFn) => {
         cache: 'no-cache',
         credentials: 'same-origin',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': AuthService.addBearerAuth()
+            'Content-Type': 'application/json',
+            'Authorization': AuthService.addBearerAuth()
         },
         redirect: 'follow',
         body: JSON.stringify(visitorData)
-    }).then((respose) => respose.json())
+    })
+    .then((respose) => respose.json())
     .then((respjson) => {
         if(respjson){
             if(callbackFn){
@@ -51,13 +63,28 @@ const deleteVisitor = async (visitor_id) => {
     });
 }
 
-const updateVisitor = async (visitor_id) => {
-    const userData = await fetch(updateVisitorUrl(),{
+const updateVisitor = async (visitorData, successFn) => {
+    const resp = await fetch( updateVisitorUrl(), {
+        method: 'PUT',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': AuthService.addBearerAuth()
+        },
+        redirect: 'follow',
+        body: JSON.stringify(visitorData)
+    })
+    .then((respose) => respose.json())
+    .then((respjson) => {
+        if(respjson){
+            if(successFn){
+                successFn();
+            }
         }
-    });
+    })
+    return resp.json(); // parses JS
 }
 
 const setForEdit = (visitor) => {

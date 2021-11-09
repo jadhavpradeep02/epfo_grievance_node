@@ -11,7 +11,7 @@ export const renderError = (errorText, closeError) => {
   }
 }
 
-export const renderAddForm = ({resetForm, findby, trySubmit, error, closeError}) => {
+export const renderAddForm = ({resetForm, findby, trySubmit, error, closeError, isEdit}) => {
     return html `
     <search-modal @button-click=${resetForm}></search-modal>
        <!-- <div class="nav">
@@ -20,7 +20,12 @@ export const renderAddForm = ({resetForm, findby, trySubmit, error, closeError})
       ${renderError(error, closeError)}
       <div class="launch-block form">
         <form name="add-user-form" class="add-enrty-form">
-        <h2>Enter visitor details</h2>
+          ${
+            isEdit? 
+            html `<h2>Update visitor details</h2>` :
+            html `<h2>Enter visitor details</h2>`
+          }
+        
           <div class="form-element">
             <label>UAN</label>
             <div class="input-and-search">
@@ -103,7 +108,10 @@ export const renderAddForm = ({resetForm, findby, trySubmit, error, closeError})
             </select>
           </div>
           <div class="options-container">
-            <lion-button class="form-submit" @click=${trySubmit}>Submit</lion-button>
+            ${isEdit ? 
+              html `<lion-button class="form-submit" @click=${trySubmit}>Update</lion-button>` :
+              html `<lion-button class="form-submit" @click=${trySubmit}>Add</lion-button>` 
+            }
           </div>
       </form>
     </div>`;

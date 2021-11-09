@@ -5,10 +5,10 @@ import { AuthService } from "../../services/authentication.service";
 
 export class LoginForm extends LitElement {
   static properties = {
-    invalidInput: false
+    invalidInput: false,
   };
 
-  constructor(){
+  constructor() {
     super();
     this.invalidInput = false;
     this.loginSuccess = this.loginSuccess.bind(this);
@@ -18,27 +18,27 @@ export class LoginForm extends LitElement {
   static styles = [
     commonStyles,
     css`
-    input {
-      width: 300px;
-      margin-bottom: 1em;
-    }
+      input {
+        width: 300px;
+        margin-bottom: 1em;
+      }
 
-    .login-form{
+      .login-form {
         margin: auto;
         text-align: center;
         padding: 2em;
         margin: 1em;
-    }
+      }
 
-    h3{
-      color: var(--british-racing-green);
-    }
+      h3 {
+        color: var(--british-racing-green);
+      }
     `,
   ];
 
-  async loadVisitors(){
+  async loadVisitors() {
     this.rows = await fetchVisitors();
-    console.log(this.rows)
+    console.log(this.rows);
     // this.rows = this.users;
   }
 
@@ -46,25 +46,37 @@ export class LoginForm extends LitElement {
     if (this.invalidInput) {
       return html`<div class="error-div">
         Error : Invalid login details.
-        <span @click=${() => {this.invalidInput = false}} class="error-close">X</span>
+        <span
+          @click=${() => {
+            this.invalidInput = false;
+          }}
+          class="error-close"
+          >X</span
+        >
       </div>`;
     } else {
       return "";
     }
   }
 
-  loginFailed(){
+  loginFailed() {
     this.invalidInput = true;
   }
 
-  loginSuccess(data){
-    this.dispatchEvent( new CustomEvent('navigateTo',{ bubbles: true, composed: true, detail:{"name":"add"}}));
+  loginSuccess(data) {
+    this.dispatchEvent(
+      new CustomEvent("navigateTo", {
+        bubbles: true,
+        composed: true,
+        detail: { name: "add" },
+      })
+    );
   }
 
-  tryLogin(){
+  tryLogin() {
     this.invalidInput = false;
-    const form = this.shadowRoot.querySelector('form');
-    if(form.checkValidity()){
+    const form = this.shadowRoot.querySelector("form");
+    if (form.checkValidity()) {
       const rawFormData = new FormData(form);
       const formData = Object.fromEntries(rawFormData.entries());
       AuthService.login(formData, this.loginSuccess, this.loginFailed);
@@ -77,7 +89,7 @@ export class LoginForm extends LitElement {
     return html`
       <div class="launch-block">
         <form name="loginForm" class="login-form">
-            <h3>Enter login details</h3>
+          <h3>Enter login details</h3>
           <input
             type="text"
             id="username"

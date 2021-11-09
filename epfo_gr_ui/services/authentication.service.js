@@ -1,4 +1,6 @@
 import { loginUrl } from './../configs/api.config';
+import { isOnline } from './../configs/api.config';
+
 let loginData = {
     authenticated: false,
     loggedIn: false,
@@ -34,13 +36,13 @@ const login = async (loginDetails, successFn, failFn) => {
         'Access-Control-Allow-Origin': '*'
     }).then((response) => response.json())
     .then((jsonResp) => {
-        if(jsonResp.response.token){
+        if(jsonResp){
             console.log(jsonResp);
-            console.log('Token : ', jsonResp, jsonResp.response.token)
+            // console.log('Token : ', jsonResp, jsonResp.response.token)
             loginData = {
                 authenticated: true,
                 loggedIn: true,
-                token: jsonResp.response.token
+                token: isOnline ? jsonResp.token : jsonResp.response.token
             };
             successFn(jsonResp);
         } else {
