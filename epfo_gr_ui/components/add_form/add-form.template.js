@@ -40,11 +40,13 @@ export const renderAddForm = ({resetForm, findby, trySubmit, error, closeError, 
               <a class="btn" @click=${() =>  findby('pf_account_no')}><i class="fas fa-search"></i></a>
             </div> -->
             <div class="input-and-search prefix">
-              <span class="input-prefix">PA</span> 
-              &nbsp;/&nbsp;<span class="input-prefix">PUN</span> 
-              &nbsp;/&nbsp;<input type="text" maxlength="7" class="size_7" name="pf_account_no1" required placeholder=" ">
-              &nbsp;/&nbsp;<input type="text" class="size_3" maxlength="3" name="pf_account_no2" required placeholder=" ">
-              &nbsp;/&nbsp;<input type="text" class="size_7" maxlength="7" name="pf_account_no3" required placeholder=" ">
+              <span class="input-prefix">PA&nbsp;/&nbsp;</span> 
+              <span class="input-prefix">PUN&nbsp;/&nbsp;</span> 
+              <input type="text" maxlength="7" class="size_7" name="pf_account_no1" required placeholder=" ">
+              <span class="input-prefix">&nbsp;/&nbsp;</span>
+              <input type="text" class="size_3" maxlength="3" name="pf_account_no2" required placeholder=" ">
+              <span class="input-prefix">&nbsp;/&nbsp;</span> 
+              <input type="text" class="size_7" maxlength="7" name="pf_account_no3" required placeholder=" ">
               <a class="btn" @click=${() =>  findby('pf_account_no')}><i class="fas fa-search"></i></a>
             </div>
           </div>

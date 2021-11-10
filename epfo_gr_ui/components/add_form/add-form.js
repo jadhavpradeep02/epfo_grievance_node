@@ -18,6 +18,7 @@ export class AddForm extends LitElement {
       mode: {type: String},
       error:{type: String},
       prefillData:{type: Object},
+      searchLoading:{type: Boolean}
     }
   }
 
@@ -28,6 +29,7 @@ export class AddForm extends LitElement {
     this.findby = this.findby.bind(this);
     this.trySubmit = this.trySubmit.bind(this);
     this.closeError = this.closeError.bind(this);
+    this.searchLoading = false;
   }
 
   connectedCallback() {
@@ -124,14 +126,23 @@ export class AddForm extends LitElement {
     this.error = "";
   }
 
+  updatemodal(){
+    const modal = this.shadowRoot.querySelector("search-modal");
+    modal.data = this.rows;
+    modal.title =  "Search Complete";
+    // modal.loading = this.searchLoading;
+    modal.text = modal.data.length ? modal.data.length+" Entries found:" :  "No Entries found :-(";
+  }
+
   showSearchResultModal() {
     const modal = this.shadowRoot.querySelector("search-modal");
     modal.open = true;
-    modal.title = "Search complete";
+    modal.title = "Searching...";
     modal.text = `No Match found!`;
+    modal.loading = this.searchLoading;
     modal.clickAction = "Continue with new";
     modal.data = this.rows;
-    modal.text = modal.data.length + " Entried found!";
+    // modal.text = modal.data.length ? modal.data.length+" Entries found:" :  "No Entries found :-(";
   }
 
   async findby(type) {
@@ -149,6 +160,7 @@ export class AddForm extends LitElement {
     }
     if (elementVal) {
       // this.renderRoot.querySelector('[name='+type+']').value
+      this.showSearchResultModal();
       await fetch(searchUrl(), {
         method: "POST",
         headers: {
@@ -162,7 +174,8 @@ export class AddForm extends LitElement {
         .then((response) => response.json())
         .then((respJSON) => {
           this.rows = respJSON;
-          this.showSearchResultModal();
+          // this.showSearchResultModal();
+          this.updatemodal();
         });
     } else {
       this.error = "Invalid search for type : " + type;

@@ -54,6 +54,11 @@ input, select{
     padding-left: 10px;
     border: 1px solid #ced4da;
     vertical-align: middle;
+    border-radius: 8px;
+}
+
+textarea{
+    border-radius: 8px;
 }
 
 input[type="text"],
@@ -110,7 +115,7 @@ nav{
   margin: 0px;
   background: var(--honeydew);
   padding: 5px;
-  border: 1px solid var(--light-gray);
+  border: 1px solid white;
   word-break: break-word;
   text-overflow: ellipsis;
 }
@@ -128,8 +133,14 @@ a.btn{
     color: var(--british-racing-green);
 }
 
+a.btn:hover{
+    color: var(--oxford-blue);
+    text-shadow: 4px 2px 2px rgba(150, 150, 150, 1);
+}
+
 .input-prefix{
     font-size: 1em;
+    padding-bottom: 4px;
 }
 
 /* .table > div:nth-child(6n+2) {

@@ -2,10 +2,12 @@ import { LitElement, html, css } from "lit";
 import "@lion/button/define";
 import { commonStyles } from "../commonStyles";
 import { AuthService } from "../../services/authentication.service";
+import './../spinner.js';
 
 export class LoginForm extends LitElement {
   static properties = {
     invalidInput: false,
+    loading: false
   };
 
   constructor() {
@@ -60,10 +62,12 @@ export class LoginForm extends LitElement {
   }
 
   loginFailed() {
+    this.loading = false;
     this.invalidInput = true;
   }
 
   loginSuccess(data) {
+    this.loading = false;
     this.dispatchEvent(
       new CustomEvent("navigateTo", {
         bubbles: true,
@@ -74,6 +78,7 @@ export class LoginForm extends LitElement {
   }
 
   tryLogin() {
+    this.loading = true;
     this.invalidInput = false;
     const form = this.shadowRoot.querySelector("form");
     if (form.checkValidity()) {
@@ -88,26 +93,32 @@ export class LoginForm extends LitElement {
   render() {
     return html`
       <div class="launch-block">
-        <form name="loginForm" class="login-form">
-          <h3>Enter login details</h3>
-          <input
-            type="text"
-            id="username"
-            placeholder="Enter username"
-            name="username"
-            required
-          /><br />
-          <input
-            type="password"
-            id="password"
-            placeholder="Enter password"
-            name="password"
-            required
-          /><br />
-          <div class="options-container">
-            <lion-button @click=${this.tryLogin}>Login</lion-button>
-          </div>
-        </form>
+        
+          <form name="loginForm" class="login-form">
+            <h3>Enter login details</h3>
+            <input
+              type="text"
+              id="username"
+              placeholder="Enter username"
+              name="username"
+              required
+            /><br />
+            <input
+              type="password"
+              id="password"
+              placeholder="Enter password"
+              name="password"
+              required
+            /><br />
+            <div class="options-container">
+            ${this.loading ? 
+                html `<div class="spinner-container"><loading-spinner></loading-spinner></div>` :
+                html `
+              <lion-button @click=${this.tryLogin}>Login</lion-button>
+              `}
+            </div>
+          </form>
+        
       </div>
       ${this.renderError()}
     `;

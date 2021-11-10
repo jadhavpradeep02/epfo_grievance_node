@@ -19,7 +19,7 @@ export class SearchResult extends LitElement {
     Fontawesome,
     css `
      .search-result {
-        padding: 2em 2em;
+        padding: 1em;
       }
 
       .spinner-container{
@@ -33,7 +33,7 @@ export class SearchResult extends LitElement {
       }
 
       .edit-icon:hover{
-        color: white;
+        color: var(--oxford-blue);
         cursor: pointer;
         text-shadow: 4px 2px 2px rgba(150, 150, 150, 1);
       }
@@ -64,7 +64,7 @@ export class SearchResult extends LitElement {
       return html` <div class="table">
       ${columnDefinition.map((col) => col.header ? html`<div class="header">${col.header}</div>` : html `<div class="header"></div>` )}
       ${this.rows.map((row) => {
-        return columnDefinition.map((col) => col.path ? html`<div>${row[col.path]}</div>` : html `<div class="edit-cell" title="Edit user" @click=${() => this.editVisitor(row)}><i class="fas fa-edit edit-icon"></i></div>`);
+        return columnDefinition.map((col) => col.path ? html`<div>${row[col.path]}</div>` : html `<div class="edit-cell" title="Edit user" @click=${() => this.editVisitor(row)}><i class="fas fa-user-edit edit-icon"></i></div>`);
       })}
     </div>`;
     }  else {

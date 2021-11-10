@@ -1,6 +1,7 @@
 import { LitElement, html, css } from "lit-element";
 import { classMap } from "lit/directives/class-map.js";
 import "../search_result/search-result.js";
+import "./../spinner.js";
 
 class SearchModal extends LitElement {
   static get styles() {
@@ -45,23 +46,32 @@ class SearchModal extends LitElement {
       }
       .dialog h1 {
         margin: 0 0 10px;
+        text-align: center;
+        margin-top: 15px;
+        margin-bottom: 20px;
+        color: var(--british-racing-green);
       }
-      .dialog button{
+      .dialog button {
         background-color: var(--british-racing-green);
         color: white;
         padding: 12px 24px;
         border-radius: 8px;
         cursor: pointer;
+        border-width: 0px;
       }
-      .action-section{
-          width: 100%;
-          text-align: center;
-          max-height: 800px;
-        overflow: scroll;
+      .action-section {
+        width: 100%;
+        text-align: center;
+        min-height: 400px;
+        margin-bottom: 25px;
       }
-      .content{
-          margin: auto;
-          padding: 20px;
+      .spinner-container{
+        text-align: center;
+      }
+      .content {
+        margin: auto;
+        padding: 20px;
+        color: var(--british-racing-green);
       }
     `;
   }
@@ -71,7 +81,8 @@ class SearchModal extends LitElement {
       title: { type: String },
       text: { type: String },
       clickAction: { type: String },
-      data: { type: Object }
+      data: { type: Object },
+      loading: { type: Boolean },
     };
   }
 
@@ -86,13 +97,18 @@ class SearchModal extends LitElement {
         <div class="overlay" @click="${this.close}"></div>
         <div class="dialog">
           <h1 id="title">${this.title}</h1>
-          <div id="content" class="content">${this.text}</div>
-          <div class="action-section">
-            <search-result .rows=${this.data}></search-result>
-             <button @click=${this.handleClick}>${this.clickAction}</button>
-          </div>
+          ${this.loading
+            ? html`<div class="spinner-container">
+                <loading-spinner></loading-spinner>
+              </div>`
+            : html`
+                <div id="content" class="content">${this.text}</div>
+                <div class="action-section">
+                  <search-result .rows=${this.data}></search-result>
+                  <button @click=${this.handleClick}>${this.clickAction}</button>
+                </div>
+              `}
         </div>
-        
       </div>
     `;
   }
