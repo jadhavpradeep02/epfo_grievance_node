@@ -47,6 +47,13 @@ create table grievance (
 	FOREIGN KEY ( visitor_id ) REFERENCES visitors(visitor_id) ON DELETE CASCADE
 ) ENGINE=INNODB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8;
 
+create table establishment (
+	estb_id INT NOT NULL AUTO_INCREMENT,
+	establishment_id VARCHAR(60) NOT NULL,
+	establishment_name VARCHAR(250) NOT NULL,
+	estb_account_task_id  VARCHAR(10) NOT NULL,
+	PRIMARY KEY ( estb_id )
+) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 insert into users values ("pradeep", "jadhavpradeep02@gmail.com", "pradeep", "admin",date());
 insert into users values ("sunil", "sunilchivate@gmail.com", "sunil", "admin",date());
