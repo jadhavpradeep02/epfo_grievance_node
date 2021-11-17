@@ -1,4 +1,4 @@
-import { LitElement, html } from "lit";
+import { LitElement, html, css } from "lit";
 import { commonStyles } from "../commonStyles";
 import "@lion/input-datepicker/define";
 import "@lion/button/define";
@@ -19,14 +19,15 @@ export class Reports extends LitElement {
     super.connectedCallback();
   }
 
-  static styles = [Fontawesome, commonStyles];
+  static styles = [Fontawesome, commonStyles,
+    css ` .title { margin: 25px; padding : 25px }`];
 
   update(changedProps) {
     super.update();
   }
 
   render() {
-    return html`<div>This is Reports</div>`;
+    return html`<div class="launch-block form"><div class="title">This is Reports</div></div>`;
   }
 }
 
