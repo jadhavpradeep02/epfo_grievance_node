@@ -71,6 +71,17 @@ export const renderAddForm = ({resetForm, findby, trySubmit, error, closeError, 
             <input type="text" name="establishment_name" required placeholder=" ">
           </div>
           <div class="form-element">
+            <label>Section</label><br>
+            <select name="section" required placeholder=" ">
+              <option value="account">Account</option>
+              <option value="pension">Pension </option>
+              <option value="compliance">Compliance</option>
+              <option value="cash">Cash</option>
+              <option value="exemption">Exemption</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-element">
             <label>Grievance Category</label><br>
             <select name="grievance_category" required placeholder=" ">
               <option value="minor">Death Case</option>

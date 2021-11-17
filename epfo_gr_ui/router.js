@@ -35,11 +35,17 @@ export class RouterMixin extends LitElement {
         render: () => html`<add-form mode="edit"></add-form>`,
       },
       {
-        key: "addlit",
+        key: "dashboard",
         name: "Add Form",
-        import: () => import("./components/add_form/add-form-lit.js"),
-        render: () => html`<add-form-lit></add-form-lit>`,
+        import: () => import("./components/dashboard/dashboard.js"),
+        render: () => html`<dash-board></dash-board>`,
       },
+      {
+        key: "reports",
+        name: "Add Form",
+        import: () => import("./components/reports/reports.js"),
+        render: () => html`<reports-view></reports-view>`,
+      }
     ];
     this.activeRoute = null;
     window.addEventListener("load", this.router);
@@ -48,6 +54,7 @@ export class RouterMixin extends LitElement {
 
   router = (evt) => {
     const url = window.location.hash.slice(1) || "/";
+    // debugger;
     this.navigateTo(url);
   };
 
