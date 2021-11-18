@@ -6,7 +6,7 @@ export const commonStyles = css `
     background-color: white;
     margin: auto;
     margin-bottom: 25px;
-    border-radius: 10px;
+    /* border-radius: 10px; */
     -webkit-box-shadow: -1px 3px 5px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: -1px 3px 5px 0px rgba(0,0,0,0.75);
     box-shadow: -1px 3px 5px 0px rgba(0,0,0,0.75);

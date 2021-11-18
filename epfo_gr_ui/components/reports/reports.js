@@ -20,14 +20,92 @@ export class Reports extends LitElement {
   }
 
   static styles = [Fontawesome, commonStyles,
-    css ` .title { margin: 25px; padding : 25px }`];
+    css ` 
+        .main { 
+            padding : 40px;
+        }
+        h1{
+            text-align: center;
+        }
+        .range-select{
+            padding: 10px;
+            text-align: center;
+        }
+        .range-select input{
+            margin: 15px;
+        }
+
+        .form-element{
+            text-align: center;
+            margin: 10px;
+        }
+
+        .step-label{
+            width: 100%;
+            text-align: center;
+            color: var(--british-racing-green);
+            display: block;
+            margin: 25px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .action-container{
+            width: 100%;
+            text-align: center;
+            margin: 25px;
+        }
+        
+        `];
 
   update(changedProps) {
     super.update();
   }
 
+  downloadReport(){
+      console.log('Report generated');
+  }
+
   render() {
-    return html`<div class="launch-block form"><div class="title">This is Reports</div></div>`;
+    return html`
+        <div class="launch-block form">
+            <div class="main">
+                <h1>Genrate Reports</h1>
+                <label class="step-label">Step 1: Select time period</label>
+                <div class="range-select">
+                    From: <input name="fromDate" type="date"/>
+                    To: <input name="toDate" type="date"/>
+                </div>
+                <label class="step-label">Step 2: Select report type</label>
+                <div class="form-element">
+                    <label>Section</label><br>
+                    <select name="section" required placeholder=" ">
+                    <option value="account">Account</option>
+                    <option value="pension">Pension </option>
+                    <option value="compliance">Compliance</option>
+                    <option value="cash">Cash</option>
+                    <option value="exemption">Exemption</option>
+                    <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-element">
+                    <label>Grievance Category</label><br>
+                    <select name="grievance_category" required placeholder=" ">
+                    <option value="minor">Death Case</option>
+                    <option value="withdraw_F19">Withdrawal Form 19 </option>
+                    <option value="Transfer_F13">Transfer Form13</option>
+                    <option value="Advance_F31">Advanced Form31</option>
+                    <option value="Pension">Pension</option>
+                    <option value="KYC_Update">Modify KYC</option>
+                    <option value="Non_Enrollment">Non enrollment</option>
+                    <option value="Other">Misc</option>
+                    </select>
+                </div>
+                <label class="step-label">Step 2: Download Report</label>
+                <div class="action-container"><lion-button @click=${this.downloadReport}>Download</lion-button></div>
+                
+            </div>
+        </div>`;
   }
 }
 

@@ -19,8 +19,7 @@ export class HeaderElement extends LitElement {
         text-align: center;
         padding: 12px;
         margin-bottom: 24px;
-  
-        
+        margin-top: 0px;
       }
 
       .elem-shadow{
@@ -32,7 +31,7 @@ export class HeaderElement extends LitElement {
       .menu{
         display: inline;
         position: absolute;
-        top: 35px;
+        top: 11px;
         right: 0px;
         font-size: 1.5em;
         color: white;
@@ -42,7 +41,7 @@ export class HeaderElement extends LitElement {
 
       .menu-items{
         position: absolute;
-        top: 80px;
+        top: 60px;
         right: 0px;
         font-size: 1.5em;
         color: white;

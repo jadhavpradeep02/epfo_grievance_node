@@ -41,8 +41,13 @@ export class GrvncApp extends RouterMixin {
     this.mode = getMode();
   }
 
+  fakeLogin(){
+    AuthService.login({ username: '123', password: '234'}, () => {window.location.href = `#add`;}, this.loginFailed);
+  }
+
   onChange(e){
     toggleMode();
+    this.fakeLogin();
     this.mode = getMode();
   }
 
