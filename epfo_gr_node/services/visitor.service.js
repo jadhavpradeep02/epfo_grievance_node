@@ -9,6 +9,7 @@ service.addVisitor = addVisitor;
 service.updateVisitor = updateVisitor;
 service.deleteVisitor = deleteVisitor;
 service.searchVisitor = searchVisitor;
+service.getReport = getReport;
 
 module.exports = service;
 
@@ -17,13 +18,13 @@ function getAllVisitors(req) {
     let LIMIT = 100; //default limit set as 100
     let visitor_id = "";
 
-    select_query = 'select v.visitor_id, visitor_name, visitor_mobile, visitor_email, uan, pf_account_no, establishment_name, created_at, grievance_category, no_of_visit, attended_at_level, grievance_details, status from visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id';
+    select_query = 'select v.visitor_id, visitor_name, visitor_mobile, visitor_email, uan, pf_account_no, establishment_name, created_at, section, grievance_category, no_of_visit, attended_at_level, grievance_details, status from visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id';
 
     if(req.visitor_id) {
         select_query += ' where v.visitor_id = ' + req.visitor_id;
     }
 
-    if(req.limit) {
+    if(req.body.limit) {
         select_query += ' LIMIT ' + req.limit;
     }
     console.log(select_query);
@@ -47,6 +48,7 @@ function addVisitor(req) {
     let pf_account_no = req.body.pf_account_no;
     let establishment_name = req.body.establishment_name;
     let grievance_category = req.body.grievance_category;
+    let section = req.body.section;
     let no_of_visit = req.body.no_of_visit;
     let attended_at_level = req.body.attended_at_level;
     let grievance_details = req.body.grievance_details;
@@ -71,7 +73,7 @@ function addVisitor(req) {
                 console.log("Last inserted id : ", result);
                 let visitor_id = result.insertId;
 
-                var insert_grievance = `INSERT INTO grievance (grievance_id, visitor_id, grievance_category, no_of_visit, attended_at_level, grievance_details, status, visited_at) VALUES (NULL, '${visitor_id}', '${grievance_category}', '${no_of_visit}', '${attended_at_level}', '${grievance_details}', '${status}', now())`;
+                var insert_grievance = `INSERT INTO grievance (grievance_id, visitor_id, grievance_category, section, no_of_visit, attended_at_level, grievance_details, status, visited_at) VALUES (NULL, '${visitor_id}', '${grievance_category}', '${section}' ,'${no_of_visit}', '${attended_at_level}', '${grievance_details}', '${status}', now())`;
                 console.log("insert query-", insert_grievance)
                 connection.query(insert_grievance, function(err, result) {
                     if (err) throw err;
@@ -100,6 +102,7 @@ function updateVisitor(req) {
     let pf_account_no = 'PA/PUN/' + req.body.pf_account_no1 +  req.body.pf_account_no2 + req.body.pf_account_no3;
     let establishment_name = req.body.establishment_name;
     let grievance_category = req.body.grievance_category;
+    let section = req.body.section;
     let no_of_visit = req.body.no_of_visit;
     let attended_at_level = req.body.attended_at_level;
     let grievance_details = req.body.grievance_details;
@@ -115,7 +118,7 @@ function updateVisitor(req) {
         connection.query(select_row, function (err, result) {
             console.log(result[0]);
             let visitor_id = result[0].visitor_id;
-            var update_grievance = `UPDATE grievance SET grievance_category='${grievance_category}', no_of_visit='${no_of_visit}', attended_at_level='${attended_at_level}', grievance_details='${grievance_details}', status='${status}' WHERE visitor_id= ${visitor_id}`;
+            var update_grievance = `UPDATE grievance SET grievance_category='${grievance_category}', section='${section}', no_of_visit='${no_of_visit}', attended_at_level='${attended_at_level}', grievance_details='${grievance_details}', status='${status}' WHERE visitor_id=${visitor_id}`;
             console.log("update query-", update_grievance)
             connection.query(update_grievance, function(err, result) {
                 if (err) throw err;
@@ -155,10 +158,15 @@ function searchVisitor(req) {
     console.log(req);
     let column = setSearchColumn(req.body);
     let value = req.body.value;
+    let select_query = "";
 
-    select_query = 'select v.visitor_id, visitor_name, visitor_mobile, visitor_email, uan, pf_account_no, establishment_name, created_at, grievance_category, no_of_visit, attended_at_level, grievance_details, status from visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id WHERE ' + column + ' like "%' + value + '%"';
+    if (req.body.by == "establishment") {
+        select_query = 'SELECT * FROM establishment WHERE establishment_name like "%' + value + '%"';
+    } else {
+        select_query = 'SELECT v.visitor_id, visitor_name, visitor_mobile, visitor_email, uan, pf_account_no, establishment_name, created_at, grievance_category, section, no_of_visit, attended_at_level, grievance_details, status FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id WHERE ' + column + ' like "%' + value + '%"';
+    }
 
-    if(req.limit) {
+    if(req.body.limit) {
         select_query += ' LIMIT ' + req.limit;
     }
     console.log(select_query);
@@ -169,6 +177,23 @@ function searchVisitor(req) {
         deferred.resolve(rows);
     });
     return deferred.promise;
+}
+
+function getReport(req) {
+    var deferred = Q.defer();
+    console.log(req);
+    let start_date = req.body.start_date;
+    let end_date = req.body.end_date;
+    let type = req.body.type;
+
+    let select_query = 'SELECT v.visitor_id, visitor_name, visitor_mobile, visitor_email, uan, pf_account_no, establishment_name, created_at, grievance_category, section, no_of_visit, attended_at_level, grievance_details, status, visited_at FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id where created_at >= "' + start_date + '" and created_at <= "' + end_date + '" group by ' + type;
+
+    connection.query(select_query, (err, rows) => {
+        if(err) throw deferred.reject(err);
+        console.log('The data from visitors table are: \n', rows);
+        deferred.resolve(rows);
+    });
+    return deferred.promise;  
 }
 
 function setSearchColumn(req) {
