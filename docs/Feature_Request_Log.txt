@@ -1,0 +1,29 @@
+Date 16-11-2021 ------------------------------------------------------------------------------------------
+
+Existing form : Add Section : [Account, Pension, Compliance, Cash, Exemption, Other]
+New Search API requested : Establishment by name [ Add API to search establishment ]
+
+Report Generation API :
+	Input : 	Date Range { from and to ]
+	type:        by Section / by Category
+
+	Report Data :
+		Total no of G :
+		Pending
+		Completed
+	
+	Report should also highlight :
+		Pending for : 10 Days
+					  more than 10 days
+
+Date 20-11-2021 ------------------------------------------------------------------------------------------
+
+- Display report data table on page when cliked downaload reports
+- Print report table rendered
+
+Reports Table :
+- Name and UAN in same column
+- Grivance category column in section wise report and vice versa
+- Pending for how many days in table
+
+- Generate Grievance category dropdown options from the reference site
