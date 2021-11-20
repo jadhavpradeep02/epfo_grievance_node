@@ -32,12 +32,22 @@ export class Dashboard extends LitElement {
             /* border: 1px solid var(--british-racing-green); */
             border-radius: 10px;
             text-align: center;
-            min-width: 280px;
+            min-width: 200px;
             margin: 15px;
             display: inline-block;
             -webkit-box-shadow: 0px 1px 10px 5px rgba(169,169,169,0.75);
             -moz-box-shadow: 0px 1px 10px 5px rgba(169,169,169,0.75);
             box-shadow: 0px 1px 10px 5px rgba(169,169,169,0.75);
+        }
+
+        .total h3{
+            display: inline-block;
+            min-width: 200px;
+            margin-right: 30px;
+        }
+
+        .total .value{
+            padding-left: 10px;
         }
 
         .total{
@@ -55,12 +65,12 @@ export class Dashboard extends LitElement {
         h3{
             color: #999999;
             margin: 5px;
-            font-size: 1.2em;
+            font-size: 1em;
             font-weight: normal;
         }
 
         .value{
-            font-size: 2em;
+            font-size: 1.5em;
             padding-left: 25px;
         }
         

@@ -3,6 +3,7 @@ import { commonStyles } from "../commonStyles";
 import "@lion/input-datepicker/define";
 import "@lion/button/define";
 import Fontawesome from "lit-fontawesome";
+import { ReportsService } from "../../services/reports.service";
 
 export class Reports extends LitElement {
   static get properties() { 
@@ -55,6 +56,9 @@ export class Reports extends LitElement {
             text-align: center;
             margin: 25px;
         }
+        .type-select{
+            text-align: center;
+        }
         
         `];
 
@@ -62,7 +66,36 @@ export class Reports extends LitElement {
     super.update();
   }
 
+  convertReportandDownload(jsonReport){
+    // Convert to Excel or Printable
+  }
+
+  showDropdown(){
+      debugger
+      if(this.shadowRoot.querySelector('input[name="type"]:checked').value === 'grievance_section'){
+        this.shadowRoot.querySelector('.grvnc-section').style.display = 'block';
+        this.shadowRoot.querySelector('.grvnc-category').style.display = 'none';
+      } else {
+        this.shadowRoot.querySelector('.grvnc-section').style.display = 'none';
+        this.shadowRoot.querySelector('.grvnc-category').style.display = 'block';
+      }
+
+  }
+
   downloadReport(){
+      const fromDate = this.shadowRoot.querySelector('input[name="fromDate"]').value;
+      const toDate = this.shadowRoot.querySelector('input[name="toDate"]').value;
+      const type = this.shadowRoot.querySelector('input[name="type"]:checked').value;
+      if(!fromDate || !toDate || !type){
+          // Show error
+          return;
+      }
+      ReportsService.getReports({
+        "start_date": fromDate,
+        "end_date": toDate,
+        "type": type,
+        "value": this.shadowRoot.querySelector('input[name="type"]:checked').value === 'grievance_section' ? this.shadowRoot.querySelector('select[name="section"]').value : this.shadowRoot.querySelector('select[name="category"]').value
+      }, this.convertReportandDownload)
       console.log('Report generated');
   }
 
@@ -77,7 +110,13 @@ export class Reports extends LitElement {
                     To: <input name="toDate" type="date"/>
                 </div>
                 <label class="step-label">Step 2: Select report type</label>
-                <div class="form-element">
+                <div class="type-select">
+                    <input type="radio" id="section" @click=${this.showDropdown} name="type" value="grievance_section">
+                    <label for="section">Grievance Section</label>
+                    <input type="radio" id="category" @click=${this.showDropdown} name="type" value="grievance_category">
+                    <label for="category">Grievance Category</label>
+                </div>
+                <div class="form-element grvnc-section" style="display: none">
                     <label>Section</label><br>
                     <select name="section" required placeholder=" ">
                     <option value="account">Account</option>
@@ -88,9 +127,9 @@ export class Reports extends LitElement {
                     <option value="other">Other</option>
                     </select>
                 </div>
-                <div class="form-element">
+                <div class="form-element grvnc-category" style="display: none">
                     <label>Grievance Category</label><br>
-                    <select name="grievance_category" required placeholder=" ">
+                    <select name="category" required placeholder=" ">
                     <option value="minor">Death Case</option>
                     <option value="withdraw_F19">Withdrawal Form 19 </option>
                     <option value="Transfer_F13">Transfer Form13</option>

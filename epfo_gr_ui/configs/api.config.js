@@ -1,24 +1,11 @@
 
 const BaseURL= 'http://localhost';
-const OnlineBaseUR = 'https://61707f6123781c0017289a77.mockapi.io/api/';
+const onlineURLBase = 'https://61707f6123781c0017289a77.mockapi.io/api/';
 const BasePort= "3000";
 let onlineMode = false;
+import { AuthService } from "../services/authentication.service";
 
-const formUrlBase = () => BaseURL + ":" + BasePort;
-    
-/* export const APIConfigLocal = {
-    addVisitor: () => formUrlBase() + '/api/visitor/add',
-    getAllVisitors: () => formUrlBase() + '/api/visitor',
-    updateVisitor: () => formUrlBase() + '/api/visitor/update',
-    deleteVisitor: (visitorId) => formUrlBase() + '/api/visitor/delete?visitor_id='+visitorId
-}
-
-export const APIConfigOnline = {
-    addVisitor: () => OnlineBaseUR + '/visitor',
-    getAllVisitors: () => OnlineBaseUR + '/visitor',
-    updateVisitor: (visitorId) => OnlineBaseUR + '/visitor/'+visitorId,
-    deleteVisitor: (visitorId) => OnlineBaseUR + '/api/visitor/delete?visitor_id='+visitorId
-} */
+const localURLBase = () => BaseURL + ":" + BasePort + '/api/';
 
 export const setLocal = () => {
     onlineMode = false;
@@ -29,13 +16,12 @@ export const isOnline = () => {
 }
 
 export const toggleMode = () => {
-    console.log('Inside ToggleMode');
     if(onlineMode){
         onlineMode = false;
     } else {
         onlineMode = true;
     }
-    console.log(onlineMode);
+    console.log('Current mode :'+onlineMode);
 }
 
 export const getMode = () => {
@@ -46,28 +32,39 @@ export const getMode = () => {
     }
 }
 
+export const commonAPIConfig = {
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    redirect: 'follow',
+}
+
 export const addVisitorURL = () => {
-    return onlineMode ? OnlineBaseUR + 'visitor' : formUrlBase() + '/api/visitor/add';
+    return onlineMode ? onlineURLBase + 'visitor' : localURLBase() + 'visitor/add';
 }
 
 export const loginUrl = () => {
-    return onlineMode ? `${OnlineBaseUR}login` : `${formUrlBase()}/api/user/login`;
+    return onlineMode ? `${onlineURLBase}login` : `${localURLBase()}user/login`;
 }
 
 export const getAllVisitorsUrl = () => {
-    return onlineMode ? `${OnlineBaseUR}visitor` : `${formUrlBase()}/api/visitor`;
+    return onlineMode ? `${onlineURLBase}visitor` : `${localURLBase()}visitor`;
 }
 
 export const updateVisitorUrl = () => {
-    return onlineMode ? `${OnlineBaseUR}visitor/` : `${formUrlBase()}/api/visitor/update`;
+    return onlineMode ? `${onlineURLBase}visitor/` : `${localURLBase()}visitor/update`;
 }
 
 export const deleteUserUrl = (visitorId) => {
-    return onlineMode ? `${OnlineBaseUR}visitor/${visitorId}` : `${formUrlBase()}/api/visitor/delete?visitor_id=${visitorId}`;
+    return onlineMode ? `${onlineURLBase}visitor/${visitorId}` : `${localURLBase()}visitor/delete?visitor_id=${visitorId}`;
 }
 
 export const searchUrl = () => {
-    return onlineMode ? `${OnlineBaseUR}search` : `${formUrlBase()}/api/visitor/search`;
+    return onlineMode ? `${onlineURLBase}search` : `${localURLBase()}visitor/search`;
+}
+
+export const reportsURL = () => {
+    return onlineMode ? `${onlineURLBase}report` : `${localURLBase()}visitor/report`;
 }
 
 export const setServer = (strServer) => {

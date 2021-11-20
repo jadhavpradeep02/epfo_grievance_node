@@ -1,17 +1,13 @@
-import { addVisitorURL, deleteUserUrl, updateVisitorUrl, getAllVisitorsUrl } from "../configs/api.config";
+import { addVisitorURL, deleteUserUrl, updateVisitorUrl, getAllVisitorsUrl, commonAPIConfig } from "../configs/api.config";
 import { AuthService } from './authentication.service.js';
 
 let currentEditVisitor = null;
 
-const commonAPIConfig = {
-    mode: 'cors',
-    cache: 'no-cache',
-    credentials: 'same-origin',
-    headers: {
+const getCommonHeaders = () => {
+    return {
         'Content-Type': 'application/json',
         'Authorization': AuthService.addBearerAuth()
-    },
-    redirect: 'follow',
+    };
 }
 
 const addNewVisitor = async (visitorData, callbackFn) => {
@@ -46,20 +42,14 @@ const addNewVisitor = async (visitorData, callbackFn) => {
 
 const fetchVisitors = async () => {
     const userData = await fetch(getAllVisitorsUrl(),{
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': AuthService.addBearerAuth()
-        }
+        headers: getCommonHeaders(),
     });
     return userData.json();
 }
 
 const deleteVisitor = async (visitor_id) => {
     const userData = await fetch(deleteUserUrl(),{
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': AuthService.addBearerAuth()
-        }
+        headers: getCommonHeaders()
     });
 }
 
@@ -69,10 +59,7 @@ const updateVisitor = async (visitorData, successFn) => {
         mode: 'cors',
         cache: 'no-cache',
         credentials: 'same-origin',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': AuthService.addBearerAuth()
-        },
+        headers: getCommonHeaders(),
         redirect: 'follow',
         body: JSON.stringify(visitorData)
     })
