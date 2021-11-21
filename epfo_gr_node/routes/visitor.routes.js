@@ -10,7 +10,7 @@ router.post('/add', authenticate,  addVisitor);
 router.put('/update', authenticate, updateVisitor);
 router.delete('/delete', authenticate, deleteVisitor);
 router.post('/search', authenticate, searchVisitor);
-router.get('/report', authenticate, getReport);
+router.post('/report', authenticate, getReport);
 
 module.exports = router;
 

@@ -71,7 +71,6 @@ export class Reports extends LitElement {
   }
 
   showDropdown(){
-      debugger
       if(this.shadowRoot.querySelector('input[name="type"]:checked').value === 'grievance_section'){
         this.shadowRoot.querySelector('.grvnc-section').style.display = 'block';
         this.shadowRoot.querySelector('.grvnc-category').style.display = 'none';
@@ -83,8 +82,8 @@ export class Reports extends LitElement {
   }
 
   downloadReport(){
-      const fromDate = this.shadowRoot.querySelector('input[name="fromDate"]').value;
-      const toDate = this.shadowRoot.querySelector('input[name="toDate"]').value;
+      const fromDate = this.shadowRoot.querySelector('input[name="fromDate"]').value + ' ' + '00:00:00';
+      const toDate = this.shadowRoot.querySelector('input[name="toDate"]').value + ' ' + '23:59:59';
       const type = this.shadowRoot.querySelector('input[name="type"]:checked').value;
       if(!fromDate || !toDate || !type){
           // Show error

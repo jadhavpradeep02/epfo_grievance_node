@@ -42,7 +42,7 @@ const login = async (loginDetails, successFn, failFn) => {
             loginData = {
                 authenticated: true,
                 loggedIn: true,
-                token: isOnline ? jsonResp.token : jsonResp.response.token
+                token: isOnline() ? jsonResp.token : jsonResp.response.token
             };
             successFn(jsonResp);
         } else {

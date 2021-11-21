@@ -99,7 +99,7 @@ function updateVisitor(req) {
     let visitor_mobile = req.body.visitor_mobile;
     let visitor_email =   req.body.visitor_email;
     let uan = req.body.uan;
-    let pf_account_no = 'PA/PUN/' + req.body.pf_account_no1 +  req.body.pf_account_no2 + req.body.pf_account_no3;
+    let pf_account_no = req.body.pf_account_no;
     let establishment_name = req.body.establishment_name;
     let grievance_category = req.body.grievance_category;
     let section = req.body.section;
@@ -162,6 +162,8 @@ function searchVisitor(req) {
 
     if (req.body.by == "establishment") {
         select_query = 'SELECT * FROM establishment WHERE establishment_name like "%' + value + '%"';
+    } else if(req.body.by == "establishment_id") {
+        select_query = 'SELECT * FROM establishment WHERE establishment_id like "%' + value + '%"';
     } else {
         select_query = 'SELECT v.visitor_id, visitor_name, visitor_mobile, visitor_email, uan, pf_account_no, establishment_name, created_at, grievance_category, section, no_of_visit, attended_at_level, grievance_details, status FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id WHERE ' + column + ' like "%' + value + '%"';
     }
@@ -185,8 +187,9 @@ function getReport(req) {
     let start_date = req.body.start_date;
     let end_date = req.body.end_date;
     let type = req.body.type;
+    let value = req.body.value;
 
-    let select_query = 'SELECT v.visitor_id, visitor_name, visitor_mobile, visitor_email, uan, pf_account_no, establishment_name, created_at, grievance_category, section, no_of_visit, attended_at_level, grievance_details, status, visited_at FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id where created_at >= "' + start_date + '" and created_at <= "' + end_date + '" group by ' + type;
+    let select_query = 'SELECT v.visitor_id, visitor_name, visitor_mobile, visitor_email, uan, pf_account_no, establishment_name, created_at, grievance_category, section, no_of_visit, attended_at_level, grievance_details, status, visited_at FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id where created_at >= "' + start_date + '" and created_at <= "' + end_date + '" and section = "' + value + '"';
 
     connection.query(select_query, (err, rows) => {
         if(err) throw deferred.reject(err);
