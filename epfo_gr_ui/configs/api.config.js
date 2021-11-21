@@ -68,7 +68,30 @@ export const reportsURL = () => {
 }
 
 export const dashboardURL = () => {
-    return onlineMode ? `${onlineURLBase}/status` : `${localURLBase()}/visitor/status`; // Pradeep change "status" to any word you want for dashboard API
+    return onlineMode ? `${onlineURLBase}/status` : `${localURLBase()}/visitor/status`; // Pradeep please change "status" to any word you want for dashboard API. ALSO
+    /* I am expecting response of this dashboard api like :
+    {
+        "daily": {
+          "resolved": 100,
+          "unresolved": 200,
+          "total": 300
+        },
+        "weekly": {
+          "resolved": 100,
+          "unresolved": 200,
+          "total": 300
+        },
+        "monthly": {
+          "resolved": 100,
+          "unresolved": 200,
+          "total": 300
+        },
+        "total": {
+          "resolved": 100,
+          "unresolved": 200,
+          "total": 300
+        }
+    } */
 }
 
 export const setServer = (strServer) => {
