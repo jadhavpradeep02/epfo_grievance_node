@@ -36,8 +36,6 @@ const addNewVisitor = async (visitorData, callbackFn) => {
             }
         }
     })
-    return resp.json(); // parses JSON response into native JavaScript objects
-    
 }
 
 const fetchVisitors = async () => {
@@ -70,8 +68,7 @@ const updateVisitor = async (visitorData, successFn) => {
                 successFn();
             }
         }
-    })
-    return resp.json(); // parses JS
+    });
 }
 
 const setForEdit = (visitor) => {

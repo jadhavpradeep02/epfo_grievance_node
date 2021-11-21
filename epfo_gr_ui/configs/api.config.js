@@ -1,11 +1,11 @@
 
 const BaseURL= 'http://localhost';
-const onlineURLBase = 'https://61707f6123781c0017289a77.mockapi.io/api/';
+const onlineURLBase = 'https://61707f6123781c0017289a77.mockapi.io/api';
 const BasePort= "3000";
 let onlineMode = false;
 import { AuthService } from "../services/authentication.service";
 
-const localURLBase = () => BaseURL + ":" + BasePort + '/api/';
+const localURLBase = () => BaseURL + ":" + BasePort + '/api';
 
 export const setLocal = () => {
     onlineMode = false;
@@ -40,31 +40,35 @@ export const commonAPIConfig = {
 }
 
 export const addVisitorURL = () => {
-    return onlineMode ? onlineURLBase + 'visitor' : localURLBase() + 'visitor/add';
+    return onlineMode ? `${onlineURLBase}/visitor` : `${localURLBase()}/visitor/add`;
 }
 
 export const loginUrl = () => {
-    return onlineMode ? `${onlineURLBase}login` : `${localURLBase()}user/login`;
+    return onlineMode ? `${onlineURLBase}/login` : `${localURLBase()}/user/login`;
 }
 
 export const getAllVisitorsUrl = () => {
-    return onlineMode ? `${onlineURLBase}visitor` : `${localURLBase()}visitor`;
+    return onlineMode ? `${onlineURLBase}/visitor` : `${localURLBase()}/visitor`;
 }
 
 export const updateVisitorUrl = () => {
-    return onlineMode ? `${onlineURLBase}visitor/` : `${localURLBase()}visitor/update`;
+    return onlineMode ? `${onlineURLBase}/visitor/` : `${localURLBase()}/visitor/update`;
 }
 
 export const deleteUserUrl = (visitorId) => {
-    return onlineMode ? `${onlineURLBase}visitor/${visitorId}` : `${localURLBase()}visitor/delete?visitor_id=${visitorId}`;
+    return onlineMode ? `${onlineURLBase}/visitor/${visitorId}` : `${localURLBase()}/visitor/delete?visitor_id=${visitorId}`;
 }
 
 export const searchUrl = () => {
-    return onlineMode ? `${onlineURLBase}search` : `${localURLBase()}visitor/search`;
+    return onlineMode ? `${onlineURLBase}/search` : `${localURLBase()}/visitor/search`;
 }
 
 export const reportsURL = () => {
-    return onlineMode ? `${onlineURLBase}report` : `${localURLBase()}visitor/report`;
+    return onlineMode ? `${onlineURLBase}/search` : `${localURLBase()}/visitor/report`;
+}
+
+export const dashboardURL = () => {
+    return onlineMode ? `${onlineURLBase}/status` : `${localURLBase()}/visitor/status`; // Pradeep change "status" to any word you want for dashboard API
 }
 
 export const setServer = (strServer) => {

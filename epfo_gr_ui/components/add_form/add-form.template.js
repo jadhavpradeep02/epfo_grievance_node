@@ -11,13 +11,24 @@ export const renderError = (errorText, closeError) => {
   }
 }
 
-export const renderAddForm = ({resetForm, findby, trySubmit, error, closeError, isEdit}) => {
+const renderSuccess = (successMsg, closeError) => {
+  if(successMsg){
+    return html`<div class="success-div">
+      ${successMsg}
+      <span @click=${closeError} class="error-close">X</span>
+    </div>`;
+  };
+
+}
+
+export const renderAddForm = ({resetForm, findby, trySubmit, error, closeError, isEdit, successMsg}) => {
     return html `
     <search-modal @button-click=${resetForm}></search-modal>
        <!-- <div class="nav">
         <a class="link-button" href="#home"> Back </a>
       </div> -->
       ${renderError(error, closeError)}
+      ${renderSuccess(successMsg, closeError)}
       <div class="launch-block form">
         <form name="add-user-form" class="add-enrty-form">
           ${
@@ -115,9 +126,9 @@ export const renderAddForm = ({resetForm, findby, trySubmit, error, closeError, 
           <div class="form-element">
             <label>Status</label><br>
             <select name="status" required>
-              <option value="minor">Not resolved</option>
-              <option value="medior">In progress</option>
-              <option value="major">Resolved</option>
+              <option value="unresolved">Not resolved</option>
+              <option value="in_progress">In progress</option>
+              <option value="resolved">Resolved</option>
             </select>
           </div>
           <div class="options-container">

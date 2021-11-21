@@ -40,6 +40,15 @@ button{
     margin: 2em;
 }
 
+.success-div{
+    padding: 1em;
+    color: var(--success-text);
+    background-color: var(--success-background);
+    border: 1px solid  var(--success-border);
+    border-radius: 5px;
+    margin: 2em;
+}
+
 .error-close{
     float: right;
     font-weight: bold;
@@ -106,7 +115,7 @@ nav{
 
 .table {
     display: grid;
-    grid-template-columns: 14% 14% 14% 14% 14% 14% 14% ; 
+    grid-template-columns: 12% 12% 12% 12% 12% 12% 12% 12%; 
     width: 100%;
     margin: auto;
 }

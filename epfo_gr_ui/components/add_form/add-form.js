@@ -17,6 +17,7 @@ export class AddForm extends LitElement {
       noSearchString: {type: Boolean},
       mode: {type: String},
       error:{type: String},
+      successMsg: {type: String},
       prefillData:{type: Object},
       searchLoading:{type: Boolean}
     }
@@ -39,6 +40,8 @@ export class AddForm extends LitElement {
   static styles = [Fontawesome, commonStyles, formStyles];
 
   addSuccess() {
+    this.resetForm();
+    this.successMsg = "User added!"
     this.dispatchEvent(
       new CustomEvent("navigateTo", {
         bubbles: true,
@@ -46,6 +49,15 @@ export class AddForm extends LitElement {
         detail: { name: "add" },
       })
     );
+  }
+
+  updateSuccess(){
+    this.resetForm();
+    this.successMsg = "User updated!"
+  }
+
+  showSuccess(){
+
   }
 
   trySubmit() {
@@ -60,7 +72,7 @@ export class AddForm extends LitElement {
         if (this.prefillData) {
           newData = { ...this.prefillData, ...formData };
         }
-        VisitorService.updateVisitor(newData, this.addSuccess)
+        VisitorService.updateVisitor(newData, this.updateSuccess)
       } else {
         VisitorService.addNewVisitor(formData, this.addSuccess);
       }
@@ -100,9 +112,9 @@ export class AddForm extends LitElement {
           } else {
             if (key === "pf_account_no") {
               let pfAccNo = this.prefillData[key].split("/");
-              form.pf_account_no1.value = pfAccNo[2];
-              form.pf_account_no2.value = pfAccNo[3];
-              form.pf_account_no3.value = pfAccNo[4];
+              form.pf_account_no1.value = pfAccNo[2] || '';
+              form.pf_account_no2.value = pfAccNo[3] || '';
+              form.pf_account_no3.value = pfAccNo[4] || '';
             }
             console.log("Cannot fill : ", key, this.prefillData[key]);
           }
@@ -112,7 +124,7 @@ export class AddForm extends LitElement {
   }
 
   resetForm() {
-    console.log('RESET FORM');
+    this.shadowRoot.querySelector("form").reset();
   }
 
   update(changedProps) {
@@ -124,6 +136,7 @@ export class AddForm extends LitElement {
 
   closeError() {
     this.error = "";
+    this.successMsg = "";
   }
 
   updatemodal(){
@@ -150,13 +163,17 @@ export class AddForm extends LitElement {
     const form = this.shadowRoot.querySelector("form");
     let elementVal = form[type]?.value;
     if (!elementVal && type === "pf_account_no") {
-      if (
+      elementVal = `PA/PUN/`;
+      elementVal = elementVal + (form.pf_account_no1.value ? `${form.pf_account_no1.value}/` : '')
+      elementVal = elementVal + (form.pf_account_no2.value ? `${form.pf_account_no2.value}/` : '')
+      elementVal = elementVal + (form.pf_account_no3.value ? `${form.pf_account_no3.value}/` : '')
+      /* if (
         form.pf_account_no1.value ||
         form.pf_account_no2.value ||
         form.pf_account_no3.value
       ) {
         elementVal = `PAPUN${form.pf_account_no1.value}${form.pf_account_no2.value}${form.pf_account_no3.value}`;
-      }
+      } */
     }
     if (elementVal) {
       // this.renderRoot.querySelector('[name='+type+']').value
@@ -193,7 +210,8 @@ export class AddForm extends LitElement {
       trySubmit: this.trySubmit,
       error: this.error,
       closeError: this.closeError,
-      isEdit: this.isEdit()
+      isEdit: this.isEdit(),
+      successMsg: this.successMsg
     })}`;
   }
 }
