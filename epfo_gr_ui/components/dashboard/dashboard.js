@@ -3,20 +3,50 @@ import { commonStyles } from "../commonStyles";
 import "@lion/input-datepicker/define";
 import "@lion/button/define";
 import Fontawesome from "lit-fontawesome";
+import { DashboardService } from "../../services/dashboard.service";
 
 export class Dashboard extends LitElement {
   static get properties() { 
     return {
       loading: {type: Boolean},
+      dashboradData: {type: Object}
     }
   }
 
   constructor() {
     super();
+    this.loadedData = this.loadedData.bind(this);
+    this.dashboradData = {
+        "daily": {
+          "resolved": 100,
+          "unresolved": 200,
+          "total": 300
+        },
+        "weekly": {
+          "resolved": 100,
+          "unresolved": 200,
+          "total": 300
+        },
+        "monthly": {
+          "resolved": 100,
+          "unresolved": 200,
+          "total": 300
+        },
+        "total": {
+          "resolved": 100,
+          "unresolved": 200,
+          "total": 300
+        }
+    };
+  }
+
+  loadedData(respData){
+    this.dashboradData = {...this.dashboradData,...respData};
   }
 
   connectedCallback() {
     super.connectedCallback();
+    DashboardService.getDashboardData(this.loadedData)
   }
 
   static styles = [Fontawesome, commonStyles,
@@ -89,35 +119,41 @@ export class Dashboard extends LitElement {
   }
 
   render() {
-    return html`<div class="launch-block form">
-            <div  class="main">
-                <h1>Dashboard</h1>
-                <div class="statistic-section">
-                    <h2>Today</h2>
-                    <h3 class="resolved">Resolved: <span class="value resolved">23</span></h3>
-                    <h3 class="pending">Pending: <span class="value pending">48</span></h3>
-                    <h3>Received: <span class="value">123</span></h3>
+    return html`
+        ${this.dashboradData ? html `
+            <div class="launch-block form">
+                <div  class="main">
+                    <h1>Dashboard</h1>
+                    <div class="statistic-section">
+                        <h2>Today</h2>
+                        <h3>Received: <span class="value">${this.dashboradData.daily.total}</span></h3>
+                        <h3 class="resolved">Resolved: <span class="value resolved">${this.dashboradData.daily.resolved}</span></h3>
+                        <h3 class="pending">Pending: <span class="value pending">${this.dashboradData.daily.unresolved}</span></h3>
+                    </div>
+                    <div class="statistic-section">
+                        <h2>This Week</h2>
+                        <h3>Received: <span class="value">${this.dashboradData.weekly.total}</span></h3>
+                        <h3 class="resolved">Resolved: <span class="value resolved">${this.dashboradData.weekly.resolved}</span></h3>
+                        <h3 class="pending">Pending: <span class="value pending">${this.dashboradData.weekly.unresolved}</span></h3>
+                        
+                    </div>
+                    <div class="statistic-section">
+                        <h2>This Month</h2>
+                        <h3>Received: <span class="value">${this.dashboradData.monthly.total}</span></h3>
+                        <h3 class="resolved">Resolved: <span class="value resolved">${this.dashboradData.monthly.resolved}</span></h3>
+                        <h3 class="pending">Pending: <span class="value pending">${this.dashboradData.monthly.unresolved}</span></h3>
+                        
+                    </div>
+                    <div class="statistic-section total">
+                        <h2>Total</h2>
+                        <h3>Received: <span class="value">${this.dashboradData.total.total}</span></h3>
+                        <h3>Resolved: <span class="value resolved">${this.dashboradData.total.resolved}</span></h3>
+                        <h3>Pending: <span class="value pending">${this.dashboradData.total.unresolved}</span></h3>
+                        
+                    </div>
                 </div>
-                <div class="statistic-section">
-                    <h2>This Week</h2>
-                    <h3 class="resolved">Resolved: <span class="value resolved">232</span></h3>
-                    <h3 class="pending">Pending: <span class="value pending">480</span></h3>
-                    <h3>Received: <span class="value">1235</span></h3>
-                </div>
-                <div class="statistic-section">
-                    <h2>This Month</h2>
-                    <h3 class="resolved">Resolved: <span class="value resolved">2345</span></h3>
-                    <h3 class="pending">Pending: <span class="value pending">4855</span></h3>
-                    <h3>Received: <span class="value">6598</span></h3>
-                </div>
-                <div class="statistic-section total">
-                    <h2>Total</h2>
-                    <h3>Resolved: <span class="value resolved">23450</span></h3>
-                    <h3>Pending: <span class="value pending">48550</span></h3>
-                    <h3>Received: <span class="value">65980</span></h3>
-                </div>
-            </div>
-        </div>`;
+            </div>` : html `` 
+        }`
   }
 }
 

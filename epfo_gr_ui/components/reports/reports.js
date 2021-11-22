@@ -4,16 +4,21 @@ import "@lion/input-datepicker/define";
 import "@lion/button/define";
 import Fontawesome from "lit-fontawesome";
 import { ReportsService } from "../../services/reports.service";
+import "../search_result/search-result";
+import { reportColumns } from "../../configs/table.config";
 
 export class Reports extends LitElement {
   static get properties() { 
     return {
       loading: {type: Boolean},
+      reportData: {type: Object},
     }
   }
 
   constructor() {
     super();
+    this.reportData = null;
+    this.convertReportandDownload = this.convertReportandDownload.bind(this);
   }
 
   connectedCallback() {
@@ -36,13 +41,18 @@ export class Reports extends LitElement {
             margin: 15px;
         }
 
+        label{
+            display: inline-block;
+            margin-top: 5px;
+            margin-bottom: 8px;
+        }
+
         .form-element{
             text-align: center;
             margin: 10px;
         }
 
         .step-label{
-            width: 100%;
             text-align: center;
             color: var(--british-racing-green);
             display: block;
@@ -51,13 +61,28 @@ export class Reports extends LitElement {
             font-weight: bold;
         }
 
-        .action-container{
+        .table {
+            display: grid;
+            grid-template-columns: 14% 14% 14% 14% 14% 14% 14%; 
             width: 100%;
+            margin: auto;
+        }
+
+        .action-container{
             text-align: center;
             margin: 25px;
         }
         .type-select{
             text-align: center;
+        }
+
+        .report-header{
+            margin-bottom: 5px;
+            color: var(--british-racing-green);
+        }
+
+        .report-header:last-child{
+            margin-bottom: 20px;
         }
         
         `];
@@ -68,6 +93,7 @@ export class Reports extends LitElement {
 
   convertReportandDownload(jsonReport){
     // Convert to Excel or Printable
+    this.reportData = jsonReport;
   }
 
   showDropdown(){
@@ -79,6 +105,30 @@ export class Reports extends LitElement {
         this.shadowRoot.querySelector('.grvnc-category').style.display = 'block';
       }
 
+  }
+
+  getReportType(){
+      let selectEl;
+    if(this.shadowRoot.querySelector('input[name="type"]:checked').value === 'grievance_section'){
+        selectEl = this.shadowRoot.querySelector('select[name="section"]');
+        return html `Section : ${selectEl.options[selectEl.selectedIndex].innerHTML}`
+      } else {
+        selectEl = this.shadowRoot.querySelector('select[name="category"]');
+        return html `Category : ${selectEl.options[selectEl.selectedIndex].innerHTML}`
+      }
+  }
+
+  printReport(){
+    var divContents = this.shadowRoot.querySelector(".printable").innerHTML;
+    var a = window.open('', '', 'height=768, width=1024');
+    a.document.write('<html>');
+    a.document.write('<link rel="stylesheet" href="/components/reports/report.print.css" type="text/css" />');
+    a.document.write('<body >');
+    a.document.write(divContents);
+    a.document.write('</body></html>');
+    a.document.close();
+    setTimeout(function(){a.print();},1000);
+    // a.print();
   }
 
   downloadReport(){
@@ -141,7 +191,24 @@ export class Reports extends LitElement {
                 </div>
                 <label class="step-label">Step 2: Download Report</label>
                 <div class="action-container"><lion-button @click=${this.downloadReport}>Download</lion-button></div>
-                
+                ${ this.reportData ? html `
+                    <div class="printable">
+                        <div class="report-header"> Report Name : ${this.shadowRoot.querySelector('input[name="type"]:checked').value === 'grievance_section' ? 'Section Report' : 'Category report'} </div>
+                        <div class="report-header">${this.getReportType()}</div>
+                        <div class="report-header">Period of report : from ${this.shadowRoot.querySelector('input[name="fromDate"]').value} to ${this.shadowRoot.querySelector('input[name="toDate"]').value}</div>
+                        <div class="report-header">Report generated On : ${ new Date().toLocaleDateString() + new Date().toLocaleTimeString() }</div>
+
+                        <div class="table">
+                            ${reportColumns.map((col) => col.header ? html`<div class="header">${col.header}</div>` : html `<div class="header"></div>` )}
+                            ${this.reportData.map((row) => {
+                                return reportColumns.map((col) => col.path ? html`<div>${row[col.path]}</div>` : html `<div class="edit-cell" title="Edit user" @click=${() => this.editVisitor(row)}><i class="fas fa-user-edit edit-icon"></i></div>`);
+                            })}
+                            </div>
+
+                        <!-- <search-result .mode=${`report`} .rows=${this.reportData}></search-result> -->
+                    </div>
+                    <div class="action-container"><lion-button @click=${this.printReport}>Print Report</lion-button></div>
+                ` : html ``}
             </div>
         </div>`;
   }

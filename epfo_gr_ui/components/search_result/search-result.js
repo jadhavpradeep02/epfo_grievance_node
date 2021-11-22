@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import '@lion/button/define';
 import { commonStyles } from '../commonStyles';
-import { columnDefinition } from '../../configs/table.config';
+import { columnDefinition, reportColumns } from '../../configs/table.config';
 import { VisitorService } from '../../services/visitor.service';
 import '../spinner.js';
 import Fontawesome from 'lit-fontawesome';
@@ -11,7 +11,9 @@ export class SearchResult extends LitElement {
   static properties = {
     noSearchResult: true,
     rows: [],
-    loading: true
+    loading: true,
+    colDef: {},
+    mode: ''
   };
 
   static styles = [
@@ -43,6 +45,16 @@ export class SearchResult extends LitElement {
   constructor(){
     super();
     this.noSearchResult = true;
+    
+  }
+
+  connectedCallback(){
+    super.connectedCallback();
+    if(this.mode === "report"){
+      this.colDef = [ ...reportColumns ];
+    } else {
+      this.colDef = [...columnDefinition ];
+    }
   }
 
   renderError(){
@@ -62,9 +74,9 @@ export class SearchResult extends LitElement {
   renderVisitorsTable() {
     if(this.rows?.length){
       return html` <div class="table">
-      ${columnDefinition.map((col) => col.header ? html`<div class="header">${col.header}</div>` : html `<div class="header"></div>` )}
+      ${this.colDef.map((col) => col.header ? html`<div class="header">${col.header}</div>` : html `<div class="header"></div>` )}
       ${this.rows.map((row) => {
-        return columnDefinition.map((col) => col.path ? html`<div>${row[col.path]}</div>` : html `<div class="edit-cell" title="Edit user" @click=${() => this.editVisitor(row)}><i class="fas fa-user-edit edit-icon"></i></div>`);
+        return this.colDef.map((col) => col.path ? html`<div>${row[col.path]}</div>` : html `<div class="edit-cell" title="Edit user" @click=${() => this.editVisitor(row)}><i class="fas fa-user-edit edit-icon"></i></div>`);
       })}
     </div>`;
     }  else {

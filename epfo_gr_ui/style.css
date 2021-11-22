@@ -50,6 +50,10 @@ body{
 --error-background: #ffdbcf;
 --error-border: #9b2801;
 
+--success-text: #084298;
+--success-background: #cfe2ff;
+--success-border: #b6d4fe;
+
 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
 }

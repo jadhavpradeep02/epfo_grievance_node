@@ -1,4 +1,6 @@
-export const columnDefinition = [
+
+
+  export const reportColumns = [
     {
       header: "Name",
       path: "visitor_name",
@@ -16,13 +18,22 @@ export const columnDefinition = [
       path: "pf_account_no",
     },
     {
+      header: "Section",
+      path: "section",
+    },
+    {
       header: "Grievance Category",
       path: "grievance_category",
     },
     { 
       header: "Status", 
       path: "status" 
-    },
+    }
+  ]
+
+  export const columnDefinition = [
+    ...reportColumns
+    ,
     {
       action: "edit",
     },
