@@ -1,17 +1,20 @@
-Required Softwares:
-MySql
-NodeJs
+# Back-End Setup
 
-Steps to setup api code:
+## Required Softwares:
+- MySql
+- NodeJs
+
+### Steps to setup api code:
 1. Install NodeJs
 2. Unzip folder epfo_gr_node.zip into any folder
 3. Go to epfo_gr_node folder
 4. Open Command Prompt inside that folder (type "cmd" in folder path and enter)
-5. Install dependent libraries by using command "npm install"
-6. Run the node server application by using "npm start"
+5. Install dependent libraries by using command  ``` npm install ```
+6. Run the node server application by using ``` npm start ```
 
-Database Commands:
+### Database Commands:
 
+```bash
 create table users (
    user_id INT NOT NULL AUTO_INCREMENT,
    username VARCHAR(100) NOT NULL,
@@ -67,3 +70,19 @@ INSERT INTO visitors (visitor_id, visitor_name, visitor_mobile, visitor_email, u
 INSERT INTO grievance (grievance_id, visitor_id, grievance_category, no_of_visit, attended_at_level, grievance_details, status, visited_at) VALUES (NULL, 1, "Normal", 1, "Clerk", "Pension not started", "Pending", now())
 
 INSERT INTO grievance (grievance_id, visitor_id, grievance_category, no_of_visit, attended_at_level, grievance_details, status, visited_at) VALUES (NULL, 2, "Major", 1, "Clerk", "PF Transfer not started", "Pending", now())
+
+```
+
+# Front-End Setup
+
+## Requirements
+- Node js
+
+### Setup
+- Open ```cmd``` window and navigate to ```epfo_gr_ui``` folder
+- If this is your first time setting up, run ```npm install```
+- Once you have done ```npm install```, do ```npm run start```
+- The front-end server will start on port ```8000``` and will launch page : ```http://localhost:8000/#login```
+- Done!
+
+***Note:***  Backend server need to be running for front-end to work properly.
