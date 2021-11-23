@@ -1,6 +1,9 @@
-### API Details
+## API Details
 
-``` bash Login API: http://localhost:3000/api/user/login
+### login API
+
+``` bash 
+URL: http://localhost:3000/api/user/login
 Request Body:
 {
     "username": "pradeep",
@@ -19,10 +22,12 @@ Response Body:
     }
 }
 ```
+### Get All Visitors data
+``` bash 
 
+GET 
+URL: http://localhost:3000/api/visitor
 
-
-GET Visitor API: http://localhost:3000/api/visitor
 with Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InByYWRlZXAiLCJyb2xlIjoiYWRtaW4iLCJlbWFpbCI6ImphZGhhdnByYWRlZXAwMkBnbWFpbC5jb20iLCJpYXQiOjE2MzM4NTI2ODQsImV4cCI6MTYzMzg1NjI4NH0.qWWquy66Yf6N9jagGVMnr6kI3cU4O2LgZP1efbywaho
 
 No request body.
@@ -45,8 +50,13 @@ Response Body:
         "status": "Pending"
     }
 ]
+```
+### Add User
+``` bash 
 
-POST API: http://localhost:3000/api/visitor/add
+POST 
+URL: http://localhost:3000/api/visitor/add
+
 with Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InByYWRlZXAiLCJyb2xlIjoiYWRtaW4iLCJlbWFpbCI6ImphZGhhdnByYWRlZXAwMkBnbWFpbC5jb20iLCJpYXQiOjE2MzM4NTI2ODQsImV4cCI6MTYzMzg1NjI4NH0.qWWquy66Yf6N9jagGVMnr6kI3cU4O2LgZP1efbywaho
 
 Request Body:
@@ -70,7 +80,13 @@ Response:
     "message": "Grievance and Visitor Added successfully"
 }
 
-PUT API: http://localhost:3000/api/visitor/update
+```
+### Update User
+``` bash 
+
+PUT 
+URL: http://localhost:3000/api/visitor/update
+
 with Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InByYWRlZXAiLCJyb2xlIjoiYWRtaW4iLCJlbWFpbCI6ImphZGhhdnByYWRlZXAwMkBnbWFpbC5jb20iLCJpYXQiOjE2MzM4NTI2ODQsImV4cCI6MTYzMzg1NjI4NH0.qWWquy66Yf6N9jagGVMnr6kI3cU4O2LgZP1efbywaho
 
 Request Body:
@@ -93,8 +109,17 @@ Response Body:
     "message": "Grievance and Visitor Updated successfully"
 }
 
-DELETE API: http://localhost:3000/api/visitor/delete?visitor_id=4
+```
+
+### Delete User
+
+``` bash 
+
+DELETE
+URL: http://localhost:3000/api/visitor/delete?visitor_id=4
+
 with Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InByYWRlZXAiLCJyb2xlIjoiYWRtaW4iLCJlbWFpbCI6ImphZGhhdnByYWRlZXAwMkBnbWFpbC5jb20iLCJpYXQiOjE2MzM4NTI2ODQsImV4cCI6MTYzMzg1NjI4NH0.qWWquy66Yf6N9jagGVMnr6kI3cU4O2LgZP1efbywaho
+
 Request Body:
 NA
 Response Body:
@@ -103,8 +128,14 @@ Response Body:
     "message": "Record deleted successfully"
 }
 
-SEARCH API: http://localhost:3000/api/visitor/search
+```
+### Search Visitor
+``` bash 
+POST
+URL: http://localhost:3000/api/visitor/search
+
 with Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InByYWRlZXAiLCJyb2xlIjoiYWRtaW4iLCJlbWFpbCI6ImphZGhhdnByYWRlZXAwMkBnbWFpbC5jb20iLCJpYXQiOjE2MzM4NTI2ODQsImV4cCI6MTYzMzg1NjI4NH0.qWWquy66Yf6N9jagGVMnr6kI3cU4O2LgZP1efbywaho
+
 Request Body:
 {
     "by":"epfo",
@@ -153,8 +184,12 @@ Response Body:
     }
 ]
 
+```
 
-SEARCH API: http://localhost:3000/api/visitor/search
+### Search Establishment
+``` bash  
+POST
+URL: http://localhost:3000/api/visitor/search
 Request Body: 
 {
     "by":"establishment",
@@ -171,8 +206,12 @@ Response:
     }
 ]
 
+```
+### Reports API :
 
-Report API: http://localhost:3000/api/visitor/report
+``` bash 
+POST
+URL: http://localhost:3000/api/visitor/report
 Request Body: 
 {
     "start_date": "2021-10-09 00:00:00",
@@ -200,3 +239,4 @@ Response:
         "visited_at": "2021-10-08T19:12:37.000Z"
     }
 ]
+```

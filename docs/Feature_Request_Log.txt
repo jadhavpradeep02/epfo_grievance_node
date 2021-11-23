@@ -27,3 +27,10 @@ Reports Table :
 - Pending for how many days in table
 
 - Generate Grievance category dropdown options from the reference site
+
+Date 21-11-2021 ------------------------------------------------------------------------------------------
+
+- Search string from paf format
+- Report Date : 12-12-2020 12:23:30 DONE 
+- Fix values of stauses dropdown
+- Clear form on Add
