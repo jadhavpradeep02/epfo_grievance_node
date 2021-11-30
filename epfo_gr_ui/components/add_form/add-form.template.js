@@ -107,7 +107,7 @@ export const renderAddForm = ({resetForm, findby, trySubmit, error, closeError, 
           </div>
           <div class="form-element">
             <label>Number of Visit</label><br>
-            <input type="number" name="no_of_visit" required placeholder=" ">
+            <input type="number" name="no_of_visit" disabled placeholder=" ">
           </div>
           <div class="form-element">
             <label>Attendance at level</label><br>

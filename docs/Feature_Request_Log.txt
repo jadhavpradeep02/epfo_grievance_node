@@ -27,3 +27,55 @@ Reports Table :
 - Pending for how many days in table
 
 - Generate Grievance category dropdown options from the reference site
+
+Date 21-11-2021 ------------------------------------------------------------------------------------------
+
+- Search string from paf format
+- Report Date : 12-12-2020 12:23:30 DONE 
+- Fix values of stauses dropdown
+- Clear form on Add
+
+
+Date 29-11-2021 ------------------------------------------------------------------------------------------
+
+Main App:
+> One bat file to start application
+
+Add/Edit page
+> Check required fileds on sibmit ( cant submitright now 
+> Status : Only pending and resolved
+> Attedance at level , make officor 1 at bottom ( highest prio )
+> No of visit > disable and not required
+> Attendance at level > disabled > automatic depend on np of visit
+> Gievance details > prepopulate based on category
+> Remove status from this page
+> Add establishment id ( searchable )
+> Establishment name : searchable 
+> Task id field based on establushment name selected ( from backend and disabled filed )
+> Member name & Mobile number [ Agent comes for member ]
+> PPO Number
+> Reset form button
+> Scroll form up when submit
+> Split into 2 columns
+> Update button > Add this to record
+
+
+New Page:
+- Member page > All records data
+All sections all grivances all visits
+
+- Visitor page > All visits > for his members
+All visits data
+
+- Update page :
+Search by visitor or member, and Update status with remark
+
+Reports: [ PRIO 1 %%%%%%]
+Visitor wise report : Highest no of visits user on top
+Pending days report : Grivances based on pending on how may days
+
+
+Update page :
+> STATUS : Pending > Resolved
+> Store wih timestamp
+> Remarks text

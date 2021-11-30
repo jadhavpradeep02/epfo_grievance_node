@@ -6,7 +6,7 @@
 
 Steps to setup UI code:
 1. Install NodeJS
-3. Go to `grievance_ui` folder
+3. Go to `epfo_gr_ui` folder
 4. Open Command Prompt inside that folder (type "cmd" in folder path and enter)
 5. Install dependent libraries by using command "npm install"
 6. Run the node server application by using "npm start"
