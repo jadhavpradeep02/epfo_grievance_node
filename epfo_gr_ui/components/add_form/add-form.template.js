@@ -170,11 +170,11 @@ export const renderAddForm = ({resetForm, findby, findEstablishmentBy, trySubmit
           </div>
           </div>
           <div class="options-container">
+            <lion-button class="form-submit" @click=${resetForm}>Reset</lion-button>
             ${isEdit ? 
               html `<lion-button class="form-submit" @click=${trySubmit}>Add new Visit</lion-button>` :
               html `<lion-button class="form-submit" @click=${trySubmit}>Add</lion-button>` 
             }
-            <lion-button class="form-submit" @click=${resetForm}>Reset</lion-button>
           </div>
       </form>
     </div>`;
