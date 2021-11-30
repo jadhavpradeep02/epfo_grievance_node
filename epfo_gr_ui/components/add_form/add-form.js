@@ -28,6 +28,7 @@ export class AddForm extends LitElement {
     this.addSuccess = this.addSuccess.bind(this);
     this.resetForm = this.resetForm.bind(this);
     this.findby = this.findby.bind(this);
+    this.findEstablishmentBy = this.findEstablishmentBy.bind(this);
     this.trySubmit = this.trySubmit.bind(this);
     this.closeError = this.closeError.bind(this);
     this.searchLoading = false;
@@ -35,6 +36,11 @@ export class AddForm extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
+    this.setInitialData();
+  }
+
+  setInitialData(){
+    this.setAttendLevel();
   }
 
   static styles = [Fontawesome, commonStyles, formStyles];
@@ -49,23 +55,56 @@ export class AddForm extends LitElement {
         detail: { name: "add" },
       })
     );
+    this.scrollToTop();
+  }
+
+  scrollToTop(){
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
   }
 
   updateSuccess(){
     this.resetForm();
-    this.successMsg = "User updated!"
+    this.successMsg = "User updated!";
+    this.scrollToTop();
   }
 
   showSuccess(){
 
   }
 
+  addDisabledFields(form, formData) {
+    if(!formData.no_of_visit){
+      formData.no_of_visit = 1;
+    } else {
+      formData.no_of_visit = Number(form.no_of_visit.value) + 1;
+    }
+    formData.attended_at_level = form.attended_at_level.value;
+    formData.status = form.status.value;
+    debugger;
+  }
+
+  getSanitizedFormData(){
+    const form = this.shadowRoot.querySelector("form");
+    const rawFormData = new FormData(form);
+    console.log('Raw form data : ', rawFormData);
+    let formData = Object.fromEntries(rawFormData.entries());
+    if(formData.pf_account_no1 && formData.pf_account_no2 && formData.pf_account_no3){
+      formData.pf_account_no = 'PA/PUN/'+formData.pf_account_no1+'/'+formData.pf_account_no2+'/'+formData.pf_account_no3;
+    } else {
+      formData.pf_account_no = '';
+    }
+    this.addDisabledFields(form, formData);
+    
+    console.log(formData);
+    debugger;
+  }
+
   trySubmit() {
     const form = this.shadowRoot.querySelector("form");
     if (form.checkValidity()) {
-      const rawFormData = new FormData(form);
-      let formData = Object.fromEntries(rawFormData.entries());
-      formData.pf_account_no = this.getPfAccontNo();
+      let formData = this.getSanitizedFormData(); 
+      // formData.pf_account_no = this.getPfAccontNo();
       if (this.mode === "edit") {
         let newData = {};
         // Append existing id to formData and update the data
@@ -82,21 +121,6 @@ export class AddForm extends LitElement {
   isEdit() {
     return this.mode === "edit";
   }
-
-  getPfAccontNo() {
-    const form = this.shadowRoot.querySelector("form");
-    return (
-      "PA/PUN/" +
-      form.pf_account_no1.value +
-      "/" +
-      form.pf_account_no2.value +
-      "/" +
-      form.pf_account_no3.value
-    );
-  }
-
-  /* setPFAccountNo(PFAccNo){
-  } */
 
   preFillForm() {
     const form = this.shadowRoot.querySelector("form");
@@ -120,8 +144,26 @@ export class AddForm extends LitElement {
           }
         }
       }
+      if(this.prefillData.no_of_visit){
+        this.setAttendLevel(this.prefillData.no_of_visit);
+      }
     }
   }
+
+  setAttendLevel(visitNumber){
+    const form = this.shadowRoot.querySelector("form");
+    var attendLevels = ["DA","SSAO","APC","RPC2","RPC1"];
+    if(form){
+      if(visitNumber >= attendLevels.length){
+        form.attended_at_level.value = attendLevels[4];
+      } else if(!visitNumber){
+        form.attended_at_level.value = attendLevels[0];
+      } else {
+        form.attended_at_level.value = attendLevels[visitNumber];
+      }
+    }
+  }
+
 
   resetForm() {
     this.shadowRoot.querySelector("form").reset();
@@ -147,7 +189,7 @@ export class AddForm extends LitElement {
     modal.text = modal.data.length ? modal.data.length+" Entries found:" :  "No Entries found :-(";
   }
 
-  showSearchResultModal() {
+  showSearchResultModal(mode) {
     const modal = this.shadowRoot.querySelector("search-modal");
     modal.open = true;
     modal.title = "Searching...";
@@ -155,7 +197,38 @@ export class AddForm extends LitElement {
     modal.loading = this.searchLoading;
     modal.clickAction = "Continue with new";
     modal.data = this.rows;
+    modal.mode = mode ? mode : 'visitor';
     // modal.text = modal.data.length ? modal.data.length+" Entries found:" :  "No Entries found :-(";
+  }
+
+  async findEstablishmentBy(type){
+    const form = this.shadowRoot.querySelector("form");
+    let elementVal = form[type]?.value;
+    if (elementVal) {
+      this.showSearchResultModal('establishment');
+      await fetch(searchUrl(), {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: AuthService.addBearerAuth(),
+        },
+        mode: "cors",
+        "Access-Control-Allow-Origin": "*",
+        body: JSON.stringify({ by: type, value: elementVal }),
+      })
+        .then((response) => response.json())
+        .then((respJSON) => {
+          this.rows = respJSON;
+          // this.showSearchResultModal();
+          this.updatemodal();
+        });
+    } else {
+      this.error = "Invalid search for type : " + type;
+
+      // DEMO FUNCTION
+      /* this.rows = await VisitorService.fetchVisitors();
+      this.showSearchResultModal(); */
+    }
   }
 
   async findby(type) {
@@ -207,6 +280,7 @@ export class AddForm extends LitElement {
     return html` ${renderAddForm({
       resetForm: this.resetForm,
       findby: this.findby,
+      findEstablishmentBy: this.findEstablishmentBy,
       trySubmit: this.trySubmit,
       error: this.error,
       closeError: this.closeError,

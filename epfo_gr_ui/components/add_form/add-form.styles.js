@@ -4,7 +4,15 @@ export const formStyles = css`
 form{
   padding: 2em;
   margin: auto;
-  max-width: 600px;
+  /* max-width: 600px; */
+}
+
+.left-section,
+.right-section{
+  display: inline-block;
+  width: 48%;
+  vertical-align: top;
+  min-width: 400px;
 }
 
 /* .datepicker{
