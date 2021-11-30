@@ -70,7 +70,7 @@ All visits data
 - Update page :
 Search by visitor or member, and Update status with remark
 
-Reports: [ PRIO 1 %%%%%%]
+API Reports: [ PRIO 1 %%%%%%]
 Visitor wise report : Highest no of visits user on top
 Pending days report : Grivances based on pending on how may days
 
@@ -79,3 +79,23 @@ Update page :
 > STATUS : Pending > Resolved
 > Store wih timestamp
 > Remarks text
+
+------- 30-11-2021 ---------------------------------------------------------------------------------------
+
+New Fields in Edit form : 
+
+	- Change mobile number to visitor mobile
+
+	Excel based API ( Search API : URL :  http://localhost:3000/api/visitor/search by establishment ) : 
+
+	Establishmane name: establishment_name
+	Establishment id : establishment_id
+	Task id : task_id
+
+	Member Mobile number : member_phone : Required
+	Member name : member_name : Required
+
+	PPO Number : ppo_number : ( 13 digit number : PA PUN 12345678 )
+
+------------------------------------------------------------------------------------------------------------
+
