@@ -7,6 +7,17 @@ form{
   /* max-width: 600px; */
 }
 
+.mandatory{
+  color: red;
+}
+
+.sub-text-title{
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 0.7em;
+  color: #999999;
+}
+
 .left-section,
 .right-section{
   display: inline-block;
@@ -107,5 +118,6 @@ input:not(:focus):not(:placeholder-shown):valid {
 h2{
     color: var(--british-racing-green);
     text-align: center;
+    margin-bottom: 10px;
 }
 `;

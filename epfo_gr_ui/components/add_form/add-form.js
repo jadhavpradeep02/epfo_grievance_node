@@ -69,10 +69,6 @@ export class AddForm extends LitElement {
     this.scrollToTop();
   }
 
-  showSuccess(){
-
-  }
-
   addDisabledFields(form, formData) {
     if(!formData.no_of_visit){
       formData.no_of_visit = 1;
@@ -81,7 +77,6 @@ export class AddForm extends LitElement {
     }
     formData.attended_at_level = form.attended_at_level.value;
     formData.status = form.status.value;
-    debugger;
   }
 
   getSanitizedFormData(){
@@ -95,14 +90,13 @@ export class AddForm extends LitElement {
       formData.pf_account_no = '';
     }
     this.addDisabledFields(form, formData);
-    
     console.log(formData);
-    debugger;
   }
 
   trySubmit() {
     const form = this.shadowRoot.querySelector("form");
     if (form.checkValidity()) {
+      this.closeError();
       let formData = this.getSanitizedFormData(); 
       // formData.pf_account_no = this.getPfAccontNo();
       if (this.mode === "edit") {
@@ -115,6 +109,9 @@ export class AddForm extends LitElement {
       } else {
         VisitorService.addNewVisitor(formData, this.addSuccess);
       }
+    } else {
+      this.error = "Please fill all mandatry fields";
+      this.scrollToTop();
     }
   }
 
@@ -131,7 +128,7 @@ export class AddForm extends LitElement {
       for (let key in this.prefillData) {
         if (this.prefillData.hasOwnProperty(key)) {
           elem = form.querySelector("[name=" + key + "]");
-          if (elem && elem.value === "") {
+          if (elem) {
             elem.value = this.prefillData[key];
           } else {
             if (key === "pf_account_no") {
@@ -171,7 +168,7 @@ export class AddForm extends LitElement {
 
   update(changedProps) {
     super.update();
-    if (this.mode && this.mode === "edit") {
+    if ( changedProps.has('mode') && this.mode === "edit") {
       this.preFillForm();
     }
   }
@@ -285,7 +282,8 @@ export class AddForm extends LitElement {
       error: this.error,
       closeError: this.closeError,
       isEdit: this.isEdit(),
-      successMsg: this.successMsg
+      successMsg: this.successMsg,
+      reloadUser: this.preFillForm
     })}`;
   }
 }

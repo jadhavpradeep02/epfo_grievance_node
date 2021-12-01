@@ -13,7 +13,7 @@ export const commonStyles = css `
 }
 
 .launch-block.form{
-    width: 75%;
+    width: 90%;
     min-width: 600px;
 }
 

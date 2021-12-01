@@ -21,9 +21,9 @@ const renderSuccess = (successMsg, closeError) => {
 
 }
 
-export const renderAddForm = ({resetForm, findby, findEstablishmentBy, trySubmit, error, closeError, isEdit, successMsg}) => {
+export const renderAddForm = ({resetForm, findby, findEstablishmentBy, trySubmit, error, closeError, isEdit, successMsg, reloadUser}) => {
     return html `
-    <search-modal @button-click=${resetForm}></search-modal>
+    <search-modal @rowselected=${reloadUser} @button-click=${resetForm}></search-modal>
        <!-- <div class="nav">
         <a class="link-button" href="#home"> Back </a>
       </div> -->
@@ -34,7 +34,7 @@ export const renderAddForm = ({resetForm, findby, findEstablishmentBy, trySubmit
           ${
             isEdit? 
             html `<h2>Update visitor details</h2>` :
-            html `<h2>Enter visitor details</h2>`
+            html `<h2>Enter visitor details</h2><div class="sub-text-title">Fields marked with * are mandatory</div>`
           }
           <div class='left-section'>
             <div class="form-element">
@@ -62,14 +62,14 @@ export const renderAddForm = ({resetForm, findby, findEstablishmentBy, trySubmit
               </div>
             </div>
             <div class="form-element">
-              <label>Visitor phone number</label><br>
+              <label>Visitor phone number<span class="mandatory">*</span></label><br>
               <div class="input-and-search">
                 <input type="tel" name="visitor_mobile" required placeholder=" ">
                 <a class="btn" @click=${() => findby('visitor_mobile')}><i class="fas fa-search"></i></a>
               </div>
             </div>
             <div class="form-element">
-              <label>Visitor name</label><br>
+              <label>Visitor name<span class="mandatory">*</span></label><br>
               <input type="text" name="visitor_name" required placeholder=" ">
             </div>
             <div class="form-element">
@@ -108,15 +108,15 @@ export const renderAddForm = ({resetForm, findby, findEstablishmentBy, trySubmit
 
           <div class="form-element">
               <label>Member Name</label><br>
-              <input type="text" name="member_name" required placeholder=" ">
+              <input type="text" name="member_name" placeholder=" ">
             </div>
             <div class="form-element">
               <label>Member Mobile number</label><br>
-              <input type="text" name="member_phone" required placeholder=" ">
+              <input type="text" name="member_phone" placeholder=" ">
             </div>
             <div class="form-element">
               <label>PPO Number</label><br>
-              <input type="text" name="ppo_number" required placeholder=" ">
+              <input type="text" name="ppo_number" placeholder=" ">
             </div>
 
           <div class="form-element">
