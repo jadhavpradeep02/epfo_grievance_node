@@ -54,7 +54,6 @@ export class RouterMixin extends LitElement {
 
   router = (evt) => {
     const url = window.location.hash.slice(1) || "/";
-    // debugger;
     this.navigateTo(url);
   };
 

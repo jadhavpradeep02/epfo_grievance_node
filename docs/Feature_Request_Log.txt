@@ -42,22 +42,22 @@ Main App:
 > One bat file to start application
 
 Add/Edit page
-> Check required fileds on sibmit ( cant submitright now 
-> Status : Only pending and resolved
-> Attedance at level , make officor 1 at bottom ( highest prio )
-> No of visit > disable and not required
-> Attendance at level > disabled > automatic depend on np of visit
+> Check required fileds on submit ( cant submit right now )  		>> DONE
+> Status : Only pending and resolved 								>> DONE
+> Attedance at level , make officor 1 at bottom ( highest prio )	>> DONE
+> No of visit > disable and not required							>> DONE
+> Attendance at level > disabled > automatic depend on np of visit	>> DONE
 > Gievance details > prepopulate based on category
 > Remove status from this page
-> Add establishment id ( searchable )
-> Establishment name : searchable 
+> Add establishment id ( searchable )								>> DONE
+> Establishment name : searchable 									>> DONE
 > Task id field based on establushment name selected ( from backend and disabled filed )
-> Member name & Mobile number [ Agent comes for member ]
-> PPO Number
-> Reset form button
-> Scroll form up when submit
-> Split into 2 columns
-> Update button > Add this to record
+> Member name & Mobile number [ Agent comes for member ]			>> DONE
+> PPO Number														>> DONE
+> Reset form button													>> DONE
+> Scroll form up when submit										>> DONE
+> Split into 2 columns												>> DONE
+> Update button > Add this to record								>> DONE
 
 
 New Page:
@@ -70,7 +70,7 @@ All visits data
 - Update page :
 Search by visitor or member, and Update status with remark
 
-Reports: [ PRIO 1 %%%%%%]
+API Reports: [ PRIO 1 %%%%%%]
 Visitor wise report : Highest no of visits user on top
 Pending days report : Grivances based on pending on how may days
 
@@ -79,3 +79,23 @@ Update page :
 > STATUS : Pending > Resolved
 > Store wih timestamp
 > Remarks text
+
+------- 30-11-2021 ---------------------------------------------------------------------------------------
+
+New Fields in Edit form : 
+
+	- Change mobile number to visitor mobile							>> DONE
+
+	Excel based API ( Search API : URL :  http://localhost:3000/api/visitor/search by establishment ) : 
+
+	Establishmane name: establishment_name								>> DONE
+	Establishment id : establishment_id									>> DONE
+	Task id : task_id													>> DONE
+
+	Member Mobile number : member_phone : Required						>> DONE	
+	Member name : member_name : Required								>> DONE
+
+	PPO Number : ppo_number : ( 13 digit number : PA PUN 12345678 )		>> DONE
+
+------------------------------------------------------------------------------------------------------------
+

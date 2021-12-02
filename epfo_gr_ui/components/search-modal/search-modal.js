@@ -104,8 +104,9 @@ class SearchModal extends LitElement {
             : html`
                 <div id="content" class="content">${this.text}</div>
                 <div class="action-section">
-                  <search-result .rows=${this.data}></search-result>
-                  <button @click=${this.handleClick}>${this.clickAction}</button>
+                  ${this.mode === 'establishment' ? html `<span> Establishment Data table </span>` : html ``}
+                  ${this.mode === 'visitor' ? html `<search-result @rowselected=${this.close} .rows=${this.data}></search-result> <button @click=${this.handleClick}>${this.clickAction}</button>` : html ``}
+                  
                 </div>
               `}
         </div>

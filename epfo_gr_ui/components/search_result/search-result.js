@@ -69,6 +69,7 @@ export class SearchResult extends LitElement {
     // Show edit page with this visitor
     VisitorService.setForEdit(visitor);
     this.dispatchEvent( new CustomEvent('navigateTo',{ bubbles: true, composed: true, detail:{"name":"edit"}}));
+    this.dispatchEvent( new CustomEvent('rowselected',{ bubbles: true, composed: true }));
   }
 
   renderVisitorsTable() {

@@ -4,7 +4,26 @@ export const formStyles = css`
 form{
   padding: 2em;
   margin: auto;
-  max-width: 600px;
+  /* max-width: 600px; */
+}
+
+.mandatory{
+  color: red;
+}
+
+.sub-text-title{
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 0.7em;
+  color: #999999;
+}
+
+.left-section,
+.right-section{
+  display: inline-block;
+  width: 48%;
+  vertical-align: top;
+  min-width: 400px;
 }
 
 /* .datepicker{
@@ -99,5 +118,6 @@ input:not(:focus):not(:placeholder-shown):valid {
 h2{
     color: var(--british-racing-green);
     text-align: center;
+    margin-bottom: 10px;
 }
 `;
