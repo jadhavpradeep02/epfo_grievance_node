@@ -97,5 +97,9 @@ New Fields in Edit form :
 
 	PPO Number : ppo_number : ( 13 digit number : PA PUN 12345678 )		>> DONE
 
-------------------------------------------------------------------------------------------------------------
+---------- 2-12-2021 ------------------------------------------------------------------------------------------
 
+Disable mobille number on Edit page 
+no_of_visit not wrking second time
+Establishment search result table
+After submit on Edit > Go to add form ( it stays on edit ) 				>> DONE
