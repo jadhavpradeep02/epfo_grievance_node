@@ -26,6 +26,7 @@ export class AddForm extends LitElement {
   constructor() {
     super();
     this.addSuccess = this.addSuccess.bind(this);
+    this.updateSuccess = this.updateSuccess.bind(this);
     this.resetForm = this.resetForm.bind(this);
     this.findby = this.findby.bind(this);
     this.findEstablishmentBy = this.findEstablishmentBy.bind(this);
