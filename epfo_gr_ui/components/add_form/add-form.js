@@ -91,6 +91,7 @@ export class AddForm extends LitElement {
     }
     this.addDisabledFields(form, formData);
     console.log(formData);
+    return formData;
   }
 
   trySubmit() {
