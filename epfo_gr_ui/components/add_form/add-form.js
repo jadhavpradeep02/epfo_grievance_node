@@ -67,6 +67,13 @@ export class AddForm extends LitElement {
   updateSuccess(){
     this.resetForm();
     this.successMsg = "User updated!";
+    this.dispatchEvent(
+      new CustomEvent("navigateTo", {
+        bubbles: true,
+        composed: true,
+        detail: { name: "add" },
+      })
+    );
     this.scrollToTop();
   }
 
