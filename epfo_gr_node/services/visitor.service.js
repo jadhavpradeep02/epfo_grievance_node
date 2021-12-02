@@ -44,28 +44,41 @@ function addVisitor(req) {
     let visitor_name = req.body.visitor_name;
     let visitor_mobile = req.body.visitor_mobile;
     let visitor_email =   req.body.visitor_email;
+
+    let member_name = req.body.member_name;
+    let member_phone = req.body.member_phone;
     let uan = req.body.uan;
     let pf_account_no = req.body.pf_account_no;
+    let ppo_number = req.body.ppo_number;
     let establishment_name = req.body.establishment_name;
+    let establishment_id = req.body.establishment_id;
+    let task_id = req.body.task_id;
     let grievance_category = req.body.grievance_category;
     let section = req.body.section;
     let no_of_visit = req.body.no_of_visit;
     let attended_at_level = req.body.attended_at_level;
     let grievance_details = req.body.grievance_details;
     let status = req.body.status;
-
+ 
     //before add new search for existing
     var select_query = `SELECT * FROM visitors WHERE visitor_mobile= '${visitor_mobile}'`;
     connection.query(select_query, function(err, data) {
+        console.log(data[0].visitor_id);
         if(data.length > 0) {
-            updateVisitor(req).then(response => {
-                let res = {};
-                res.status = "200";
-                res.message = "Grievance and Visitor Updated successfully";
-                deferred.resolve(res);
-            });
+            let visitor_id = data[0].visitor_id;
+
+            var insert_grievance = `INSERT INTO grievance (grievance_id, visitor_id, member_name, member_mobile, uan, pf_account_no, ppo_number, establishment_name, establishment_id, task_id, section, grievance_category, no_of_visit, attended_at_level, grievance_details, status, visited_at) VALUES (NULL, '${visitor_id}', '${member_name}', '${member_phone}', '${uan}', '${pf_account_no}', '${ppo_number}', '${establishment_name}', '${establishment_id}', '${task_id}', '${section}', '${grievance_category}', '${no_of_visit}', '${attended_at_level}', '${grievance_details}', '${status}', now())`;
+
+            console.log("insert query-", insert_grievance)
+            connection.query(insert_grievance, function(err, result) {
+                if (err) throw err;
+                console.log("Successfully inserted grievance: ")
+                response.status = "200";
+                response.message = "Grievance and Visitor Added successfully";
+                deferred.resolve(response);
+            })
         } else {
-            var insert_sql = `INSERT INTO visitors (visitor_id, visitor_name, visitor_mobile, visitor_email, uan, pf_account_no, establishment_name, created_at) VALUES (NULL, '${visitor_name}', '${visitor_mobile}', '${visitor_email}', '${uan}', '${pf_account_no}', '${establishment_name}', now())`;
+            var insert_sql = `INSERT INTO visitors (visitor_id, visitor_name, visitor_mobile, visitor_email, created_at) VALUES (NULL, '${visitor_name}', '${visitor_mobile}', '${visitor_email}', now())`;
             console.log("insert query 1 -", insert_sql)
             connection.query(insert_sql, function (err, result) {
                 if (err) throw err;
@@ -73,7 +86,7 @@ function addVisitor(req) {
                 console.log("Last inserted id : ", result);
                 let visitor_id = result.insertId;
 
-                var insert_grievance = `INSERT INTO grievance (grievance_id, visitor_id, grievance_category, section, no_of_visit, attended_at_level, grievance_details, status, visited_at) VALUES (NULL, '${visitor_id}', '${grievance_category}', '${section}' ,'${no_of_visit}', '${attended_at_level}', '${grievance_details}', '${status}', now())`;
+                var insert_grievance = `INSERT INTO grievance (grievance_id, visitor_id, member_name, member_mobile, uan, pf_account_no, ppo_number, establishment_name, establishment_id, task_id, section, grievance_category, no_of_visit, attended_at_level, grievance_details, status, visited_at) VALUES (NULL, '${visitor_id}', '${member_name}', '${member_phone}', '${uan}', '${pf_account_no}', '${ppo_number}', '${establishment_name}', '${establishment_id}', '${task_id}', '${section}', '${grievance_category}', '${no_of_visit}', '${attended_at_level}', '${grievance_details}', '${status}', now())`;
                 console.log("insert query-", insert_grievance)
                 connection.query(insert_grievance, function(err, result) {
                     if (err) throw err;
@@ -94,13 +107,19 @@ function updateVisitor(req) {
     var deferred = Q.defer();
     let response = {};
 
-    //let visitor_id = req.body.visitor_id;
     let visitor_name = req.body.visitor_name;
     let visitor_mobile = req.body.visitor_mobile;
     let visitor_email =   req.body.visitor_email;
+
+    let grievance_id = req.body.grievance_id;
+    let member_name = req.body.member_name;
+    let member_phone = req.body.member_phone;
     let uan = req.body.uan;
     let pf_account_no = req.body.pf_account_no;
+    let ppo_number = req.body.ppo_number;
     let establishment_name = req.body.establishment_name;
+    let establishment_id = req.body.establishment_id;
+    let task_id = req.body.task_id;
     let grievance_category = req.body.grievance_category;
     let section = req.body.section;
     let no_of_visit = req.body.no_of_visit;
@@ -108,25 +127,20 @@ function updateVisitor(req) {
     let grievance_details = req.body.grievance_details;
     let status = req.body.status;
 
-    var update_sql = `UPDATE visitors SET visitor_name = '${visitor_name}', visitor_mobile = '${visitor_mobile}', visitor_email='${visitor_email}', uan='${uan}', pf_account_no='${pf_account_no}', establishment_name='${establishment_name}' where visitor_mobile = '${visitor_mobile}'`;
-    console.log("update query 1 -", update_sql)
+    var update_sql = `UPDATE visitors SET visitor_name = '${visitor_name}', visitor_email='${visitor_email}' where visitor_mobile = '${visitor_mobile}'`;
+    console.log("update query 1 -", update_sql);
     connection.query(update_sql, function (err, result) {
         if (err) throw err;
         console.log('The data is updated successfully into visitor table');
-        //get visitor_id from updated row
-        let select_row = `select visitor_id from visitors where visitor_mobile = '${visitor_mobile}'`;
-        connection.query(select_row, function (err, result) {
-            console.log(result[0]);
-            let visitor_id = result[0].visitor_id;
-            var update_grievance = `UPDATE grievance SET grievance_category='${grievance_category}', section='${section}', no_of_visit='${no_of_visit}', attended_at_level='${attended_at_level}', grievance_details='${grievance_details}', status='${status}' WHERE visitor_id=${visitor_id}`;
-            console.log("update query-", update_grievance)
-            connection.query(update_grievance, function(err, result) {
-                if (err) throw err;
-                console.log("Successfully updated grievance: ")
-                response.status = "200";
-                response.message = "Grievance and Visitor Updated successfully";
-                deferred.resolve(response);
-            })
+
+        var update_grievance = `UPDATE grievance SET member_name='${member_name}', member_mobile='${member_phone}', uan='${uan}', pf_account_no='${pf_account_no}', ppo_number='${ppo_number}', establishment_name='${establishment_name}', establishment_id='${establishment_id}', task_id='${task_id}', section='${section}', grievance_category='${grievance_category}', no_of_visit='${no_of_visit}', attended_at_level='${attended_at_level}', grievance_details='${grievance_details}', status='${status}' WHERE grievance_id='${grievance_id}'`;
+        console.log("update query-", update_grievance)
+        connection.query(update_grievance, function(err, result) {
+            if (err) throw err;
+            console.log("Successfully updated grievance: ")
+            response.status = "200";
+            response.message = "Grievance and Visitor Updated successfully";
+            deferred.resolve(response);
         })
     });
     return deferred.promise;
@@ -160,12 +174,12 @@ function searchVisitor(req) {
     let value = req.body.value;
     let select_query = "";
 
-    if (req.body.by == "establishment") {
+    if (req.body.by == "establishment_name") {
         select_query = 'SELECT * FROM establishment WHERE establishment_name like "%' + value + '%"';
     } else if(req.body.by == "establishment_id") {
         select_query = 'SELECT * FROM establishment WHERE establishment_id like "%' + value + '%"';
     } else {
-        select_query = 'SELECT v.visitor_id, visitor_name, visitor_mobile, visitor_email, uan, pf_account_no, establishment_name, created_at, grievance_category, section, no_of_visit, attended_at_level, grievance_details, status FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id WHERE ' + column + ' like "%' + value + '%"';
+        select_query = 'SELECT v.visitor_id, visitor_name, visitor_mobile, visitor_email, member_name, member_mobile as member_phone, grievance_id, uan, pf_account_no, ppo_number, establishment_name, task_id, establishment_id, created_at, grievance_category, section, no_of_visit, attended_at_level, grievance_details, status FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id WHERE ' + column + ' like "%' + value + '%"';
     }
 
     if(req.body.limit) {
@@ -209,6 +223,8 @@ function setSearchColumn(req) {
         column = "uan";
     } else if (req.by == "pf_account_no") {
         column = "pf_account_no";
+    } else if (req.by == "establishment_name") {
+        column = "establishment_name";
     }
     return column;
 }
