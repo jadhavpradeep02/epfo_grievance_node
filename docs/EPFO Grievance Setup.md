@@ -30,9 +30,6 @@ create table visitors (
    visitor_name VARCHAR(100) NOT NULL,
    visitor_mobile VARCHAR(20) NOT NULL,
    visitor_email VARCHAR(60),
-   uan VARCHAR(20),
-   pf_account_no VARCHAR(50),
-   establishment_name VARCHAR(100),
    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
    PRIMARY KEY ( visitor_id )
 ) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
@@ -40,8 +37,16 @@ create table visitors (
 create table grievance (
 	grievance_id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
 	visitor_id BIGINT(20) UNSIGNED NOT NULL,
-	grievance_category VARCHAR(100) NOT NULL,
+	member_name VARCHAR(100),
+	member_mobile VARCHAR(20),
+	uan VARCHAR(20),
+	pf_account_no VARCHAR(50),
+	ppo_number VARCHAR(50),
+	establishment_name VARCHAR(100),
+	establishment_id VARCHAR(20),
+	task_id VARCHAR(10),
 	section varchar(50),
+	grievance_category VARCHAR(100),
 	no_of_visit INT(10),
 	attended_at_level VARCHAR(100),
 	grievance_details VARCHAR(500),
@@ -59,9 +64,10 @@ create table establishment (
 	PRIMARY KEY ( estb_id )
 ) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-insert into users values ("pradeep", "jadhavpradeep02@gmail.com", "pradeep", "admin",date());
-insert into users values ("sunil", "sunilchivate@gmail.com", "sunil", "admin",date());
-insert into users values ("suhas", "suhassanmukh@gmail.com", "suhas", "admin",date());
+insert into users (username,email,password,role, created_at) values ("pradeep", "jadhavpradeep02@gmail.com", "pradeep", "admin",now());
+insert into users (username,email,password,role, created_at) values ("sunil", "sunilchivate@gmail.com", "sunil", "admin",now());
+insert into users (username,email,password,role, created_at) values ("suhas", "suhassanmukh@gmail.com", "suhas", "admin",now());
+insert into users (username,email,password,role, created_at) values ("chetan", "chetankekade@gmail.com", "chetan", "admin", now());
 
 INSERT INTO visitors (visitor_id, visitor_name, visitor_mobile, visitor_email, uan, pf_account_no, establishment_name, created_at) VALUES (NULL,"Mohan","9867153742","mohan@abc.com","1122334455","MH/BAN/0002/25788/29882","9/10/2021 0:24:16");
 
