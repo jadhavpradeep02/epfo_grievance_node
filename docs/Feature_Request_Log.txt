@@ -99,7 +99,7 @@ New Fields in Edit form :
 
 ---------- 2-12-2021 ------------------------------------------------------------------------------------------
 
-Disable mobille number on Edit page 
-no_of_visit not wrking second time
-Establishment search result table
+Disable mobille number on Edit page 									! TODO : Will do later					
+no_of_visit not wrking second time										>> DONE
+Establishment search result table										>> DONE
 After submit on Edit > Go to add form ( it stays on edit ) 				>> DONE
