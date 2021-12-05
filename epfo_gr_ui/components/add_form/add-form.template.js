@@ -21,9 +21,9 @@ const renderSuccess = (successMsg, closeError) => {
 
 }
 
-export const renderAddForm = ({resetForm, findby, findEstablishmentBy, trySubmit, error, closeError, isEdit, successMsg, reloadUser}) => {
+export const renderAddForm = ({resetForm, findby, findEstablishmentBy, trySubmit, error, closeError, isEdit, successMsg, reloadUser, setEstablishment}) => {
     return html `
-    <search-modal @rowselected=${reloadUser} @button-click=${resetForm}></search-modal>
+    <search-modal @rowselected=${reloadUser} @estselected=${setEstablishment} @button-click=${resetForm}></search-modal>
        <!-- <div class="nav">
         <a class="link-button" href="#home"> Back </a>
       </div> -->
@@ -64,7 +64,7 @@ export const renderAddForm = ({resetForm, findby, findEstablishmentBy, trySubmit
             <div class="form-element">
               <label>Visitor phone number<span class="mandatory">*</span></label><br>
               <div class="input-and-search">
-                <input type="tel" name="visitor_mobile" required placeholder=" ">
+                <input type="tel" name="visitor_mobile" required placeholder=" "><!-- Disable in edit mode -->
                 <a class="btn" @click=${() => findby('visitor_mobile')}><i class="fas fa-search"></i></a>
               </div>
             </div>
@@ -94,8 +94,8 @@ export const renderAddForm = ({resetForm, findby, findEstablishmentBy, trySubmit
             <div class="form-element">
               <label>Task Id</label><br>
               <div class="input-and-search">
-                <input type="text" name="task_id" placeholder=" ">
-                <a class="btn" @click=${() => findEstablishmentBy('task_id')}><i class="fas fa-search"></i></a>
+                <input type="text" name="estb_account_task_id" placeholder=" ">
+                <a class="btn" @click=${() => findEstablishmentBy('estb_account_task_id')}><i class="fas fa-search"></i></a>
               </div>
             </div>
 

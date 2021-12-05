@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import '@lion/button/define';
 import { commonStyles } from '../commonStyles';
-import { columnDefinition, reportColumns } from '../../configs/table.config';
+import { columnDefinition, reportColumns, establishmentColumns } from '../../configs/table.config';
 import { VisitorService } from '../../services/visitor.service';
 import '../spinner.js';
 import Fontawesome from 'lit-fontawesome';
@@ -39,6 +39,34 @@ export class SearchResult extends LitElement {
         cursor: pointer;
         text-shadow: 4px 2px 2px rgba(150, 150, 150, 1);
       }
+
+      /* Results table */
+
+      .table {
+          display: grid;
+          grid-template-columns: 12% 12% 12% 12% 12% 12% 12% 12%; 
+          width: 100%;
+          margin: auto;
+      }
+
+      .table.est-table {
+        grid-template-columns: 25% 25% 25% 25%; 
+      }
+
+      .table > div {
+        margin: 0px;
+        background: var(--honeydew);
+        padding: 5px;
+        border: 1px solid white;
+        word-break: break-word;
+        text-overflow: ellipsis;
+      }
+
+      .table .header{
+          font-weight: bold;
+          background: var(--british-racing-green);
+          color: white;
+      }
     `
   ];
 
@@ -52,6 +80,9 @@ export class SearchResult extends LitElement {
     super.connectedCallback();
     if(this.mode === "report"){
       this.colDef = [ ...reportColumns ];
+    } 
+    else if(this.mode === 'establishment'){
+      this.colDef = [...establishmentColumns]
     } else {
       this.colDef = [...columnDefinition ];
     }
@@ -72,6 +103,35 @@ export class SearchResult extends LitElement {
     this.dispatchEvent( new CustomEvent('rowselected',{ bubbles: true, composed: true }));
   }
 
+  selectEst(estData){
+    VisitorService.setEstBlishment(estData);
+    this.dispatchEvent( new CustomEvent('estselected',{ bubbles: true, composed: true }));
+  }
+
+  renderTable(){
+    if(this.mode === "report"){
+      return this.renderVisitorsTable();
+    } 
+    else if(this.mode === 'establishment'){
+      return this.renderEstTable();
+    } else {
+      return this.renderVisitorsTable();
+    }
+  }
+
+  renderEstTable(){
+    if(this.rows?.length){
+      return html` <div class="table est-table">
+      ${this.colDef.map((col) => col.header ? html`<div class="header">${col.header}</div>` : html `<div class="header"></div>` )}
+      ${this.rows.map((row) => {
+        return this.colDef.map((col) => col.path ? html`<div>${row[col.path]}</div>` : html `<div class="edit-cell" title="Select" @click=${() => this.selectEst(row)}><i class="fas fa-user-edit edit-icon"></i></div>`);
+      })}
+    </div>`;
+    }  else {
+      html `<span>ille</span>`
+    }
+  }
+
   renderVisitorsTable() {
     if(this.rows?.length){
       return html` <div class="table">
@@ -89,7 +149,7 @@ export class SearchResult extends LitElement {
     return html`
       <!-- <div class="launch-block"> -->
         <div class="search-result">
-          ${this.loading ? html `<div class="spinner-container"><loading-spinner></loading-spinner></div>` : this.renderVisitorsTable() } 
+          ${this.loading ? html `<div class="spinner-container"><loading-spinner></loading-spinner></div>` : this.renderTable() } 
         </div>
       <!-- </div> -->
       

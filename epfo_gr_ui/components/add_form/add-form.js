@@ -30,6 +30,7 @@ export class AddForm extends LitElement {
     this.resetForm = this.resetForm.bind(this);
     this.findby = this.findby.bind(this);
     this.findEstablishmentBy = this.findEstablishmentBy.bind(this);
+    this.setEstablishment = this.setEstablishment.bind(this);
     this.trySubmit = this.trySubmit.bind(this);
     this.closeError = this.closeError.bind(this);
     this.searchLoading = false;
@@ -78,11 +79,7 @@ export class AddForm extends LitElement {
   }
 
   addDisabledFields(form, formData) {
-    if(!formData.no_of_visit){
-      formData.no_of_visit = 1;
-    } else {
-      formData.no_of_visit = Number(form.no_of_visit.value) + 1;
-    }
+    formData.no_of_visit = Number(form.no_of_visit.value) + 1;
     formData.attended_at_level = form.attended_at_level.value;
     formData.status = form.status.value;
   }
@@ -126,6 +123,15 @@ export class AddForm extends LitElement {
 
   isEdit() {
     return this.mode === "edit";
+  }
+
+  setEstablishment(){
+    const EstData = VisitorService.getEstBlishment();
+    const form = this.shadowRoot.querySelector("form");
+    form.establishment_name.value = EstData.establishment_name;
+    form.establishment_id.value = EstData.establishment_id;
+    form.estb_account_task_id.value = EstData.estb_account_task_id;
+
   }
 
   preFillForm() {
@@ -197,13 +203,25 @@ export class AddForm extends LitElement {
 
   showSearchResultModal(mode) {
     const modal = this.shadowRoot.querySelector("search-modal");
-    modal.open = true;
-    modal.title = "Searching...";
-    modal.text = `No Match found!`;
-    modal.loading = this.searchLoading;
-    modal.clickAction = "Continue with new";
-    modal.data = this.rows;
-    modal.mode = mode ? mode : 'visitor';
+    if(!mode || mode === "visitor"){
+      modal.open = true;
+      modal.title = "Searching...";
+      modal.text = `No Match found!`;
+      modal.loading = this.searchLoading;
+      modal.clickAction = "Continue with new";
+      modal.data = this.rows;
+      modal.mode = mode ? mode : 'visitor';
+    }
+    if(mode === "establishment"){
+      modal.open = true;
+      modal.title = "Searching...";
+      modal.text = `No Match found!`;
+      modal.loading = this.searchLoading;
+      modal.clickAction = "Continue with new";
+      modal.data = this.rows;
+      modal.mode = mode ? mode : 'establishment';
+    }
+    
     // modal.text = modal.data.length ? modal.data.length+" Entries found:" :  "No Entries found :-(";
   }
 
@@ -211,7 +229,7 @@ export class AddForm extends LitElement {
     const form = this.shadowRoot.querySelector("form");
     let elementVal = form[type]?.value;
     if (elementVal) {
-      this.showSearchResultModal('establishment');
+      
       await fetch(searchUrl(), {
         method: "POST",
         headers: {
@@ -225,15 +243,11 @@ export class AddForm extends LitElement {
         .then((response) => response.json())
         .then((respJSON) => {
           this.rows = respJSON;
-          // this.showSearchResultModal();
+          this.showSearchResultModal('establishment');
           this.updatemodal();
         });
     } else {
       this.error = "Invalid search for type : " + type;
-
-      // DEMO FUNCTION
-      /* this.rows = await VisitorService.fetchVisitors();
-      this.showSearchResultModal(); */
     }
   }
 
@@ -246,13 +260,6 @@ export class AddForm extends LitElement {
       elementVal = elementVal + (form.pf_account_no1.value ? `${form.pf_account_no1.value}/` : '')
       elementVal = elementVal + (form.pf_account_no2.value ? `${form.pf_account_no2.value}/` : '')
       elementVal = elementVal + (form.pf_account_no3.value ? `${form.pf_account_no3.value}/` : '')
-      /* if (
-        form.pf_account_no1.value ||
-        form.pf_account_no2.value ||
-        form.pf_account_no3.value
-      ) {
-        elementVal = `PAPUN${form.pf_account_no1.value}${form.pf_account_no2.value}${form.pf_account_no3.value}`;
-      } */
     }
     if (elementVal) {
       // this.renderRoot.querySelector('[name='+type+']').value
@@ -292,7 +299,8 @@ export class AddForm extends LitElement {
       closeError: this.closeError,
       isEdit: this.isEdit(),
       successMsg: this.successMsg,
-      reloadUser: this.preFillForm
+      reloadUser: this.preFillForm,
+      setEstablishment: this.setEstablishment
     })}`;
   }
 }

@@ -2,6 +2,7 @@ import { addVisitorURL, deleteUserUrl, updateVisitorUrl, getAllVisitorsUrl, comm
 import { AuthService } from './authentication.service.js';
 
 let currentEditVisitor = null;
+let currentEstblishment = null;
 
 const getCommonHeaders = () => {
     return {
@@ -75,6 +76,14 @@ const setForEdit = (visitor) => {
     currentEditVisitor = {...visitor};
 }
 
+const setEstBlishment = ( EstData ) => {
+    currentEstblishment = {...EstData};
+}
+
+const getEstBlishment = () => {
+    return currentEstblishment;
+}
+
 const getEditData = () => {
     return currentEditVisitor;
 }
@@ -90,5 +99,7 @@ export const VisitorService = {
     updateVisitor,
     setForEdit,
     visitorUpdated,
-    getEditData
+    getEditData,
+    getEstBlishment,
+    setEstBlishment
 }

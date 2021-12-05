@@ -38,3 +38,21 @@
       action: "edit",
     },
   ];
+
+  export const establishmentColumns = [
+    {
+      header: "Establishment Name",
+      path: "establishment_name",
+    },
+    {
+      header: "Establishment Id",
+      path: "establishment_id",
+    },
+    {
+      header: "Task Id",
+      path: "estb_account_task_id",
+    },
+    {
+      action: "edit",
+    }
+  ]
