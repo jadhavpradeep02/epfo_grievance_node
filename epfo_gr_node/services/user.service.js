@@ -34,7 +34,6 @@ function login(req) {
         rows = Array.from(rows);
 
         if(rows.length !== 0) {
-            console.log("userdata - ", rows);
             rows.forEach( (row) => {
                 if(row.password === password) {
                     console.log("Password Matches");

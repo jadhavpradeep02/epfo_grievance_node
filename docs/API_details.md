@@ -221,22 +221,28 @@ Request Body:
 
 Response:
 [
-    {
-        "visitor_id": 1,
-        "visitor_name": "Mohan",
-        "visitor_mobile": "9867153742",
-        "visitor_email": "mohan@abc.com",
-        "uan": "1122334455",
-        "pf_account_no": "PA/PUN/00022578829882",
-        "establishment_name": "IBM",
-        "created_at": "2021-10-08T18:58:50.000Z",
-        "grievance_category": "Transfer_F13",
-        "section": null,
-        "no_of_visit": 2,
-        "attended_at_level": "SSAO",
-        "grievance_details": "Pension not started. Action taken. Documents submitted",
-        "status": "minor",
-        "visited_at": "2021-10-08T19:12:37.000Z"
-    }
+   {
+      "visitor_id":4,
+      "visitor_name":"Mohan Kumar",
+      "visitor_mobile":"8928898672",
+      "visitor_email":"mohan.k@gmali.com",
+      "member_name":"Sahil",
+      "member_phone":"7865453421",
+      "grievance_id":1002,
+      "uan":"977327656012",
+      "pf_account_no":"PA/PUN/99999/888/77777",
+      "ppo_number":"",
+      "establishment_name":"BOMBAY TRADING SWADESHI STORES",
+      "estb_account_task_id":"10204",
+      "establishment_id":"PUPUN0003987000",
+      "created_at":"2021-12-06T17:57:30.000Z",
+      "grievance_category":"Transfer_F13",
+      "section":"pension",
+      "no_of_visit":4,
+      "attended_at_level":"RPC2",
+      "grievance_details":"Tranfer issue",
+      "status":"in_progress",
+      "visited_at":"2021-12-06T17:57:30.000Z"
+   }
 ]
 ```

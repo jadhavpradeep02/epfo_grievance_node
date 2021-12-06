@@ -26,10 +26,8 @@ function getAllUsers(req, res) {
 function login(req, res) {
     userService.login(req).then(function (userData) {
         console.log("in login user controller data = ", userData);
-        console.log("session data controller ", req.sessionID);
 
         if (userData) {
-            console.log("gt succeess")
             req.token = userData.token;
             req.username = userData.user.username;
             req.role = userData.user.role;
@@ -41,7 +39,6 @@ function login(req, res) {
                 response: userData
             });
         } else {
-            console.log("gt failure")
             res.send({
                 message: 'Username or password is incorrect'
             });

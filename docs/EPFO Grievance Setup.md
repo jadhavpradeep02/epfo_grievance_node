@@ -47,14 +47,21 @@ create table grievance (
 	task_id VARCHAR(10),
 	section varchar(50),
 	grievance_category VARCHAR(100),
-	no_of_visit INT(10),
-	attended_at_level VARCHAR(100),
-	grievance_details VARCHAR(500),
 	status VARCHAR(20),
 	visited_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY ( grievance_id ),
 	FOREIGN KEY ( visitor_id ) REFERENCES visitors(visitor_id) ON DELETE CASCADE
 ) ENGINE=INNODB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8;
+
+create table visits (
+	visit_id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+	grievance_id BIGINT(20),
+	no_of_visit INT(10),
+	attended_at_level VARCHAR(100),
+	grievance_details VARCHAR(500),
+	visit_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY ( visit_id )
+)ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 create table establishment (
 	estb_id INT NOT NULL AUTO_INCREMENT,
