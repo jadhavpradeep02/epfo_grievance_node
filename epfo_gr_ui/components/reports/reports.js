@@ -134,7 +134,7 @@ export class Reports extends LitElement {
   downloadReport(){
       const fromDate = this.shadowRoot.querySelector('input[name="fromDate"]').value + ' ' + '00:00:00';
       const toDate = this.shadowRoot.querySelector('input[name="toDate"]').value + ' ' + '23:59:59';
-      const type = this.shadowRoot.querySelector('input[name="type"]:checked').value;
+      let type = this.shadowRoot.querySelector('input[name="type"]:checked').value;
       if(!fromDate || !toDate || !type){
           // Show error
           return;
