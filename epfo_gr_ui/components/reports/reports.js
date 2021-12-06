@@ -139,6 +139,9 @@ export class Reports extends LitElement {
           // Show error
           return;
       }
+      if(type === "grievance_section"){
+        type = "section"
+      }
       ReportsService.getReports({
         "start_date": fromDate,
         "end_date": toDate,
