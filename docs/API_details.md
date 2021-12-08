@@ -246,3 +246,7 @@ Response:
    }
 ]
 ```
+Request URL: http://localhost:3000/api/visitor/status
+Request: NA
+Response:
+{"daily":{"total":0,"pending":2,"resolved":0},"weekly":{"total":0,"pending":2,"resolved":0},"monthly":{"total":0,"pending":2,"resolved":0}}

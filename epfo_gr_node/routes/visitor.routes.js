@@ -11,6 +11,7 @@ router.put('/update', authenticate, updateVisitor);
 router.delete('/delete', authenticate, deleteVisitor);
 router.post('/search', authenticate, searchVisitor);
 router.post('/report', authenticate, getReport);
+router.get('/status', authenticate, getDashboardData);
 
 module.exports = router;
 
@@ -56,6 +57,14 @@ function searchVisitor(req, res) {
 
 function getReport(req, res) {
     visitorService.getReport(req).then(function (response) {
+        res.send(response);
+    }).catch(function (err) {
+        res.send(err);
+    });
+}
+
+function getDashboardData(req, res) {
+    visitorService.getDashboardData(req).then(function (response) {
         res.send(response);
     }).catch(function (err) {
         res.send(err);

@@ -10,7 +10,7 @@ service.updateVisitor = updateVisitor;
 service.deleteVisitor = deleteVisitor;
 service.searchVisitor = searchVisitor;
 service.getReport = getReport;
-
+service.getDashboardData = getDashboardData;
 module.exports = service;
 
 function getAllVisitors(req) {
@@ -179,7 +179,7 @@ function searchVisitor(req) {
     } else if(req.body.by == "establishment_id") {
         select_query = 'SELECT * FROM establishment WHERE establishment_id like "%' + value + '%"';
     } else {
-        select_query = 'SELECT v.visitor_id, visitor_name, visitor_mobile, visitor_email, member_name, member_mobile as member_phone, g.grievance_id, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, created_at, grievance_category, section, no_of_visit, attended_at_level, grievance_details, status, visit_at FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id INNER JOIN visits as vs ON vs.grievance_id = g.grievance_id WHERE ' + column + ' like "%' + value + '%"';
+        select_query = 'SELECT v.visitor_id, visitor_name, visitor_mobile, visitor_email, member_name, member_mobile as member_phone, g.grievance_id, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, created_at, grievance_category, section, max(no_of_visit), attended_at_level, grievance_details, status, visit_at FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id INNER JOIN visits as vs ON vs.grievance_id = g.grievance_id WHERE ' + column + ' like "%' + value + '%"  group by grievance_id';
     }
 
     if(req.body.limit) {
@@ -226,6 +226,67 @@ function setSearchColumn(req) {
         column = "establishment_name";
     }
     return column;
+}
+
+function getDashboardData(req) {
+    var deferred = Q.defer();
+    let LIMIT = 100; //default limit set as 100
+    let response = { 
+                    "daily" : { "total" : 0, "pending": 0, "resolved": 0}, 
+                    "weekly": { "total" : 0, "pending": 0, "resolved": 0},
+                    "monthly": { "total" : 0, "pending": 0, "resolved": 0}
+                };
+    var currentdate = new Date();
+
+    let today = currentdate.getFullYear() + '-' + (currentdate.getMonth()+1) + "-" + (currentdate.getDate() < 10 ? '0' + currentdate.getDate() : currentdate.getDate());
+    var first = currentdate.getDate() - currentdate.getDay(); // First day is the day of the month - the day of the week
+    var last = first + 6; // last day is the first day + 6
+    var firstday = new Date(currentdate.setDate(first)).toUTCString();
+    var lastday = new Date(currentdate.setDate(last)).toUTCString();
+    let week_start = new Date(firstday).toISOString().split('T')[0] + " 00:00:00";
+    let week_end = new Date(lastday).toISOString().split('T')[0] + " 23:59:59";
+
+    var month_start = new Date(currentdate.getFullYear(), currentdate.getMonth(), 1).toISOString().split('T')[0] + " 00:00:00";
+    var month_end = new Date(currentdate.getFullYear(), currentdate.getMonth() + 1, 0).toISOString().split('T')[0] + " 23:59:59";
+
+    select_day_query = 'select count(*) as total,(select count(*) from grievance where status = "in_progress" and visited_at like "%' + today + '%") as pending,(select count(*) from grievance where status = "resolved" and visited_at like "%' + today + '%") as resolved from grievance where visited_at like "%' + today + '%"';
+
+    select_week_query = 'select count(*) as total,(select count(*) from grievance where status = "in_progress" and visited_at between "' + week_start + '" and "' + week_end + '") as pending, (select count(*) from grievance where status = "resolved" and visited_at between "' + week_start + '" and "' + week_end + '") as resolved from grievance where visited_at between "' + week_start + '" and "' + week_end + '"';
+
+    select_month_query = 'select count(*) as total,(select count(*) from grievance where status = "in_progress" and visited_at between "' + month_start + '" and "' + month_end + '") as pending, (select count(*) from grievance where status = "resolved" and visited_at between "' + month_start + '" and "' + month_end + '") as resolved from grievance where visited_at between "' + month_start + '" and "' + month_end + '"';
+
+    if(req.visitor_id) {
+        select_query += ' where v.visitor_id = ' + req.visitor_id;
+    }
+    if(req.body.limit) {
+        select_query += ' LIMIT ' + req.limit;
+    }
+    connection.query(select_day_query, (err, rows) => {
+        if(err) throw deferred.reject(err);
+        console.log(rows);
+        response.daily.total = rows[0].total;
+        response.daily.pending = rows[0].pending;
+        response.daily.resolved = rows[0].resolved;
+
+        connection.query(select_week_query, (err, rows) => {
+            if(err) throw deferred.reject(err);
+            console.log(rows);
+            response.weekly.total = rows[0].total;
+            response.weekly.pending = rows[0].pending;
+            response.weekly.resolved = rows[0].resolved;
+            
+            connection.query(select_month_query, (err, rows) => {
+                if(err) throw deferred.reject(err);
+                console.log(rows);
+                response.monthly.total = rows[0].total;
+                response.monthly.pending = rows[0].pending;
+                response.monthly.resolved = rows[0].resolved;
+ 
+                deferred.resolve(response);
+            });
+        });
+    });
+    return deferred.promise;
 }
 
 function getCurrentDateTime() {
