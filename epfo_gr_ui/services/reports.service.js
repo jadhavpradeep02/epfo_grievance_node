@@ -1,5 +1,6 @@
 import {
   reportsURL,
+  topEntitiesURL,
   commonAPIConfig,
 } from "../configs/api.config";
 import { AuthService } from "./authentication.service.js";
@@ -29,6 +30,17 @@ const getReports = async (reportParams, callbackFn) => {
   // return resp.json(); // parses JSON response into native JavaScript objects
 };
 
+const getTopEntities = async (callbackFn) => {
+  const resp = await fetch(topEntitiesURL()).then((respose) => respose.json()).then((respjson) => {
+    if (respjson) {
+      if (callbackFn) {
+        callbackFn(respjson);
+      }
+    }
+  });
+}
+
 export const ReportsService = {
   getReports,
+  getTopEntities
 };

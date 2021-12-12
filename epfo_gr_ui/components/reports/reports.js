@@ -5,24 +5,28 @@ import "@lion/button/define";
 import Fontawesome from "lit-fontawesome";
 import { ReportsService } from "../../services/reports.service";
 import "../search_result/search-result";
-import { reportColumns } from "../../configs/table.config";
+import { reportColumns, highestVisitorTableCols } from "../../configs/table.config";
 
 export class Reports extends LitElement {
   static get properties() { 
     return {
       loading: {type: Boolean},
       reportData: {type: Object},
+      topEntities: {type: Object}
     }
   }
 
   constructor() {
     super();
     this.reportData = null;
+    this.topEntities = null;
     this.convertReportandDownload = this.convertReportandDownload.bind(this);
+    this.setTopEntities = this.setTopEntities.bind(this);
   }
 
   connectedCallback() {
     super.connectedCallback();
+    this.loadTopEntities();
   }
 
   static styles = [Fontawesome, commonStyles,
@@ -68,6 +72,42 @@ export class Reports extends LitElement {
             margin: auto;
         }
 
+        .top-visitors{
+          width: 45%;
+        }
+
+        .top-visitors .table {
+          grid-template-columns: 25% 25% 25% 25%; 
+        }
+
+        .top-grivances{
+          width: 45%;
+        }
+
+        .table {
+          display: grid;
+          grid-template-columns: 14% 14% 14% 14% 14% 14% 14% ; 
+          width: 100%;
+          margin: auto;
+          font-size: 1em;
+          font-family: 'Courier New', Courier, monospace;
+      }
+
+      .table > div {
+        margin: 0px;
+        background: #cccccc;
+        padding: 5px;
+        border: 1px solid white;
+        word-break: break-word;
+        text-overflow: ellipsis;
+      }
+
+      .table .header{
+          font-weight: bold;
+          background: #7a7a7a;
+          color: white;
+      }
+
         .action-container{
             text-align: center;
             margin: 25px;
@@ -92,8 +132,17 @@ export class Reports extends LitElement {
   }
 
   convertReportandDownload(jsonReport){
+    this.loading = false;
     // Convert to Excel or Printable
     this.reportData = jsonReport;
+  }
+
+  setTopEntities(entitiesData){
+    this.topEntities = entitiesData;
+  }
+
+  loadTopEntities(){
+    ReportsService.getTopEntities(this.setTopEntities);
   }
 
   showDropdown(){
@@ -141,7 +190,8 @@ export class Reports extends LitElement {
       }
       if(type === "grievance_section"){
         type = "section"
-      }
+      };
+      this.loading = true;
       ReportsService.getReports({
         "start_date": fromDate,
         "end_date": toDate,
@@ -194,6 +244,9 @@ export class Reports extends LitElement {
                 </div>
                 <label class="step-label">Step 2: Download Report</label>
                 <div class="action-container"><lion-button @click=${this.downloadReport}>Download</lion-button></div>
+                ${this.loading ? 
+                html `<div class="spinner-container"><loading-spinner></loading-spinner></div>` :
+                html ``}
                 ${ this.reportData ? html `
                     <div class="printable">
                         <div class="report-header"> Report Name : ${this.shadowRoot.querySelector('input[name="type"]:checked').value === 'grievance_section' ? 'Section Report' : 'Category report'} </div>
@@ -206,12 +259,36 @@ export class Reports extends LitElement {
                             ${this.reportData.map((row) => {
                                 return reportColumns.map((col) => col.path ? html`<div>${row[col.path]}</div>` : html `<div class="edit-cell" title="Edit user" @click=${() => this.editVisitor(row)}><i class="fas fa-user-edit edit-icon"></i></div>`);
                             })}
-                            </div>
+                        </div>
 
                         <!-- <search-result .mode=${`report`} .rows=${this.reportData}></search-result> -->
                     </div>
                     <div class="action-container"><lion-button @click=${this.printReport}>Print Report</lion-button></div>
                 ` : html ``}
+                <h2>Top Entities :</h2>
+                <h3>Top visitors</h3>
+                    <div class="top-visitors">
+                      ${this.topEntities ?
+                      html `
+                        <div class="table">
+                          ${highestVisitorTableCols.map((col) => col.header ? html`<div class="header">${col.header}</div>` : html `<div class="header"></div>` )}
+                          ${this.topEntities.map((row) => {
+                              return highestVisitorTableCols.map((col) => col.path ? 
+                              html`<div>
+                                ${
+                                  (col.type && col.type === "datetime") ? 
+                                  html `${new Date(row[col.path]).toLocaleDateString()}`:
+                                  html `${row[col.path]}`
+                                }
+                                </div>` : 
+                              html ``);
+                          })}
+                      </div>
+                      ` : 
+                      html ``}
+                  </div>
+                  </div>
+                  <div class="top-grivances">
             </div>
         </div>`;
   }

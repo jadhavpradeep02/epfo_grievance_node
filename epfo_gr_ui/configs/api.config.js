@@ -67,6 +67,10 @@ export const reportsURL = () => {
     return onlineMode ? `${onlineURLBase}/search` : `${localURLBase()}/visitor/report`;
 }
 
+export const topEntitiesURL = () => {
+    return onlineMode ? `${onlineURLBase}/login` : `${localURLBase()}/visitor/topvisits`;
+}
+
 export const dashboardURL = () => {
     return onlineMode ? `${onlineURLBase}/status` : `${localURLBase()}/visitor/status`; // Pradeep please change "status" to any word you want for dashboard API. ALSO
     /* I am expecting response of this dashboard api like :

@@ -31,6 +31,26 @@
     }
   ]
 
+  export const highestVisitorTableCols = [
+    {
+      header: "Member Name",
+      path: "member_name",
+    },
+    {
+      header: "member mobile number",
+      path: "member_phone",
+    },
+    {
+      header: "Last Visit",
+      path: "visited_at",
+      type: "datetime"
+    },
+    { 
+      header: "Total Visit", 
+      path: "no_of_visit"
+    }
+  ]
+
   export const columnDefinition = [
     ...reportColumns
     ,
