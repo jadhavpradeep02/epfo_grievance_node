@@ -95,7 +95,6 @@ export const renderAddForm = ({resetForm, findby, findEstablishmentBy, trySubmit
               <label>Task Id</label><br>
               <div class="input-and-search">
                 <input type="text" name="estb_account_task_id" placeholder=" ">
-                <a class="btn" @click=${() => findEstablishmentBy('estb_account_task_id')}><i class="fas fa-search"></i></a>
               </div>
             </div>
 
@@ -172,7 +171,7 @@ export const renderAddForm = ({resetForm, findby, findEstablishmentBy, trySubmit
           <div class="options-container">
             <lion-button class="form-submit" @click=${resetForm}>Reset</lion-button>
             ${isEdit ? 
-              html `<lion-button class="form-submit" @click=${trySubmit}>Add new Visit</lion-button>` :
+              html `<lion-button class="form-submit" @click=${trySubmit}>Update user</lion-button>` :
               html `<lion-button class="form-submit" @click=${trySubmit}>Add</lion-button>` 
             }
           </div>

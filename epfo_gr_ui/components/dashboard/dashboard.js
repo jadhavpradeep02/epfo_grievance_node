@@ -42,11 +42,12 @@ export class Dashboard extends LitElement {
 
   loadedData(respData){
     this.dashboradData = {...this.dashboradData,...respData};
+    console.log('Loaded Dashboard Data : ', this.dashboradData);
   }
 
   connectedCallback() {
     super.connectedCallback();
-    DashboardService.getDashboardData(this.loadedData)
+    DashboardService.getDashboardData(this.loadedData);
   }
 
   static styles = [Fontawesome, commonStyles,
@@ -128,20 +129,20 @@ export class Dashboard extends LitElement {
                         <h2>Today</h2>
                         <h3>Received: <span class="value">${this.dashboradData.daily.total}</span></h3>
                         <h3 class="resolved">Resolved: <span class="value resolved">${this.dashboradData.daily.resolved}</span></h3>
-                        <h3 class="pending">Pending: <span class="value pending">${this.dashboradData.daily.unresolved}</span></h3>
+                        <h3 class="pending">Pending: <span class="value pending">${this.dashboradData.daily.pending}</span></h3>
                     </div>
                     <div class="statistic-section">
                         <h2>This Week</h2>
                         <h3>Received: <span class="value">${this.dashboradData.weekly.total}</span></h3>
                         <h3 class="resolved">Resolved: <span class="value resolved">${this.dashboradData.weekly.resolved}</span></h3>
-                        <h3 class="pending">Pending: <span class="value pending">${this.dashboradData.weekly.unresolved}</span></h3>
+                        <h3 class="pending">Pending: <span class="value pending">${this.dashboradData.weekly.pending}</span></h3>
                         
                     </div>
                     <div class="statistic-section">
                         <h2>This Month</h2>
                         <h3>Received: <span class="value">${this.dashboradData.monthly.total}</span></h3>
                         <h3 class="resolved">Resolved: <span class="value resolved">${this.dashboradData.monthly.resolved}</span></h3>
-                        <h3 class="pending">Pending: <span class="value pending">${this.dashboradData.monthly.unresolved}</span></h3>
+                        <h3 class="pending">Pending: <span class="value pending">${this.dashboradData.monthly.pending}</span></h3>
                         
                     </div>
                     <div class="statistic-section total">
