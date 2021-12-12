@@ -11,6 +11,7 @@ service.deleteVisitor = deleteVisitor;
 service.searchVisitor = searchVisitor;
 service.getReport = getReport;
 service.getDashboardData = getDashboardData;
+service.closeGrievance = closeGrievance;
 module.exports = service;
 
 function getAllVisitors(req) {
@@ -167,6 +168,34 @@ function deleteVisitor(req) {
     return deferred.promise;
 }
 
+function closeGrievance(req) {
+    var deferred = Q.defer();
+    let response = {};
+
+    let grievance_id = req.body.grievance_id;
+    let status = req.body.status;
+
+    let attended_at_level = req.body.attended_at_level;
+    let no_of_visit = req.body.no_of_visit;
+    let grievance_details = req.body.grievance_details;
+
+    var update_grievance = `UPDATE grievance SET status='${status}' WHERE grievance_id='${grievance_id}'`;
+
+    console.log("update query-", update_grievance)
+    connection.query(update_grievance, function(err, result) {
+        if (err) throw err;
+        console.log("Successfully updated grievance: ")
+        var insert_visit = `INSERT INTO visits (visit_id, grievance_id, no_of_visit, attended_at_level, grievance_details, visit_at) VALUES (NULL, '${grievance_id}', '${no_of_visit}', '${attended_at_level}', '${grievance_details}', now())`;
+
+        connection.query(insert_visit, function(err, result) {
+            response.status = "200";
+            response.message = "Grievance and Visitor Status closed successfully";
+            deferred.resolve(response);
+        });
+    })
+    return deferred.promise;
+}
+
 function searchVisitor(req) {
     var deferred = Q.defer();
     let LIMIT = 100; //default limit set as 100
@@ -234,7 +263,8 @@ function getDashboardData(req) {
     let response = { 
                     "daily" : { "total" : 0, "pending": 0, "resolved": 0}, 
                     "weekly": { "total" : 0, "pending": 0, "resolved": 0},
-                    "monthly": { "total" : 0, "pending": 0, "resolved": 0}
+                    "monthly": { "total" : 0, "pending": 0, "resolved": 0},
+                    "total": { "total" : 0, "pending": 0, "resolved": 0}
                 };
     var currentdate = new Date();
 

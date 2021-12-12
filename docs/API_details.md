@@ -249,4 +249,41 @@ Response:
 Request URL: http://localhost:3000/api/visitor/status
 Request: NA
 Response:
-{"daily":{"total":0,"pending":2,"resolved":0},"weekly":{"total":0,"pending":2,"resolved":0},"monthly":{"total":0,"pending":2,"resolved":0}}
+{
+   "daily":{
+      "total":0,
+      "pending":0,
+      "resolved":0
+   },
+   "weekly":{
+      "total":0,
+      "pending":0,
+      "resolved":0
+   },
+   "monthly":{
+      "total":2,
+      "pending":2,
+      "resolved":0
+   },
+   "total":{
+      "total":2,
+      "pending":2,
+      "resolved":0
+   }
+}
+
+
+Request URL: http://localhost:3000/api/visitor/close
+Request: 
+{
+    "grievance_id": "1",
+    "status": "Closed",
+    "attended_at_level": "APC",
+    "no_of_visit": "4",
+    "grievance_details": "closed now"
+}
+Response:
+{
+    "status": "200",
+    "message": "Grievance and Visitor Status closed successfully"
+}
