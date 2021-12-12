@@ -155,7 +155,7 @@ export class Reports extends LitElement {
     return html`
         <div class="launch-block form">
             <div class="main">
-                <h1>Genrate Reports</h1>
+                <h1>Generate Reports</h1>
                 <label class="step-label">Step 1: Select time period</label>
                 <div class="range-select">
                     From: <input name="fromDate" type="date"/>
