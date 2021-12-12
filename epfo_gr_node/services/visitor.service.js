@@ -280,9 +280,9 @@ function getDashboardData(req) {
  
                 connection.query(select_total_query, (err, rows) => {
                     if(err) throw deferred.reject(err);
-                    response.monthly.total = rows[0].total;
-                    response.monthly.pending = rows[0].pending;
-                    response.monthly.resolved = rows[0].resolved;
+                    response.total.total = rows[0].total;
+                    response.total.pending = rows[0].pending;
+                    response.total.resolved = rows[0].resolved;
      
                     deferred.resolve(response);
                 });
