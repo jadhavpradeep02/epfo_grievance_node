@@ -89,7 +89,7 @@ export class LauncherScreen extends LitElement {
           <input type="radio" id="epfo" name="by" value="epfo"/><label for="epfo">EPFO</label>
           <div class="options-container">
             <lion-button @click=${this.onSearch}>Search</lion-button>
-            <lion-button @click=${this.addEntry}>+ Add New</lion-button>
+            <!-- <lion-button @click=${this.addEntry}>+ Add New</lion-button> -->
           </div>
         </form>
       </div>

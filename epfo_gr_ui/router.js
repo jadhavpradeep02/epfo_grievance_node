@@ -17,7 +17,7 @@ export class RouterMixin extends LitElement {
         render: () => html`<login-form></login-form>`,
       },
       {
-        key: "Home",
+        key: "Search&close",
         name: "Hello World!",
         import: () => import("./components/launcher_screen/launcher-screen.js"),
         render: () => html`<launcher-screen></launcher-screen>`,
