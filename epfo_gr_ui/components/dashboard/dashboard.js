@@ -146,7 +146,7 @@ export class Dashboard extends LitElement {
                         
                     </div>
                     <div class="statistic-section total">
-                        <h2>Total</h2>
+                        <h2>Total </h2>
                         <h3>Received: <span class="value">${this.dashboradData.total.total}</span></h3>
                         <h3>Resolved: <span class="value resolved">${this.dashboradData.total.resolved}</span></h3>
                         <h3>Pending: <span class="value pending">${this.dashboradData.total.pending}</span></h3>
