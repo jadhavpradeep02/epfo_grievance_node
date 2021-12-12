@@ -255,34 +255,37 @@ function getDashboardData(req) {
 
     select_month_query = 'select count(*) as total,(select count(*) from grievance where status = "in_progress" and visited_at between "' + month_start + '" and "' + month_end + '") as pending, (select count(*) from grievance where status = "resolved" and visited_at between "' + month_start + '" and "' + month_end + '") as resolved from grievance where visited_at between "' + month_start + '" and "' + month_end + '"';
 
-    if(req.visitor_id) {
-        select_query += ' where v.visitor_id = ' + req.visitor_id;
-    }
+    select_total_query = 'select count(*) as total,(select count(*) from grievance where status = "in_progress") as pending, (select count(*) from grievance where status = "resolved") as resolved from grievance';
+
     if(req.body.limit) {
         select_query += ' LIMIT ' + req.limit;
     }
     connection.query(select_day_query, (err, rows) => {
         if(err) throw deferred.reject(err);
-        console.log(rows);
         response.daily.total = rows[0].total;
         response.daily.pending = rows[0].pending;
         response.daily.resolved = rows[0].resolved;
 
         connection.query(select_week_query, (err, rows) => {
             if(err) throw deferred.reject(err);
-            console.log(rows);
             response.weekly.total = rows[0].total;
             response.weekly.pending = rows[0].pending;
             response.weekly.resolved = rows[0].resolved;
             
             connection.query(select_month_query, (err, rows) => {
                 if(err) throw deferred.reject(err);
-                console.log(rows);
                 response.monthly.total = rows[0].total;
                 response.monthly.pending = rows[0].pending;
                 response.monthly.resolved = rows[0].resolved;
  
-                deferred.resolve(response);
+                connection.query(select_total_query, (err, rows) => {
+                    if(err) throw deferred.reject(err);
+                    response.monthly.total = rows[0].total;
+                    response.monthly.pending = rows[0].pending;
+                    response.monthly.resolved = rows[0].resolved;
+     
+                    deferred.resolve(response);
+                });
             });
         });
     });
