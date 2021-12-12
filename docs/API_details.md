@@ -273,7 +273,7 @@ Response:
 }
 
 
-Request URL: http://localhost:3000/api/visitor/close
+Request URL (POST): http://localhost:3000/api/visitor/close
 Request: 
 {
     "grievance_id": "1",
@@ -287,3 +287,33 @@ Response:
     "status": "200",
     "message": "Grievance and Visitor Status closed successfully"
 }
+
+Request URL (GET request): http://localhost:3000/api/visitor/topvisits
+Request: 
+{}
+Response:
+[
+   {
+      "visitor_id":4,
+      "visitor_name":"Mohan Kumar",
+      "visitor_mobile":"8928898672",
+      "visitor_email":"mohan.k@gmali.com",
+      "member_name":"Sahil",
+      "member_phone":"7865453421",
+      "grievance_id":1002,
+      "uan":"977327656012",
+      "pf_account_no":"PA/PUN/99999/888/77777",
+      "ppo_number":"",
+      "establishment_name":"BOMBAY TRADING SWADESHI STORES",
+      "estb_account_task_id":"10204",
+      "establishment_id":"PUPUN0003987000",
+      "created_at":"2021-12-06T17:57:30.000Z",
+      "grievance_category":"Transfer_F13",
+      "section":"pension",
+      "no_of_visit":4,
+      "attended_at_level":"RPC2",
+      "grievance_details":"Tranfer issue",
+      "status":"in_progress",
+      "visited_at":"2021-12-06T17:57:30.000Z"
+   }
+]

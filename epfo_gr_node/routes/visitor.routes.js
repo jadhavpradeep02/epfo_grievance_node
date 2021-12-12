@@ -13,6 +13,7 @@ router.post('/search', authenticate, searchVisitor);
 router.post('/report', authenticate, getReport);
 router.get('/status', authenticate, getDashboardData);
 router.post('/close', authenticate, closeGrievance);
+router.get('/topvisits', authenticate, getTopVisits);
 
 module.exports = router;
 
@@ -74,6 +75,14 @@ function getDashboardData(req, res) {
 
 function closeGrievance(req, res) {
     visitorService.closeGrievance(req).then(function (response) {
+        res.send(response);
+    }).catch(function (err) {
+        res.send(err);
+    });
+}
+
+function getTopVisits(req, res) {
+    visitorService.getTopVisits(req).then(function (response) {
         res.send(response);
     }).catch(function (err) {
         res.send(err);

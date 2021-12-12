@@ -12,6 +12,7 @@ service.searchVisitor = searchVisitor;
 service.getReport = getReport;
 service.getDashboardData = getDashboardData;
 service.closeGrievance = closeGrievance;
+service.getTopVisits = getTopVisits;
 module.exports = service;
 
 function getAllVisitors(req) {
@@ -219,6 +220,18 @@ function searchVisitor(req) {
 
         if(err) throw deferred.reject(err);
         console.log('The data from users table are: \n');
+        deferred.resolve(rows);
+    });
+    return deferred.promise;
+}
+
+function getTopVisits(req) {
+    var deferred = Q.defer();
+    let LIMIT = 50; //default limit set as 50    
+    let select_query = 'SELECT v.visitor_id, visitor_name, visitor_mobile, visitor_email, member_name, member_mobile as member_phone, g.grievance_id, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, created_at, grievance_category, section, max(no_of_visit) as no_of_visit, attended_at_level, grievance_details, status, visit_at FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id INNER JOIN visits as vs ON vs.grievance_id = g.grievance_id group by vs.grievance_id order by no_of_visit desc limit 50';
+
+    connection.query(select_query, (err, rows) => {
+        if(err) throw deferred.reject(err);
         deferred.resolve(rows);
     });
     return deferred.promise;
