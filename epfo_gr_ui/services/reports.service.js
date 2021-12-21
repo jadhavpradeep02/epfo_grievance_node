@@ -31,7 +31,9 @@ const getReports = async (reportParams, callbackFn) => {
 };
 
 const getTopEntities = async (callbackFn) => {
-  const resp = await fetch(topEntitiesURL()).then((respose) => respose.json()).then((respjson) => {
+  const resp = await fetch(topEntitiesURL(),{
+    headers: getCommonHeaders()
+  }).then((respose) => respose.json()).then((respjson) => {
     if (respjson) {
       if (callbackFn) {
         callbackFn(respjson);

@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit';
+import { formStyles } from './add-form.styles';
 
 export const renderError = (errorText, closeError) => {
   if (errorText) {
@@ -21,7 +22,7 @@ const renderSuccess = (successMsg, closeError) => {
 
 }
 
-export const renderAddForm = ({resetForm, findby, findEstablishmentBy, trySubmit, error, closeError, isEdit, successMsg, reloadUser, setEstablishment}) => {
+export const renderAddForm = ({resetForm, findby, findEstablishmentBy, trySubmit, error, closeError, isEdit, successMsg, reloadUser, setEstablishment, sectionChanged, showTaskSection}) => {
     return html `
     <search-modal @rowselected=${reloadUser} @estselected=${setEstablishment} @button-click=${resetForm}></search-modal>
        <!-- <div class="nav">
@@ -77,7 +78,9 @@ export const renderAddForm = ({resetForm, findby, findEstablishmentBy, trySubmit
               <input type="email" name="visitor_email" placeholder=" ">
             </div>
 
-            <div class="form-element">
+
+            ${showTaskSection ? 
+            html `<div class="form-element">
               <label>Establishment Name</label><br>
               <div class="input-and-search">
                 <input type="text" name="establishment_name" placeholder=" ">
@@ -96,11 +99,8 @@ export const renderAddForm = ({resetForm, findby, findEstablishmentBy, trySubmit
               <div class="input-and-search">
                 <input type="text" name="estb_account_task_id" placeholder=" ">
               </div>
-            </div>
+            </div>` : html ``}
 
-
-            
-            
 
           </div>
           <div class='right-section'>
@@ -117,10 +117,9 @@ export const renderAddForm = ({resetForm, findby, findEstablishmentBy, trySubmit
               <label>PPO Number</label><br>
               <input type="text" name="ppo_number" placeholder=" ">
             </div>
-
           <div class="form-element">
             <label>Section</label><br>
-            <select name="section" required placeholder=" ">
+            <select @change=${sectionChanged} name="section" required placeholder=" ">
               <option value="account">Account</option>
               <option value="pension">Pension </option>
               <option value="compliance">Compliance</option>

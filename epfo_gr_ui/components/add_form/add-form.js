@@ -19,7 +19,8 @@ export class AddForm extends LitElement {
       error:{type: String},
       successMsg: {type: String},
       prefillData:{type: Object},
-      searchLoading:{type: Boolean}
+      searchLoading:{type: Boolean},
+      showTaskSection: {type: Boolean}
     }
   }
 
@@ -33,7 +34,9 @@ export class AddForm extends LitElement {
     this.setEstablishment = this.setEstablishment.bind(this);
     this.trySubmit = this.trySubmit.bind(this);
     this.closeError = this.closeError.bind(this);
+    this.sectionChanged = this.sectionChanged.bind(this);
     this.searchLoading = false;
+    this.showTaskSection = true;
   }
 
   connectedCallback() {
@@ -80,8 +83,17 @@ export class AddForm extends LitElement {
 
   addDisabledFields(form, formData) {
     formData.no_of_visit = Number(form.no_of_visit.value) + 1;
-    formData.attended_at_level = form.attended_at_level.value;
+    formData.attended_at_level = form.attended_at_level.value - 1;
     formData.status = form.status.value;
+  }
+
+  sectionChanged(e){
+    console.log('Section changed : ', e.target.value);
+    if(e.target.value === "account"){
+      this.showTaskSection = true;
+    } else {
+      this.showTaskSection = false;
+    }
   }
 
   getSanitizedFormData(){
@@ -171,7 +183,7 @@ export class AddForm extends LitElement {
       } else if(!visitNumber){
         form.attended_at_level.value = attendLevels[0];
       } else {
-        form.attended_at_level.value = attendLevels[visitNumber];
+        form.attended_at_level.value = attendLevels[visitNumber - 1];
       }
     }
   }
@@ -290,6 +302,7 @@ export class AddForm extends LitElement {
   }
 
   render() {
+    console.log('Re-render');
     return html` ${renderAddForm({
       resetForm: this.resetForm,
       findby: this.findby,
@@ -300,7 +313,9 @@ export class AddForm extends LitElement {
       isEdit: this.isEdit(),
       successMsg: this.successMsg,
       reloadUser: this.preFillForm,
-      setEstablishment: this.setEstablishment
+      setEstablishment: this.setEstablishment,
+      sectionChanged: this.sectionChanged,
+      showTaskSection: this.showTaskSection
     })}`;
   }
 }
