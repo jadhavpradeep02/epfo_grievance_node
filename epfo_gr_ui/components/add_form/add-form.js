@@ -88,7 +88,7 @@ export class AddForm extends LitElement {
   }
 
   sectionChanged(e){
-    console.log('Section changed : ', e.target.value);
+    // console.log('Section changed : ', e.target.value);
     if(e.target.value === "account"){
       this.showTaskSection = true;
     } else {
