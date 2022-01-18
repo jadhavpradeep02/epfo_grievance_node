@@ -55,6 +55,10 @@ export const updateVisitorUrl = () => {
     return onlineMode ? `${onlineURLBase}/visitor/` : `${localURLBase()}/visitor/update`;
 }
 
+export const closeGrievanceUrl = () => {
+    return onlineMode ? `${onlineURLBase}/visitor/` : `${localURLBase()}/visitor/close`;
+}
+
 export const deleteUserUrl = (visitorId) => {
     return onlineMode ? `${onlineURLBase}/visitor/${visitorId}` : `${localURLBase()}/visitor/delete?visitor_id=${visitorId}`;
 }

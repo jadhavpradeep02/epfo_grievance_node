@@ -1,4 +1,4 @@
-import { addVisitorURL, deleteUserUrl, updateVisitorUrl, getAllVisitorsUrl, commonAPIConfig } from "../configs/api.config";
+import { addVisitorURL, deleteUserUrl, updateVisitorUrl, getAllVisitorsUrl, commonAPIConfig, closeGrievanceUrl } from "../configs/api.config";
 import { AuthService } from './authentication.service.js';
 
 let currentEditVisitor = null;
@@ -18,6 +18,29 @@ const addNewVisitor = async (visitorData, callbackFn) => {
     ).then( response => console.log(response.data)); */
 
     const resp = await fetch( addVisitorURL(), {
+        method: 'POST',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': AuthService.addBearerAuth()
+        },
+        redirect: 'follow',
+        body: JSON.stringify(visitorData)
+    })
+    .then((respose) => respose.json())
+    .then((respjson) => {
+        if(respjson){
+            if(callbackFn){
+                callbackFn();
+            }
+        }
+    })
+}
+
+const closeGriavance = async (visitorData, callbackFn) => {
+    const resp = await fetch( closeGrievanceUrl(), {
         method: 'POST',
         mode: 'cors',
         cache: 'no-cache',
@@ -101,5 +124,6 @@ export const VisitorService = {
     visitorUpdated,
     getEditData,
     getEstBlishment,
-    setEstBlishment
+    setEstBlishment,
+    closeGriavance
 }

@@ -10,13 +10,15 @@ export class LauncherScreen extends LitElement {
   static properties = {
     noSearchString: false,
     userData: [],
-    rows: []
+    rows: [],
+    successMsg: ''
   };
 
   constructor(){
     super();
     this.rows = [];
-    this.loadVisitors();
+    this.successMsg = '';
+    // this.loadVisitors();
   }
 
   static styles = [
@@ -46,26 +48,44 @@ export class LauncherScreen extends LitElement {
       return "";
     }
   }
+  renderSuccess() {
+    if (this.successMsg) {
+      return html`<div class="success-div">
+        ${this.successMsg}
+        <span @click=${this.clearSuccessMsg} class="error-close">X</span>
+      </div>`;
+    } else {
+      return "";
+    }
+  }
+
+  clearSuccessMsg(){
+    this.successMsg = '';
+  }
 
   async onSearch(event) {
     this.rows = [];
     this.noSearchString = false;
+    this.successMsg = '';
     if (this.renderRoot.querySelector("#search").value) {
       await fetch(searchUrl(), {
         method: 'POST',
         headers: {
           Authorization: AuthService.addBearerAuth()
         },
-        body: JSON.stringify({by: 'uan', value: this.renderRoot.querySelector("#search").value})
+        body: JSON.stringify({by: this.renderRoot.querySelector('[name="by"]:checked').value, value: this.renderRoot.querySelector("#search").value})
       }).then((response) => response.json())
       .then((respJSON) => {
         this.rows = respJSON;
       })
     } else {
       this.noSearchString = true;
+      this.successMsg = '';
     }
+  }
 
-    
+  closeSuccess(){
+    this.successMsg = "Closed grievance successfully"
   }
 
   addEntry() {
@@ -94,7 +114,8 @@ export class LauncherScreen extends LitElement {
         </form>
       </div>
       ${this.renderError()}
-      <search-result .rows=${this.rows} .loading=${this.loading}></search-result>
+      ${this.renderSuccess()}
+      <search-result @successClose=${this.closeSuccess} .rows=${this.rows} .loading=${this.loading} .mode=${`searchAndClose`}></search-result>
     `;
   }
 }
