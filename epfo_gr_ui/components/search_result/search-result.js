@@ -120,7 +120,7 @@ export class SearchResult extends LitElement {
     modal.submitFn = (feedback) => {
       VisitorService.closeGriavance({
         "grievance_id": rowData.grievance_id,
-        "status": "Closed",
+        "status": "resolved",
         "attended_at_level": rowData.attended_at_level,
         "no_of_visit": rowData.no_of_visit,
         "grievance_details": feedback
