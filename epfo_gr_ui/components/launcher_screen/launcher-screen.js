@@ -71,8 +71,11 @@ export class LauncherScreen extends LitElement {
       await fetch(searchUrl(), {
         method: 'POST',
         headers: {
+          "Content-Type": "application/json",
           Authorization: AuthService.addBearerAuth()
         },
+        mode: "cors",
+        "Access-Control-Allow-Origin": "*",
         body: JSON.stringify({by: this.renderRoot.querySelector('[name="by"]:checked').value, value: this.renderRoot.querySelector("#search").value})
       }).then((response) => response.json())
       .then((respJSON) => {
