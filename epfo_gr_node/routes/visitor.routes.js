@@ -14,6 +14,7 @@ router.post('/report', authenticate, getReport);
 router.get('/status', authenticate, getDashboardData);
 router.post('/close', authenticate, closeGrievance);
 router.get('/topvisits', authenticate, getTopVisits);
+router.get('/toppending', authenticate, getTopPending);
 
 module.exports = router;
 
@@ -83,6 +84,14 @@ function closeGrievance(req, res) {
 
 function getTopVisits(req, res) {
     visitorService.getTopVisits(req).then(function (response) {
+        res.send(response);
+    }).catch(function (err) {
+        res.send(err);
+    });
+}
+
+function getTopPending(req, res) {
+    visitorService.getTopPending(req).then(function (response) {
         res.send(response);
     }).catch(function (err) {
         res.send(err);
