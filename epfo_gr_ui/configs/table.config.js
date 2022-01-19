@@ -51,6 +51,26 @@
     }
   ]
 
+  export const highestPendingTableCols = [
+    {
+      header: "Establishment Name",
+      path: "establishment_name",
+    },
+    {
+      header: "Section",
+      path: "section",
+    },
+    {
+      header: "First Entry",
+      path: "created_at",
+      type: "datetime"
+    },
+    { 
+      header: "Total Visit", 
+      path: "no_of_visit"
+    }
+  ]
+
   export const columnDefinition = [
     ...reportColumns
     ,

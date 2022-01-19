@@ -350,7 +350,12 @@ Response:
 ]
 /// Longest pending Grivances API Request
 
- We need top 50 Longest pending days grivances 
- > Compare creation date of grivance with todays date that will give you no of days pending for that Grgivance
- > Give grievance details in the response ( Girvance details, Category, member name, Member mobile, Details )
- > Give top 50 grivances ( highest days pending on top )
+NEXT API REQUEST : [ Refer feature reqeust of 19-01-2022 ]
+
+// Members API : 
+    Search by : member name / uan / mobile / PPO
+    Result : Member details + Members grievances ( All ) + All visits data of every grievance 
+
+// Visitors API :
+    Search by : visitor name / uan / mobile / email
+    Result : Visitor details + Visitors grievances ( All ) + All visits data of every grievance
