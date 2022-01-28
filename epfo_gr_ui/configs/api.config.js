@@ -74,6 +74,9 @@ export const reportsURL = () => {
 export const topEntitiesURL = () => {
     return onlineMode ? `${onlineURLBase}/login` : `${localURLBase()}/visitor/topvisits`;
 }
+export const topPendingEntitiesURL = () => {
+    return onlineMode ? `${onlineURLBase}/login` : `${localURLBase()}/visitor/toppending`;
+}
 
 export const dashboardURL = () => {
     return onlineMode ? `${onlineURLBase}/status` : `${localURLBase()}/visitor/status`; // Pradeep please change "status" to any word you want for dashboard API. ALSO

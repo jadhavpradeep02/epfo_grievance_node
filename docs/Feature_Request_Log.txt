@@ -108,3 +108,26 @@ After submit on Edit > Go to add form ( it stays on edit ) 				>> DONE
 
 Task id is only specific to Account Section
 Search by member mobile, ppo on Edit page
+
+
+------------- 19-01-2022 ------------------------------------------------------------------------------------
+
+Member/Visitor Search Page :
+
+[-------] [Search] << By name ! uan ! mobile ! PPO
+
+MEMBER XXXX
+
+Grievances :
+	1.  Griavance details | Last Visit ! Status ! [Remark, if resolved ] | No of days pending | visitor name 
+	2.
+	3.
+	4. 
+	
+MEMBER YYYY
+
+Grievances :
+	1.  Griavance details | Last Visit ! Status ! [Remark, if resolved ] | No of days pending | Visitor Name
+	3.
+	4.
+	

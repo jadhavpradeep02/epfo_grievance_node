@@ -5,14 +5,16 @@ import "@lion/button/define";
 import Fontawesome from "lit-fontawesome";
 import { ReportsService } from "../../services/reports.service";
 import "../search_result/search-result";
-import { reportColumns, highestVisitorTableCols } from "../../configs/table.config";
+import { reportColumns, highestVisitorTableCols, highestPendingTableCols } from "../../configs/table.config";
+import { formStyles } from "./reports.style";
 
 export class Reports extends LitElement {
   static get properties() { 
     return {
       loading: {type: Boolean},
       reportData: {type: Object},
-      topEntities: {type: Object}
+      topEntities: {type: Object},
+      topPendingEntities: {type: Object}
     }
   }
 
@@ -20,112 +22,19 @@ export class Reports extends LitElement {
     super();
     this.reportData = null;
     this.topEntities = null;
+    this.topPendingEntities = null;
     this.convertReportandDownload = this.convertReportandDownload.bind(this);
     this.setTopEntities = this.setTopEntities.bind(this);
+    this.setTopPendingEntities = this.setTopPendingEntities.bind(this);
   }
 
   connectedCallback() {
     super.connectedCallback();
     this.loadTopEntities();
+    this.loadTopPending();
   }
 
-  static styles = [Fontawesome, commonStyles,
-    css ` 
-        .main { 
-            padding : 40px;
-        }
-        h1{
-            text-align: center;
-        }
-        .range-select{
-            padding: 10px;
-            text-align: center;
-        }
-        .range-select input{
-            margin: 15px;
-        }
-
-        label{
-            display: inline-block;
-            margin-top: 5px;
-            margin-bottom: 8px;
-        }
-
-        .form-element{
-            text-align: center;
-            margin: 10px;
-        }
-
-        .step-label{
-            text-align: center;
-            color: var(--british-racing-green);
-            display: block;
-            margin: 25px;
-            font-size: 1.2em;
-            font-weight: bold;
-        }
-
-        .table {
-            display: grid;
-            grid-template-columns: 14% 14% 14% 14% 14% 14% 14%; 
-            width: 100%;
-            margin: auto;
-        }
-
-        .top-visitors{
-          width: 45%;
-        }
-
-        .top-visitors .table {
-          grid-template-columns: 25% 25% 25% 25%; 
-        }
-
-        .top-grivances{
-          width: 45%;
-        }
-
-        .table {
-          display: grid;
-          grid-template-columns: 14% 14% 14% 14% 14% 14% 14% ; 
-          width: 100%;
-          margin: auto;
-          font-size: 1em;
-          font-family: 'Courier New', Courier, monospace;
-      }
-
-      .table > div {
-        margin: 0px;
-        background: #cccccc;
-        padding: 5px;
-        border: 1px solid white;
-        word-break: break-word;
-        text-overflow: ellipsis;
-      }
-
-      .table .header{
-          font-weight: bold;
-          background: #7a7a7a;
-          color: white;
-      }
-
-        .action-container{
-            text-align: center;
-            margin: 25px;
-        }
-        .type-select{
-            text-align: center;
-        }
-
-        .report-header{
-            margin-bottom: 5px;
-            color: var(--british-racing-green);
-        }
-
-        .report-header:last-child{
-            margin-bottom: 20px;
-        }
-        
-        `];
+  static styles = [Fontawesome, commonStyles, formStyles];
 
   update(changedProps) {
     super.update();
@@ -137,8 +46,16 @@ export class Reports extends LitElement {
     this.reportData = jsonReport;
   }
 
+  setTopPendingEntities(entitiesData){
+    this.topPendingEntities = entitiesData;
+  }
+
   setTopEntities(entitiesData){
     this.topEntities = entitiesData;
+  }
+
+  loadTopPending(){
+    ReportsService.getTopPendingEntities(this.setTopPendingEntities);
   }
 
   loadTopEntities(){
@@ -266,7 +183,8 @@ export class Reports extends LitElement {
                     <div class="action-container"><lion-button @click=${this.printReport}>Print Report</lion-button></div>
                 ` : html ``}
                 <h2>Top Entities :</h2>
-                <h3>Top visitors</h3>
+                <div class="left-section">
+                  <h3>Top visitors</h3>
                     <div class="top-visitors">
                       ${this.topEntities ?
                       html `
@@ -287,8 +205,32 @@ export class Reports extends LitElement {
                       ` : 
                       html ``}
                   </div>
+                </div>
+                <div class="right-section">
+
+                  <h3>Top Pending Grievances</h3>
+                    <div class="top-grivances">
+                    ${this.topPendingEntities ?
+                        html `
+                          <div class="table">
+                            ${highestPendingTableCols.map((col) => col.header ? html`<div class="header">${col.header}</div>` : html `<div class="header"></div>` )}
+                            ${this.topPendingEntities.map((row) => {
+                                return highestPendingTableCols.map((col) => col.path ? 
+                                html`<div>
+                                  ${
+                                    (col.type && col.type === "datetime") ? 
+                                    html `${new Date(row[col.path]).toLocaleDateString()}`:
+                                    html `${row[col.path]}`
+                                  }
+                                  </div>` : 
+                                html ``);
+                            })}
+                        </div>
+                        ` : 
+                        html ``}
+                    </div>
                   </div>
-                  <div class="top-grivances">
+                </div>
             </div>
         </div>`;
   }

@@ -1,6 +1,7 @@
 import {
   reportsURL,
   topEntitiesURL,
+  topPendingEntitiesURL,
   commonAPIConfig,
 } from "../configs/api.config";
 import { AuthService } from "./authentication.service.js";
@@ -41,8 +42,20 @@ const getTopEntities = async (callbackFn) => {
     }
   });
 }
+const getTopPendingEntities = async (callbackFn) => {
+  const resp = await fetch(topPendingEntitiesURL(),{
+    headers: getCommonHeaders()
+  }).then((respose) => respose.json()).then((respjson) => {
+    if (respjson) {
+      if (callbackFn) {
+        callbackFn(respjson);
+      }
+    }
+  });
+}
 
 export const ReportsService = {
   getReports,
-  getTopEntities
+  getTopEntities,
+  getTopPendingEntities
 };

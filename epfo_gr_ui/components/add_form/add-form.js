@@ -83,7 +83,7 @@ export class AddForm extends LitElement {
 
   addDisabledFields(form, formData) {
     formData.no_of_visit = Number(form.no_of_visit.value) + 1;
-    formData.attended_at_level = form.attended_at_level.value - 1;
+    formData.attended_at_level = form.attended_at_level.value;
     formData.status = form.status.value;
   }
 
