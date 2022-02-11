@@ -352,10 +352,17 @@ Response:
 
 NEXT API REQUEST : [ Refer feature reqeust of 19-01-2022 ]
 
-// Members API : 
-    Search by : member name / uan / mobile / PPO
+// Members Search API : Result >> Members list
+    Search by : member_name / uan / member_mobile / pf_account_no
     Result : Member details + Members grievances ( All ) + All visits data of every grievance 
 
-// Visitors API :
-    Search by : visitor name / uan / mobile / email
+// Visitors Search API : Result >> Visitors list
+    Search by : visitor name / uan / mobile / visitor_email / pf_account_no
     Result : Visitor details + Visitors grievances ( All ) + All visits data of every grievance
+
+// Member details pade
+>> Get Member details >>
+
+
+//  Visitor Detail Page
+>> Get Visitor details >>
