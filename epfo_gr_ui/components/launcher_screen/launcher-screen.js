@@ -108,8 +108,8 @@ export class LauncherScreen extends LitElement {
 
           <input type="radio" id="phone" name="by" value="phone" data-name="visitor_mobile" checked/><label for="phone">Phone</label>
           <input type="radio" id="email" name="by" value="email" data-name="visitor_email" /><label for="email">Email</label>
-          <input type="radio" id="uan" name="by" value="uan" data-name="" /><label for="uan">UAN</label>
-          <input type="radio" id="epfo" name="by" value="epfo" data-name="" /><label for="pf_account_no">EPFO</label>
+          <input type="radio" id="uan" name="by" value="uan" data-name="uan" /><label for="uan">UAN</label>
+          <input type="radio" id="epfo" name="by" value="epfo" data-name="pf_account_no" /><label for="pf_account_no">EPFO</label>
           <div class="options-container">
             <lion-button @click=${this.onSearch}>Search</lion-button>
             <!-- <lion-button @click=${this.addEntry}>+ Add New</lion-button> -->
