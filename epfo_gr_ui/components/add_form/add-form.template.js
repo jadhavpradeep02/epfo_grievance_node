@@ -52,7 +52,7 @@ export const renderAddForm = ({resetForm, findby, findEstablishmentBy, trySubmit
                 <a class="btn" @click=${() =>  findby('pf_account_no')}><i class="fas fa-search"></i></a>
               </div> -->
               <div class="input-and-search prefix">
-                <span class="input-prefix">PA&nbsp;/&nbsp;</span> 
+                <span class="input-prefix">PU&nbsp;/&nbsp;</span> 
                 <span class="input-prefix">PUN&nbsp;/&nbsp;</span> 
                 <input type="text" maxlength="7" class="size_7" name="pf_account_no1" placeholder=" ">
                 <span class="input-prefix">&nbsp;/&nbsp;</span>
@@ -149,7 +149,7 @@ export const renderAddForm = ({resetForm, findby, findEstablishmentBy, trySubmit
             <label>Attendance at level</label><br>
             <select name="attended_at_level" required placeholder=" " disabled>
               <option value="DA">Dealing Assistant</option>
-              <option value="SSAO">Session Supervisor Account Officer</option>
+              <option value="SSAO">Section Supervisor Account Officer</option>
               <option value="APC">Assistant PF Commissioner</option>
               <option value="RPC2">Regional PF Commissioner 2</option>
               <option value="RPC1">Regional PF Commissioner 1</option>

@@ -102,7 +102,7 @@ export class AddForm extends LitElement {
     console.log('Raw form data : ', rawFormData);
     let formData = Object.fromEntries(rawFormData.entries());
     if(formData.pf_account_no1 && formData.pf_account_no2 && formData.pf_account_no3){
-      formData.pf_account_no = 'PA/PUN/'+formData.pf_account_no1+'/'+formData.pf_account_no2+'/'+formData.pf_account_no3;
+      formData.pf_account_no = 'PU/PUN/'+formData.pf_account_no1+'/'+formData.pf_account_no2+'/'+formData.pf_account_no3;
     } else {
       formData.pf_account_no = '';
     }
