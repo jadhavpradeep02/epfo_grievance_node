@@ -32,7 +32,6 @@ function getAllVisitors(req) {
     }
     try {
         connection.query(select_query, (err, rows) => {
-            if (err) throw deferred.reject(err);
             deferred.resolve(rows);
         });
         return deferred.promise;
@@ -175,7 +174,6 @@ function deleteVisitor(req) {
         delete_query = `DELETE from visitors WHERE visitor_id = ${visitor_id}`;
         connection.query(delete_query, (err, result) => {
 
-            if (err) throw deferred.reject(err);
             console.log('The data from visitor table deleted: \n');
             response.status = "200";
             response.message = "Record deleted successfully";
@@ -243,7 +241,6 @@ function searchVisitor(req) {
         console.log(select_query);
         connection.query(select_query, (err, rows) => {
 
-            if (err) throw deferred.reject(err);
             console.log('The data from users table are: \n');
             deferred.resolve(rows);
         });
@@ -261,7 +258,6 @@ function getTopVisits(req) {
 
     try {
         connection.query(select_query, (err, rows) => {
-            if (err) throw deferred.reject(err);
             deferred.resolve(rows);
         });
         return deferred.promise;
@@ -278,7 +274,6 @@ function getTopPending(req) {
 
     try {
         connection.query(select_query, (err, rows) => {
-            if (err) throw deferred.reject(err);
             deferred.resolve(rows);
         });
         return deferred.promise;
@@ -300,7 +295,6 @@ function getReport(req) {
         let select_query = 'SELECT v.visitor_id, visitor_name, visitor_mobile, visitor_email, member_name, member_mobile as member_phone, g.grievance_id, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, created_at, grievance_category, section, status, visited_at FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id where created_at >= "' + start_date + '" and created_at <= "' + end_date + '" and ' + type + ' = "' + value + '"';
         console.log(select_query);
         connection.query(select_query, (err, rows) => {
-            if (err) throw deferred.reject(err);
             console.log('The data from visitors table are: \n');
             deferred.resolve(rows);
         });
@@ -362,25 +356,21 @@ function getDashboardData(req) {
     }
     try {
         connection.query(select_day_query, (err, rows) => {
-            if (err) throw deferred.reject(err);
             response.daily.total = rows[0].total;
             response.daily.pending = rows[0].pending;
             response.daily.resolved = rows[0].resolved;
 
             connection.query(select_week_query, (err, rows) => {
-                if (err) throw deferred.reject(err);
                 response.weekly.total = rows[0].total;
                 response.weekly.pending = rows[0].pending;
                 response.weekly.resolved = rows[0].resolved;
 
                 connection.query(select_month_query, (err, rows) => {
-                    if (err) throw deferred.reject(err);
                     response.monthly.total = rows[0].total;
                     response.monthly.pending = rows[0].pending;
                     response.monthly.resolved = rows[0].resolved;
 
                     connection.query(select_total_query, (err, rows) => {
-                        if (err) throw deferred.reject(err);
                         response.total.total = rows[0].total;
                         response.total.pending = rows[0].pending;
                         response.total.resolved = rows[0].resolved;
