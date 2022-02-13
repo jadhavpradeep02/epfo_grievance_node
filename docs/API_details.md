@@ -356,6 +356,69 @@ NEXT API REQUEST : [ Refer feature reqeust of 19-01-2022 ]
     Search by : member_name / uan / member_mobile / pf_account_no
     Result : Member details + Members grievances ( All ) + All visits data of every grievance 
 
+Request URL: 
+
+Request Object:
+{
+    "by":"member_mobile",
+    "value":"9876"
+}
+{
+    "by":"member_name",
+    "value":"jayprakas"
+}
+{
+    "by":"uan",
+    "value":"9773"
+}
+{
+    "by":"pf_account_no",
+    "value":"9773"
+}
+
+Response Object:
+[
+    {
+        "grievance_id": 1008,
+        "visitor_id": 8,
+        "member_name": "Jayprakash Ahuja",
+        "member_phone": "9876543210",
+        "uan": "1779773276790",
+        "pf_account_no": "PU/PUN/123/99/8887",
+        "ppo_number": "",
+        "establishment_name": "",
+        "estb_account_task_id": "",
+        "establishment_id": "",
+        "grievance_category": "KYC_Update",
+        "section": "compliance",
+        "no_of_visit": 2,
+        "attended_at_level": "DA",
+        "grievance_details": "modify kyc",
+        "status": "in_progress",
+        "visit_at": "2022-02-13T12:18:29.000Z"
+    },
+    {
+        "grievance_id": 1008,
+        "visitor_id": 8,
+        "member_name": "Jayprakash Ahuja",
+        "member_phone": "9876543210",
+        "uan": "1779773276790",
+        "pf_account_no": "PU/PUN/123/99/8887",
+        "ppo_number": "",
+        "establishment_name": "",
+        "estb_account_task_id": "",
+        "establishment_id": "",
+        "grievance_category": "KYC_Update",
+        "section": "compliance",
+        "no_of_visit": 3,
+        "attended_at_level": "SSAO",
+        "grievance_details": "modify kyc forwarded to next level",
+        "status": "in_progress",
+        "visit_at": "2022-02-13T12:58:06.000Z"
+    }
+]
+
+
 // Visitors Search API : Result >> Visitors list
     Search by : visitor name / uan / mobile / visitor_email / pf_account_no
     Result : Visitor details + Visitors grievances ( All ) + All visits data of every grievance

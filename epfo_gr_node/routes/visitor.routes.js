@@ -16,6 +16,7 @@ router.get('/status', authenticate, getDashboardData);
 router.post('/close', authenticate, closeGrievance);
 router.get('/topvisits', authenticate, getTopVisits);
 router.get('/toppending', authenticate, getTopPending);
+router.get('/membersearch', authenticate, searchMembers);
 
 module.exports = router;
 
@@ -99,3 +100,10 @@ function getTopPending(req, res) {
     });
 }
 
+function searchMembers(req, res) {
+    visitorService.searchMembers(req).then(function (response) {
+        res.send(response);
+    }).catch(function (err) {
+        res.send(err);
+    });
+}

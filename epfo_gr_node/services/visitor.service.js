@@ -15,6 +15,7 @@ service.getDashboardData = getDashboardData;
 service.closeGrievance = closeGrievance;
 service.getTopVisits = getTopVisits;
 service.getTopPending = getTopPending;
+service.searchMembers = searchMembers;
 module.exports = service;
 
 function getAllVisitors(req) {
@@ -318,6 +319,10 @@ function setSearchColumn(req) {
         column = "pf_account_no";
     } else if (req.by == "establishment_name") {
         column = "establishment_name";
+    } else if (req.by == "member_name") {
+        column = "member_name";
+    } else if (req.by == "member_mobile") {
+        column = "member_mobile";
     }
     return column;
 }
@@ -391,4 +396,30 @@ function getCurrentDateTime() {
         + currentdate.getMinutes() + ":"
         + currentdate.getSeconds();
     return datetime;
+}
+
+function searchMembers(req) {
+    var deferred = Q.defer();
+    let LIMIT = 100; //default limit set as 100
+    let column = setSearchColumn(req.body);
+    let value = req.body.value;
+    let select_query = "";
+
+    try {
+        select_query = 'SELECT g.grievance_id, visitor_id, member_name, member_mobile as member_phone, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, grievance_category, section, no_of_visit, attended_at_level, grievance_details, status, visit_at FROM grievance as g INNER JOIN visits as vs ON g.grievance_id = vs.grievance_id WHERE ' + column + ' like "%' + value + '%"';
+
+        if (req.body.limit) {
+            select_query += ' LIMIT ' + req.limit;
+        }
+        console.log(select_query);
+        connection.query(select_query, (err, rows) => {
+
+            console.log('The data from users table are: \n');
+            deferred.resolve(rows);
+        });
+        return deferred.promise;
+    } catch (error) {
+        console.error(error.message);
+        return res.status(500).send("Internal Server Error");
+    }
 }
