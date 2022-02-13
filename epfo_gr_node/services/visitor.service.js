@@ -1,6 +1,7 @@
 const connection = require('../config/dbConnect');
 var Q = require('q');
 const config = require('../config/config.json');
+var moment = require('moment');
 
 service = {};
 
@@ -53,9 +54,9 @@ function addVisitor(req) {
     let uan = req.body.uan;
     let pf_account_no = req.body.pf_account_no;
     let ppo_number = req.body.ppo_number;
-    let establishment_name = req.body.establishment_name;
-    let establishment_id = req.body.establishment_id;
-    let task_id = req.body.estb_account_task_id;
+    let establishment_name = req.body.establishment_name ? req.body.establishment_name : "";
+    let establishment_id = req.body.establishment_id ? req.body.establishment_id : "";
+    let task_id = req.body.estb_account_task_id ? req.body.estb_account_task_id : "";
     let grievance_category = req.body.grievance_category;
     let section = req.body.section;
     let no_of_visit = req.body.no_of_visit;
@@ -330,18 +331,12 @@ function getDashboardData(req) {
         "monthly": { "total": 0, "pending": 0, "resolved": 0 },
         "total": { "total": 0, "pending": 0, "resolved": 0 }
     };
-    var currentdate = new Date();
 
-    let today = currentdate.getFullYear() + '-' + (currentdate.getMonth() + 1) + "-" + (currentdate.getDate() < 10 ? '0' + currentdate.getDate() : currentdate.getDate());
-    var first = currentdate.getDate() - currentdate.getDay(); // First day is the day of the month - the day of the week
-    var last = first + 6; // last day is the first day + 6
-    var firstday = new Date(currentdate.setDate(first)).toUTCString();
-    var lastday = new Date(currentdate.setDate(last)).toUTCString();
-    let week_start = new Date(firstday).toISOString().split('T')[0] + " 00:00:00";
-    let week_end = new Date(lastday).toISOString().split('T')[0] + " 23:59:59";
-
-    var month_start = new Date(currentdate.getFullYear(), currentdate.getMonth(), 1).toISOString().split('T')[0] + " 00:00:00";
-    var month_end = new Date(currentdate.getFullYear(), currentdate.getMonth() + 1, 0).toISOString().split('T')[0] + " 23:59:59";
+    let today = moment().format('YYYY-MM-DD');
+    let week_start = moment().startOf('week').format('YYYY-MM-DD');
+    let week_end = moment().endOf('week').format('YYYY-MM-DD');
+    var month_start = moment().startOf('month').format('YYYY-MM-DD');
+    var month_end = moment().endOf('month').format('YYYY-MM-DD');
 
     select_day_query = 'select count(*) as total,(select count(*) from grievance where status = "in_progress" and visited_at like "%' + today + '%") as pending,(select count(*) from grievance where status = "resolved" and visited_at like "%' + today + '%") as resolved from grievance where visited_at like "%' + today + '%"';
 
