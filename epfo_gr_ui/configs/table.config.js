@@ -96,3 +96,22 @@
       action: "edit",
     }
   ]
+
+  export const membersColumns = [
+    {
+      header: "Member Name",
+      path: "member_name",
+    },
+    {
+      header: "Member Phone",
+      path: "member_phone",
+    },
+    {
+      header: "UAN",
+      path: "uan",
+    },
+    {
+      header: "PF Account number",
+      path: "pf_account_no",
+    }
+  ]

@@ -69,6 +69,14 @@ const fetchVisitors = async () => {
     return userData.json();
 }
 
+const fetchMemberData = async () => {
+    // TODO : Mmodify this to load members data when API is available
+    const userData = await fetch(getAllVisitorsUrl(),{
+        headers: getCommonHeaders(),
+    });
+    return userData.json();
+}
+
 const deleteVisitor = async (visitor_id) => {
     const userData = await fetch(deleteUserUrl(),{
         headers: getCommonHeaders()
@@ -125,5 +133,6 @@ export const VisitorService = {
     getEditData,
     getEstBlishment,
     setEstBlishment,
-    closeGriavance
+    closeGriavance,
+    fetchMemberData
 }

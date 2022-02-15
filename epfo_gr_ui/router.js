@@ -18,9 +18,21 @@ export class RouterMixin extends LitElement {
       },
       {
         key: "Search&close",
-        name: "Hello World!",
+        name: "Search And Close",
         import: () => import("./components/launcher_screen/launcher-screen.js"),
         render: () => html`<launcher-screen></launcher-screen>`,
+      },
+      {
+        key: "member",
+        name: "Member Details",
+        import: () => import("./components/member-details/member-details.js"),
+        render: () => html`<member-details></member-details>`,
+      },
+      {
+        key: "SearchPeople",
+        name: "Search Entities",
+        import: () => import("./components/search_person/search-person.js"),
+        render: () => html`<search-person></search-person>`,
       },
       {
         key: "add",
@@ -53,7 +65,10 @@ export class RouterMixin extends LitElement {
   }
 
   router = (evt) => {
-    const url = window.location.hash.slice(1) || "/";
+    let url = window.location.hash.slice(1) || "/";
+    if(url !== '/'){
+      url = url.split('?')[0]
+    }
     this.navigateTo(url);
   };
 

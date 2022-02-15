@@ -99,6 +99,7 @@ export class HeaderElement extends LitElement {
           <div class="menu-item"  @click=${() => this.toPage('add')}><i class="fas fa-home"></i>&nbsp;&nbsp;Home</div>
           <div class="menu-item"  @click=${() => this.toPage('dashboard')}><i class="fas fa-tachometer-alt"></i>&nbsp;&nbsp;Dashboard</div>
           <div class="menu-item"  @click=${() => this.toPage('Search&close')}><i class="fas fas fa-search"></i>&nbsp;&nbsp;Search & Close</div>
+          <div class="menu-item"  @click=${() => this.toPage('SearchPeople')}><i class="fas fas fa-search"></i>&nbsp;&nbsp;Search Entities</div>
           <div class="menu-item"  @click=${() => this.toPage('reports')}><i class="fas fa-file-alt"></i>&nbsp;&nbsp;Reports</div>
           <div class="menu-item"><i class="fas fa-user"></i>&nbsp;&nbsp;Profile</div>
           <div class="menu-item" title="log out" @click=${this.logout}><i class="fas fa-power-off"></i>&nbsp;&nbsp;Logout</div>

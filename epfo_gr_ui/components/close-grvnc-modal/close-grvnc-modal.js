@@ -117,6 +117,7 @@ class CloseGrvncModal extends LitElement {
                     <div class="details"><b>Visitor</b>: ${this.textData.visitor_name} </div>
                     <div class="details"><b>UAN</b>: ${this.textData.uan} </div>
                     <div class="details"><b>Details</b>: ${this.textData.grievance_details} </div>
+                    <!-- TODO! ADD GRIEVANCE DETAILS -->
                   </div>
                   <div class="closing-feedback-label">Provide info on closing grievance: </div>
                   <textarea cols="80" name="closing_text" rows="10" class="clsing-details-text"></textarea>  
