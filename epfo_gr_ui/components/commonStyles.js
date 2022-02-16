@@ -33,9 +33,9 @@ button{
 
 .error-div{
     padding: 1em;
-    color: var(--error-text);
-    background-color: var(--error-background);
-    border: 1px solid  var(--error-border);
+    color: white; /* var(--error-text); */
+    background-color: #ea5f1e; /* var(--error-background); */
+    border: 1px solid  #bf4128; /* var(--error-border); */
     border-radius: 5px;
     margin: 2em;
 }

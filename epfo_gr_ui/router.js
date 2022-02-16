@@ -29,6 +29,12 @@ export class RouterMixin extends LitElement {
         render: () => html`<member-details></member-details>`,
       },
       {
+        key: "visitor",
+        name: "Visitor Details",
+        import: () => import("./components/visitor-details/visitor-details.js"),
+        render: () => html`<visitor-details></visitor-details>`,
+      },
+      {
         key: "SearchPeople",
         name: "Search Entities",
         import: () => import("./components/search_person/search-person.js"),

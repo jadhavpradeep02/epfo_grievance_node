@@ -1,5 +1,24 @@
 
 
+export const visitorColumns = [
+  {
+    header: "Name",
+    path: "visitor_name",
+  },
+  {
+    header: "Id",
+    path: "visitor_id",
+  },
+  {
+    header: "Contact",
+    path: "visitor_mobile",
+  },
+  {
+    header: "Email",
+    path: "visitor_email",
+  }
+]
+
   export const reportColumns = [
     {
       header: "Name",

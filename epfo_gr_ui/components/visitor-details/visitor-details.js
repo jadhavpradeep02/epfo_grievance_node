@@ -4,27 +4,27 @@ import { commonStyles } from "../commonStyles";
 import { VisitorService } from "../../services/visitor.service";
 import { AuthService } from "../../services/authentication.service";
 
-export class MemberDetails extends LitElement {
+export class VisitorDetails extends LitElement {
   static properties = {
   };
 
   constructor(){
     super();
-    this.loadMemberData();
+    this.loadVisitorData();
   }
 
   static styles = [
     commonStyles,
     css`
-    .member-details{
+    .visitor-details{
         padding: 1em;
         text-align: center;
     }`,
   ];
 
-  async loadMemberData(){
+  async loadVisitorData(){
     this.loading = true;
-    this.rows = await VisitorService.fetchMemberData();
+    this.rows = await VisitorService.fetchVisitorData();
     this.loading = false;
   }
 
@@ -38,24 +38,24 @@ export class MemberDetails extends LitElement {
     }
   }
 
-  getUANFromURL(){
-    var url_string = window.location.href.split('?')[1]; //window.location.href
+  getIdFromURL(){
+    var url_string = window.location.href.split('?')[1];
     var url = new URLSearchParams(url_string);
-    return url.get("uan");
+    return url.get("id");
   }
 
   render() {
     return html`
-      <div class="member-details launch-block">
-          <h2>Member Data</h2>
-          <label>Get member data by UAN : ${this.getUANFromURL()}</label><br/><br/>
-
+      <div class="visitor-details launch-block">
+      <h2>Visitor Data:</h2>
+          Fetch visitor data from Id: ${this.getIdFromURL()}<br/><br/>
           Data Needed from API :<br>
-          - List of all grievances of this Member<br>
+          - List of all grievances of this visitor<br>
+          - Total number of Visits of this visitor<br>
       </div>
       ${this.renderError()}
     `;
   }
 }
 
-customElements.define("member-details", MemberDetails);
+customElements.define("visitor-details", VisitorDetails);

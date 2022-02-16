@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import '@lion/button/define';
 import { commonStyles } from '../commonStyles';
-import { columnDefinition, reportColumns, establishmentColumns, membersColumns } from '../../configs/table.config';
+import { columnDefinition, reportColumns, establishmentColumns, membersColumns, visitorColumns } from '../../configs/table.config';
 import { VisitorService } from '../../services/visitor.service';
 import '../spinner.js';
 import '../close-grvnc-modal/close-grvnc-modal.js';
@@ -58,6 +58,10 @@ export class SearchResult extends LitElement {
         grid-template-columns: 25% 25% 25% 25%; 
       }
 
+      .table.visitors-table{
+        grid-template-columns: 25% 25% 25% 25%; 
+      }
+
       .table > div {
         margin: 0px;
         background: var(--honeydew);
@@ -83,6 +87,10 @@ export class SearchResult extends LitElement {
 
   connectedCallback(){
     super.connectedCallback();
+    this.defineColumns();
+  }
+
+  defineColumns(){
     if(this.mode === "report"){
       this.colDef = [ ...reportColumns ];
     } 
@@ -91,7 +99,10 @@ export class SearchResult extends LitElement {
     }
     else if(this.mode === 'establishment'){
       this.colDef = [...establishmentColumns]
-    } else {
+    } else if( this.mode === 'visitors') {
+      this.colDef = [...visitorColumns]
+    }
+    else {
       this.colDef = [...columnDefinition ];
     }
   }
@@ -141,6 +152,7 @@ export class SearchResult extends LitElement {
   }
 
   renderTable(){
+    this.defineColumns();
     if(this.mode === "report"){
       return this.renderVisitorsTable();
     } 
@@ -148,6 +160,8 @@ export class SearchResult extends LitElement {
       return this.renderEstTable();
     } else if(this.mode === 'members'){
       return this.renderMembersTable();
+    }else if(this.mode === 'visitors'){
+      return this.renderVisitorsSearchResultTable();
     } else if(this.mode === "searchAndClose"){
       return this.renderSearchAndCloseTable();
     }
@@ -162,6 +176,19 @@ export class SearchResult extends LitElement {
       ${this.colDef.map((col) => col.header ? html`<div class="header">${col.header}</div>` : html `<div class="header"></div>` )}
       ${this.rows.map((row) => {
         return this.colDef.map((col, index) => index != 0 ? html`<div>${row[col.path]}</div>` : html `<div><a href=${`#member?uan=${row.uan}`}>${row[col.path]}</a></div>`);
+      })}
+    </div>`;
+    }  else {
+      html `<span>ille</span>`
+    }
+  }
+
+  renderVisitorsSearchResultTable(){
+    if(this.rows?.length){
+      return html` <div class="table visitors-table">
+      ${this.colDef.map((col) => col.header ? html`<div class="header">${col.header}</div>` : html `<div class="header"></div>` )}
+      ${this.rows.map((row) => {
+        return this.colDef.map((col, index) => index != 0 ? html`<div>${row[col.path]}</div>` : html `<div><a href=${`#visitor?id=${row.visitor_id}`}>${row[col.path]}</a></div>`);
       })}
     </div>`;
     }  else {
