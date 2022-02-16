@@ -3,7 +3,7 @@ import "@lion/button/define";
 import { commonStyles } from "../commonStyles";
 import '../search_result/search-result.js';
 import { VisitorService } from "../../services/visitor.service";
-import { searchUrl } from "../../configs/api.config";
+import { memberSearchUrl } from "../../configs/api.config";
 import { AuthService } from "../../services/authentication.service";
 import '../spinner.js'
 
@@ -65,7 +65,7 @@ export class SearchPerson extends LitElement {
     this.noSearchString = false;
     this.successMsg = '';
     if (this.renderRoot.querySelector("#search").value) {
-      await fetch(searchUrl(), {
+      await fetch(memberSearchUrl(), {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",

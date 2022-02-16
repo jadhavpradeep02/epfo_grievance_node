@@ -16,7 +16,7 @@ router.get('/status', authenticate, getDashboardData);
 router.post('/close', authenticate, closeGrievance);
 router.get('/topvisits', authenticate, getTopVisits);
 router.get('/toppending', authenticate, getTopPending);
-router.get('/membersearch', authenticate, searchMembers);
+router.post('/membersearch', authenticate, searchMembers);
 
 module.exports = router;
 
