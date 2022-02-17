@@ -139,7 +139,7 @@ export class SearchPerson extends LitElement {
             <input type="radio" id="visitor" @click=${() => this.setMode('visitor')} name="mode" value="visitor" checked/><label for="visitor">Visitor</label>
           </div>
           
-        <form name="searchForm" class="search-form">
+        <form name="searchForm" class="search-form" action="javascript:void(0);">
           <input
             type="text"
             id="search"

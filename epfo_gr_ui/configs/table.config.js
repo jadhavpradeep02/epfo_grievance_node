@@ -134,3 +134,39 @@ export const visitorColumns = [
       path: "pf_account_no",
     }
   ]
+
+  export const grievanceColumns = [
+    {
+      header: "Grievance ID",
+      path: "grievance_id"
+    },
+    {
+      header: "Organisation",
+      path: "establishment_name",
+    },
+    {
+      header: "UAN",
+      path: "uan",
+    },
+    {
+      header: "PF Account Number",
+      path: "pf_account_no",
+    },
+    {
+      header: "Section",
+      path: "section",
+    },
+    {
+      header: "Grievance Category",
+      path: "grievance_category",
+    },
+    {
+      header: "Date Created",
+      path: "created_at",
+      type: "datetime"
+    },
+    { 
+      header: "Status", 
+      path: "status" 
+    }
+  ]

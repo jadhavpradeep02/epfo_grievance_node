@@ -68,7 +68,7 @@ export const searchUrl = () => {
 }
 
 export const getVisitorDataURL= () => {
-    return onlineMode ? `${onlineURLBase}/search` : `${localURLBase()}/visitor/visitordata`;
+    return onlineMode ? `${onlineURLBase}/visitordata` : `${localURLBase()}/visitor/visitordata`;
 }
 
 export const getMemberDataURL= () => {
