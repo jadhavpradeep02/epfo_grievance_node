@@ -246,6 +246,10 @@ Response:
    }
 ]
 ```
+
+Visitor Status :
+
+```bash
 Request URL: http://localhost:3000/api/visitor/status
 Request: NA
 Response:
@@ -272,7 +276,11 @@ Response:
    }
 }
 
+```
 
+API Visitor > Close
+
+```bash
 Request URL (POST): http://localhost:3000/api/visitor/close
 Request: 
 {
@@ -287,7 +295,11 @@ Response:
     "status": "200",
     "message": "Grievance and Visitor Status closed successfully"
 }
+```
 
+API Top Visits
+
+```bash
 Request URL (GET request): http://localhost:3000/api/visitor/topvisits
 Request: 
 {}
@@ -317,8 +329,12 @@ Response:
       "visited_at":"2021-12-06T17:57:30.000Z"
    }
 ]
+```
 
+/// Longest pending Grivances API Request
+API : top Pending Grievances :
 
+```bash
 Request URL (GET request): http://localhost:3000/api/visitor/toppending
 Request: 
 {}
@@ -348,15 +364,81 @@ Response:
       "visited_at":"2021-12-06T17:57:30.000Z"
    }
 ]
-/// Longest pending Grivances API Request
+
+```
+
 
 NEXT API REQUEST : [ Refer feature reqeust of 19-01-2022 ]
+
+
+
+// Visitors Search API : Result >> Visitors list
+    Search by : visitor name / uan / mobile / visitor_email / pf_account_no
+    Result : Visitor details + Visitors grievances ( All ) + All visits data of every grievance
+
+``` bash 
+POST
+URL: http://localhost:3000/api/visitor/search
+
+with Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InByYWRlZXAiLCJyb2xlIjoiYWRtaW4iLCJlbWFpbCI6ImphZGhhdnByYWRlZXAwMkBnbWFpbC5jb20iLCJpYXQiOjE2MzM4NTI2ODQsImV4cCI6MTYzMzg1NjI4NH0.qWWquy66Yf6N9jagGVMnr6kI3cU4O2LgZP1efbywaho
+
+Request Body:
+{
+    "by":"epfo",
+    "value":"MH/BAN",
+    search: "visitor"
+}
+or {
+    "by":"phone",
+    "value":"9867",
+    search: "visitor"
+} 
+or  {
+    "by":"email",
+    "value":"amit@",
+    search: "visitor"
+}
+
+Response Body:
+[
+    {
+        "visitor_id": 1,
+        "visitor_name": "Mohan",
+        "visitor_mobile": "9867153742",
+        "visitor_email": "mohan@abc.com",
+        "uan": "1122334455",
+        "pf_account_no": "MH/BAN/0002/25788/29882",
+        "establishment_name": "IBM",
+        "created_at": "2021-10-08T18:58:50.000Z",
+        "grievance_category": "Normal",
+        "no_of_visit": 1,
+        "attended_at_level": "Clerk",
+        "grievance_details": "Pension not started",
+        "status": "Pending"
+    },
+    {
+        "visitor_id": 8,
+        "visitor_name": "Kunal Saha",
+        "visitor_mobile": "9867452314",
+        "visitor_email": "amit.saha@gmail.com",
+        "uan": "112233445566889",
+        "pf_account_no": "MH/BAN/0002/23145/87908",
+        "establishment_name": "TCS",
+        "created_at": "2021-10-10T09:51:50.000Z",
+        "grievance_category": "Minor",
+        "no_of_visit": 2,
+        "attended_at_level": "PF Inspector",
+        "grievance_details": "Action taken, will resolve within 1 week",
+        "status": "Inprogress"
+    }
+]
+```
 
 // Members Search API : Result >> Members list
     Search by : member_name / uan / member_mobile / pf_account_no
     Result : Member details + Members grievances ( All ) + All visits data of every grievance 
 
-
+```bash
 Request URL: http://localhost:3000/api/visitor/membersearch
 
 Request Object:
@@ -418,15 +500,104 @@ Response Object:
         "visit_at": "2022-02-13T12:58:06.000Z"
     }
 ]
+```
 
 
-// Visitors Search API : Result >> Visitors list
-    Search by : visitor name / uan / mobile / visitor_email / pf_account_no
-    Result : Visitor details + Visitors grievances ( All ) + All visits data of every grievance
 
 // Member details pade
 >> Get Member details >>
 
+``` bash 
+Request URL: http://localhost:3000//api/visitor/member?uan=899766123456
+
+Response : 
+[
+    {
+        "grievance_id": 1008,
+        "visitor_id": 8,
+        "member_name": "Jayprakash Ahuja",
+        "member_phone": "9876543210",
+        "uan": "1779773276790",
+        "pf_account_no": "PU/PUN/123/99/8887",
+        "ppo_number": "",
+        "establishment_name": "",
+        "estb_account_task_id": "",
+        "establishment_id": "",
+        "grievance_category": "KYC_Update",
+        "section": "compliance",
+        "no_of_visit": 2,
+        "attended_at_level": "DA",
+        "grievance_details": "modify kyc",
+        "status": "in_progress",
+        "visit_at": "2022-02-13T12:18:29.000Z"
+    },
+    {
+        "grievance_id": 1008,
+        "visitor_id": 8,
+        "member_name": "Jayprakash Ahuja",
+        "member_phone": "9876543210",
+        "uan": "1779773276790",
+        "pf_account_no": "PU/PUN/123/99/8887",
+        "ppo_number": "",
+        "establishment_name": "",
+        "estb_account_task_id": "",
+        "establishment_id": "",
+        "grievance_category": "KYC_Update",
+        "section": "compliance",
+        "no_of_visit": 3,
+        "attended_at_level": "SSAO",
+        "grievance_details": "modify kyc forwarded to next level",
+        "status": "in_progress",
+        "visit_at": "2022-02-13T12:58:06.000Z"
+    }
+]
+```  
 
 //  Visitor Detail Page
 >> Get Visitor details >>
+
+``` bash 
+Request URL: http://localhost:3000//api/visitor/visitordata?visitor_id=3
+
+Response : 
+[
+    {
+        "grievance_id": 1008,
+        "visitor_id": 8,
+        "member_name": "Jayprakash Ahuja",
+        "member_phone": "9876543210",
+        "uan": "1779773276790",
+        "pf_account_no": "PU/PUN/123/99/8887",
+        "ppo_number": "",
+        "establishment_name": "",
+        "estb_account_task_id": "",
+        "establishment_id": "",
+        "grievance_category": "KYC_Update",
+        "section": "compliance",
+        "no_of_visit": 2,
+        "attended_at_level": "DA",
+        "grievance_details": "modify kyc",
+        "status": "in_progress",
+        "visit_at": "2022-02-13T12:18:29.000Z"
+    },
+    {
+        "grievance_id": 1008,
+        "visitor_id": 8,
+        "member_name": "Jayprakash Ahuja",
+        "member_phone": "9876543210",
+        "uan": "1779773276790",
+        "pf_account_no": "PU/PUN/123/99/8887",
+        "ppo_number": "",
+        "establishment_name": "",
+        "estb_account_task_id": "",
+        "establishment_id": "",
+        "grievance_category": "KYC_Update",
+        "section": "compliance",
+        "no_of_visit": 3,
+        "attended_at_level": "SSAO",
+        "grievance_details": "modify kyc forwarded to next level",
+        "status": "in_progress",
+        "visit_at": "2022-02-13T12:58:06.000Z"
+    }
+]
+``` 
