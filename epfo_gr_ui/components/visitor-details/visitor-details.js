@@ -24,7 +24,7 @@ export class VisitorDetails extends LitElement {
 
   async loadVisitorData(){
     this.loading = true;
-    this.rows = await VisitorService.fetchVisitorData();
+    this.rows = await VisitorService.fetchVisitorData(this.getIdFromURL());
     this.loading = false;
   }
 
