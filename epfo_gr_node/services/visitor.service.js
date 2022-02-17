@@ -234,7 +234,11 @@ function searchVisitor(req) {
         } else if (req.body.by == "establishment_id") {
             select_query = 'SELECT * FROM establishment WHERE establishment_id like "%' + value + '%"';
         } else {
-            select_query = 'SELECT v.visitor_id, visitor_name, visitor_mobile, visitor_email, member_name, member_mobile as member_phone, g.grievance_id, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, created_at, grievance_category, section, max(no_of_visit) as no_of_visit, attended_at_level, grievance_details, status, visit_at FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id INNER JOIN visits as vs ON vs.grievance_id = g.grievance_id WHERE ' + column + ' like "%' + value + '%"  group by grievance_id';
+            if(req.body.search == "visitor") {
+                select_query = 'SELECT v.visitor_id, visitor_name, visitor_mobile, visitor_email, member_name, member_mobile as member_phone, g.grievance_id, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, created_at, grievance_category, section, no_of_visit, attended_at_level, grievance_details, status, visit_at FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id INNER JOIN visits as vs ON vs.grievance_id = g.grievance_id WHERE ' + column + ' like "%' + value + '%"';
+            } else {
+                select_query = 'SELECT v.visitor_id, visitor_name, visitor_mobile, visitor_email, member_name, member_mobile as member_phone, g.grievance_id, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, created_at, grievance_category, section, max(no_of_visit) as no_of_visit, attended_at_level, grievance_details, status, visit_at FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id INNER JOIN visits as vs ON vs.grievance_id = g.grievance_id WHERE ' + column + ' like "%' + value + '%"  group by grievance_id';
+            }
         }
 
         if (req.body.limit) {
@@ -313,6 +317,8 @@ function setSearchColumn(req) {
         column = "visitor_mobile";
     } else if (req.by == "visitor_email") {
         column = "visitor_email";
+    } else if (req.by == "visitor_name") {
+        column = "visitor_name";
     } else if (req.by == "uan") {
         column = "uan";
     } else if (req.by == "pf_account_no") {
