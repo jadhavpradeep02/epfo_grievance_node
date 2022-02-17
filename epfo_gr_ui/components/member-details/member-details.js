@@ -24,7 +24,7 @@ export class MemberDetails extends LitElement {
 
   async loadMemberData(){
     this.loading = true;
-    this.rows = await VisitorService.fetchMemberData();
+    this.rows = await VisitorService.fetchMemberData(this.getUANFromURL());
     this.loading = false;
   }
 

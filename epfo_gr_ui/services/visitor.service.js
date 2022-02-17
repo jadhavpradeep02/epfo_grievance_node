@@ -1,4 +1,4 @@
-import { addVisitorURL, deleteUserUrl, updateVisitorUrl, getAllVisitorsUrl, commonAPIConfig, closeGrievanceUrl } from "../configs/api.config";
+import { addVisitorURL, deleteUserUrl, updateVisitorUrl, getAllVisitorsUrl, getVisitorDataURL, getMemberDataURL, commonAPIConfig, closeGrievanceUrl } from "../configs/api.config";
 import { AuthService } from './authentication.service.js';
 
 let currentEditVisitor = null;
@@ -62,6 +62,13 @@ const closeGriavance = async (visitorData, callbackFn) => {
     })
 }
 
+const fetchMemberData = async (uan) => {
+    const userData = await fetch(getMemberDataURL()+'?uan='+uan,{
+        headers: getCommonHeaders(),
+    });
+    return userData.json();
+}
+
 const fetchVisitors = async () => {
     const userData = await fetch(getAllVisitorsUrl(),{
         headers: getCommonHeaders(),
@@ -69,13 +76,13 @@ const fetchVisitors = async () => {
     return userData.json();
 }
 
-const fetchMemberData = async () => {
+/* const fetchMemberData = async () => {
     // TODO : Mmodify this to load members data when API is available
     const userData = await fetch(getAllVisitorsUrl(),{
         headers: getCommonHeaders(),
     });
     return userData.json();
-}
+} */
 
 const fetchVisitorData = async () => {
     // TODO : Mmodify this to load visitor data when API is available
