@@ -16,6 +16,8 @@ service.closeGrievance = closeGrievance;
 service.getTopVisits = getTopVisits;
 service.getTopPending = getTopPending;
 service.searchMembers = searchMembers;
+service.getMemberData = getMemberData;
+service.getVisitorData = getVisitorData;
 module.exports = service;
 
 function getAllVisitors(req) {
@@ -235,7 +237,7 @@ function searchVisitor(req) {
             select_query = 'SELECT * FROM establishment WHERE establishment_id like "%' + value + '%"';
         } else {
             if(req.body.search == "visitor") {
-                select_query = 'SELECT v.visitor_id, visitor_name, visitor_mobile, visitor_email, member_name, member_mobile as member_phone, g.grievance_id, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, created_at, grievance_category, section, no_of_visit, attended_at_level, grievance_details, status, visit_at FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id INNER JOIN visits as vs ON vs.grievance_id = g.grievance_id WHERE ' + column + ' like "%' + value + '%"';
+                select_query = 'SELECT v.visitor_id, visitor_name, visitor_mobile, visitor_email, member_name, member_mobile as member_phone, g.grievance_id, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, created_at, grievance_category, section, max(no_of_visit) as no_of_visit, attended_at_level, grievance_details, status, visit_at FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id INNER JOIN visits as vs ON vs.grievance_id = g.grievance_id WHERE ' + column + ' like "%' + value + '%"  group by visitor_id';
             } else {
                 select_query = 'SELECT v.visitor_id, visitor_name, visitor_mobile, visitor_email, member_name, member_mobile as member_phone, g.grievance_id, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, created_at, grievance_category, section, max(no_of_visit) as no_of_visit, attended_at_level, grievance_details, status, visit_at FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id INNER JOIN visits as vs ON vs.grievance_id = g.grievance_id WHERE ' + column + ' like "%' + value + '%"  group by grievance_id';
             }
@@ -412,11 +414,55 @@ function searchMembers(req) {
     let select_query = "";
 
     try {
-        select_query = 'SELECT g.grievance_id, visitor_id, member_name, member_mobile as member_phone, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, grievance_category, section, no_of_visit, attended_at_level, grievance_details, status, visit_at FROM grievance as g INNER JOIN visits as vs ON g.grievance_id = vs.grievance_id WHERE ' + column + ' like "%' + value + '%"';
+        select_query = 'SELECT g.grievance_id, visitor_id, member_name, member_mobile as member_phone, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, grievance_category, section, max(no_of_visit) as no_of_visit, attended_at_level, grievance_details, status, visit_at FROM grievance as g INNER JOIN visits as vs ON g.grievance_id = vs.grievance_id WHERE ' + column + ' like "%' + value + '%" group by grievance_id';
 
         if (req.body.limit) {
             select_query += ' LIMIT ' + req.limit;
         }
+        console.log(select_query);
+        connection.query(select_query, (err, rows) => {
+
+            console.log('The data from users table are: \n');
+            deferred.resolve(rows);
+        });
+        return deferred.promise;
+    } catch (error) {
+        console.error(error.message);
+        return res.status(500).send("Internal Server Error");
+    }
+}
+
+function getMemberData(req) {
+    var deferred = Q.defer();
+    let value = req.query.uan;
+    let column = 'uan';
+    let select_query = "";
+
+    try {
+        select_query = 'SELECT g.grievance_id, visitor_id, member_name, member_mobile as member_phone, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, grievance_category, section, no_of_visit, attended_at_level, grievance_details, status, visit_at FROM grievance as g INNER JOIN visits as vs ON g.grievance_id = vs.grievance_id WHERE ' + column + ' like "%' + value + '%"';
+
+        console.log(select_query);
+        connection.query(select_query, (err, rows) => {
+
+            console.log('The data from users table are: \n');
+            deferred.resolve(rows);
+        });
+        return deferred.promise;
+    } catch (error) {
+        console.error(error.message);
+        return res.status(500).send("Internal Server Error");
+    }
+}
+
+function getVisitorData(req) {
+    var deferred = Q.defer();
+    let value = req.query.visitor_id;
+    let column = 'visitor_id';
+    let select_query = "";
+
+    try {
+        select_query = 'SELECT v.visitor_id, visitor_name, visitor_mobile, visitor_email, g.grievance_id, member_name, member_mobile as member_phone, uan, pf_account_no, ppo_number, establishment_name, establishment_id, task_id as estb_account_task_id, section,grievance_category,  status, vs.visit_id, no_of_visit, attended_at_level, grievance_details, visit_at FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id INNER JOIN visits as vs ON g.grievance_id = vs.grievance_id WHERE v.visitor_id = "' + value + '" order by v.visitor_id';
+
         console.log(select_query);
         connection.query(select_query, (err, rows) => {
 

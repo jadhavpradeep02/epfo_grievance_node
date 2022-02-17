@@ -17,6 +17,8 @@ router.post('/close', authenticate, closeGrievance);
 router.get('/topvisits', authenticate, getTopVisits);
 router.get('/toppending', authenticate, getTopPending);
 router.post('/membersearch', authenticate, searchMembers);
+router.get('/member', authenticate, getMemberData);
+router.get('/visitordata', authenticate, getVisitorData);
 
 module.exports = router;
 
@@ -102,6 +104,22 @@ function getTopPending(req, res) {
 
 function searchMembers(req, res) {
     visitorService.searchMembers(req).then(function (response) {
+        res.send(response);
+    }).catch(function (err) {
+        res.send(err);
+    });
+}
+
+function getMemberData(req, res) {
+    visitorService.getMemberData(req).then(function (response) {
+        res.send(response);
+    }).catch(function (err) {
+        res.send(err);
+    });
+}
+
+function getVisitorData(req, res) {
+    visitorService.getVisitorData(req).then(function (response) {
         res.send(response);
     }).catch(function (err) {
         res.send(err);
