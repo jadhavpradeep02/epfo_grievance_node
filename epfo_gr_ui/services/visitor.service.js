@@ -84,9 +84,8 @@ const fetchVisitors = async () => {
     return userData.json();
 } */
 
-const fetchVisitorData = async () => {
-    // TODO : Mmodify this to load visitor data when API is available
-    const userData = await fetch(getAllVisitorsUrl(),{
+const fetchVisitorData = async (visitor_id) => {
+    const userData = await fetch(getVisitorDataURL()+'?visitor_id='+visitor_id,{
         headers: getCommonHeaders(),
     });
     return userData.json();
