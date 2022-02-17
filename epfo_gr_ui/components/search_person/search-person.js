@@ -88,10 +88,10 @@ export class SearchPerson extends LitElement {
     let endpoint, jsonBody;
     if(this.mode === "visitor"){
         endpoint = searchUrl();
-        jsonBody = JSON.stringify({by: this.renderRoot.querySelector('.visitor-area [name="by"]:checked').attributes['data-name'].value, value: this.renderRoot.querySelector("#search").value})
+        jsonBody = JSON.stringify({by: this.renderRoot.querySelector('.visitor-area [name="by"]:checked').attributes['data-name'].value, value: this.renderRoot.querySelector("#search").value, search: "visitor"})
     } else {
         endpoint = memberSearchUrl();
-        jsonBody = JSON.stringify({by: this.renderRoot.querySelector('.member-area [name="by"]:checked').attributes['data-name'].value, value: this.renderRoot.querySelector("#search").value})
+        jsonBody = JSON.stringify({by: this.renderRoot.querySelector('.member-area [name="by"]:checked').attributes['data-name'].value, value: this.renderRoot.querySelector("#search").value, search: "member"})
     }
     if (this.renderRoot.querySelector("#search").value) {
       this.loading = true;

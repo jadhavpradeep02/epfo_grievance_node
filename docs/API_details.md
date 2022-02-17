@@ -356,7 +356,8 @@ NEXT API REQUEST : [ Refer feature reqeust of 19-01-2022 ]
     Search by : member_name / uan / member_mobile / pf_account_no
     Result : Member details + Members grievances ( All ) + All visits data of every grievance 
 
-Request URL: 
+
+Request URL: http://localhost:3000/api/visitor/membersearch
 
 Request Object:
 {
