@@ -461,7 +461,7 @@ function getVisitorData(req) {
     let select_query = "";
 
     try {
-        select_query = 'SELECT v.visitor_id, visitor_name, visitor_mobile, visitor_email, g.grievance_id, member_name, member_mobile as member_phone, uan, pf_account_no, ppo_number, establishment_name, establishment_id, task_id as estb_account_task_id, section,grievance_category,  status, vs.visit_id, no_of_visit, attended_at_level, grievance_details, visit_at FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id INNER JOIN visits as vs ON g.grievance_id = vs.grievance_id WHERE v.visitor_id = "' + value + '" order by v.visitor_id';
+        select_query = 'SELECT v.visitor_id, visitor_name, visitor_mobile, visitor_email, created_at, g.grievance_id, member_name, member_mobile as member_phone, uan, pf_account_no, ppo_number, establishment_name, establishment_id, task_id as estb_account_task_id, section,grievance_category,  status, vs.visit_id, no_of_visit, attended_at_level, grievance_details, visit_at FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id INNER JOIN visits as vs ON g.grievance_id = vs.grievance_id WHERE v.visitor_id = "' + value + '" order by v.visitor_id';
 
         console.log(select_query);
         connection.query(select_query, (err, rows) => {
