@@ -150,12 +150,12 @@ export class SearchPerson extends LitElement {
           <input type="radio" id="name" name="by" value="name" data-name="visitor_name" /><label for="name">Visitor Name</label>
           <input type="radio" id="email" name="by" value="email" data-name="visitor_email" /><label for="email">Visitor Email</label>
           <input type="radio" id="uan" name="by" value="uan" data-name="uan" /><label for="uan">UAN</label>
-          <input type="radio" id="epfo" name="by" value="epfo" data-name="pf_account_no" /><label for="pf_account_no">EPFO</label></div>`
+          <input type="radio" id="epfo" name="by" value="epfo" data-name="pf_account_no" /><label for="pf_account_no">PF Account No.</label></div>`
         :
         html `<div class="member-area"><input type="radio" id="phone" name="by" value="phone" data-name="member_mobile" checked/><label for="phone">Member Phone</label>
           <input type="radio" id="name" name="by" value="name" data-name="member_name" /><label for="name">Member Name</label>
           <input type="radio" id="uan" name="by" value="uan" data-name="uan" /><label for="uan">UAN</label>
-          <input type="radio" id="epfo" name="by" value="epfo" data-name="pf_account_no" /><label for="pf_account_no">EPFO</label></div>`}
+          <input type="radio" id="epfo" name="by" value="epfo" data-name="pf_account_no" /><label for="pf_account_no">PF Account No.</label></div>`}
           
           <div class="options-container">
             <lion-button @click=${this.onSearch}>Search</lion-button>

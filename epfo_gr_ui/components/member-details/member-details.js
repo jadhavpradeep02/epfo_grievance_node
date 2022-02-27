@@ -3,8 +3,9 @@ import "@lion/button/define";
 import { commonStyles } from "../commonStyles";
 import { VisitorService } from "../../services/visitor.service";
 import { AuthService } from "../../services/authentication.service";
-import { grievanceColumns } from "../../configs/table.config";
+import { grievanceColumnsMember } from "../../configs/table.config";
 import { grievanceTableStyles } from "../../configs/table.styles";
+import { renderCell } from "../utils";
 
 export class MemberDetails extends LitElement {
   static properties = {
@@ -15,7 +16,7 @@ export class MemberDetails extends LitElement {
   constructor(){
     super();
     this.loadMemberData();
-    this.colDef = [...grievanceColumns];
+    this.colDef = [...grievanceColumnsMember];
     this.rows = [];
   }
 
@@ -52,6 +53,19 @@ export class MemberDetails extends LitElement {
     }
   }
 
+  printReport(){
+    var divContents = this.shadowRoot.querySelector(".data-table  ").innerHTML;
+    var a = window.open('', '', 'height=768, width=1024');
+    a.document.write('<html>');
+    a.document.write('<link rel="stylesheet" href="/components/reports/report.print.css" type="text/css" />');
+    a.document.write('<body >');
+    a.document.write(divContents);
+    a.document.write('</body></html>');
+    a.document.close();
+    setTimeout(function(){a.print();},1000);
+    // a.print();
+  }
+
   getUANFromURL(){
     var url_string = window.location.href.split('?')[1]; //window.location.href
     var url = new URLSearchParams(url_string);
@@ -62,33 +76,25 @@ export class MemberDetails extends LitElement {
     return html`
       <div class="member-details launch-block">
           <h2>Member Data</h2>
-          <label>Get member data by UAN : ${this.getUANFromURL()}</label><br/><br/>
-
-          Data Needed from API :<br>
-          - List of all grievances of this Member<br>
-      </div>
-      ${this.rows.length ? 
-        html `<div>
+          ${this.rows.length ? 
+        html `
           <h2>${this.rows[0].member_name}</h2>
           <h3>Contact: ${this.rows[0].member_phone}</h3>
           <h3>UAN: ${this.rows[0].uan}</h3>
-          <h3>PAF Account Number: ${this.rows[0].pf_account_no}</h3>
-          <div>
-            <div class="table grievance-table">
+          <h3>PF Account Number: ${this.rows[0].pf_account_no}</h3>
+          <div class="data-table">
+            <div class="table grievance-table col-8">
               ${this.colDef.map((col) => col.header ? html`<div class="header">${col.header}</div>` : html `<div class="header"></div>` )}
               ${this.rows.map((row) => {
-                return this.colDef.map((col) => col.path ? html`<div>
-                  ${
-                    (col.type && col.type === "datetime") ? 
-                    html `${new Date(row[col.path]).toLocaleDateString()}`:
-                    html `${row[col.path]}`
-                  }
-                </div>` : html ``);
+                return this.colDef.map((col) => col.path ? html`<div>${renderCell(col, row)}</div>` : html ``);
               })}
             </div>
-          </div>`
+            </div><br/><br/>
+            <lion-button @click=${this.printReport}>Print Data</lion-button>
+            </div>`
           : 
           html ``}
+      </div>
         </div>
       ${this.renderError()}
     `;

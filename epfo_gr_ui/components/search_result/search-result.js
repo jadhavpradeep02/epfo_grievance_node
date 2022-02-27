@@ -6,6 +6,7 @@ import { VisitorService } from '../../services/visitor.service';
 import '../spinner.js';
 import '../close-grvnc-modal/close-grvnc-modal.js';
 import Fontawesome from 'lit-fontawesome';
+import { renderCell } from '../utils';
 
 export class SearchResult extends LitElement {
 
@@ -175,7 +176,7 @@ export class SearchResult extends LitElement {
       return html` <div class="table member-table">
       ${this.colDef.map((col) => col.header ? html`<div class="header">${col.header}</div>` : html `<div class="header"></div>` )}
       ${this.rows.map((row) => {
-        return this.colDef.map((col, index) => index != 0 ? html`<div>${row[col.path]}</div>` : html `<div><a href=${`#member?uan=${row.uan}`}>${row[col.path]}</a></div>`);
+        return this.colDef.map(col => html`<div>${renderCell(col, row)}</div>`);
       })}
     </div>`;
     }  else {
@@ -188,7 +189,7 @@ export class SearchResult extends LitElement {
       return html` <div class="table visitors-table">
       ${this.colDef.map((col) => col.header ? html`<div class="header">${col.header}</div>` : html `<div class="header"></div>` )}
       ${this.rows.map((row) => {
-        return this.colDef.map((col, index) => index != 0 ? html`<div>${row[col.path]}</div>` : html `<div><a href=${`#visitor?id=${row.visitor_id}`}>${row[col.path]}</a></div>`);
+        return this.colDef.map(col => html`<div>${renderCell(col, row)}</div>`);
       })}
     </div>`;
     }  else {
@@ -201,7 +202,7 @@ export class SearchResult extends LitElement {
       return html` <div class="table est-table">
       ${this.colDef.map((col) => col.header ? html`<div class="header">${col.header}</div>` : html `<div class="header"></div>` )}
       ${this.rows.map((row) => {
-        return this.colDef.map((col) => col.path ? html`<div>${row[col.path]}</div>` : html `<div class="edit-cell" title="Select" @click=${() => this.selectEst(row)}><i class="fas fa-user-edit edit-icon"></i></div>`);
+        return this.colDef.map((col) => col.path ? html`<div>${renderCell(col, row)}</div>` : html `<div class="edit-cell" title="Select" @click=${() => this.selectEst(row)}><i class="fas fa-user-edit edit-icon"></i></div>`);
       })}
     </div>`;
     }  else {
@@ -214,7 +215,7 @@ export class SearchResult extends LitElement {
       return html` <div class="table">
       ${this.colDef.map((col) => col.header ? html`<div class="header">${col.header}</div>` : html `<div class="header"></div>` )}
       ${this.rows.map((row) => {
-        return this.colDef.map((col) => col.path ? html`<div>${row[col.path]}</div>` : html `<div class="edit-cell" title="Edit user" @click=${() => this.editVisitor(row)}><i class="fas fa-user-edit edit-icon"></i></div>`);
+        return this.colDef.map((col) => col.path ? html`<div>${renderCell(col, row)}</div>` : html `<div class="edit-cell" title="Edit user" @click=${() => this.editVisitor(row)}><i class="fas fa-user-edit edit-icon"></i></div>`);
       })}
     </div>`;
     }  else {
@@ -229,7 +230,7 @@ export class SearchResult extends LitElement {
       <div class="table">
       ${this.colDef.map((col) => col.header ? html`<div class="header">${col.header}</div>` : html `<div class="header"></div>` )}
       ${this.rows.map((row) => {
-        return this.colDef.map((col) => col.path ? html`<div>${row[col.path]}</div>` : html `<div class="edit-cell" title="Mark done" @click=${() => this.closeGrvnce(row)}><i class="fas fa-clipboard-check edit-icon"></i></div>`);
+        return this.colDef.map((col) => col.path ? html`<div>${renderCell(col, row)}</div>` : html `<div class="edit-cell" title="Mark done" @click=${() => this.closeGrvnce(row)}><i class="fas fa-clipboard-check edit-icon"></i></div>`);
       })}
     </div>`;
     }  else {

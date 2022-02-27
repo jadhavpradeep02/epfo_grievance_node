@@ -7,6 +7,7 @@ import { ReportsService } from "../../services/reports.service";
 import "../search_result/search-result";
 import { reportColumns, highestVisitorTableCols, highestPendingTableCols } from "../../configs/table.config";
 import { formStyles } from "./reports.style";
+import { renderCell } from "../utils";
 
 export class Reports extends LitElement {
   static get properties() { 
@@ -191,15 +192,7 @@ export class Reports extends LitElement {
                         <div class="table">
                           ${highestVisitorTableCols.map((col) => col.header ? html`<div class="header">${col.header}</div>` : html `<div class="header"></div>` )}
                           ${this.topEntities.map((row) => {
-                              return highestVisitorTableCols.map((col) => col.path ? 
-                              html`<div>
-                                ${
-                                  (col.type && col.type === "datetime") ? 
-                                  html `${new Date(row[col.path]).toLocaleDateString()}`:
-                                  html `${row[col.path]}`
-                                }
-                                </div>` : 
-                              html ``);
+                              return highestVisitorTableCols.map(col => html`<div>${renderCell(col, row)}</div>`);
                           })}
                       </div>
                       ` : 
@@ -215,15 +208,7 @@ export class Reports extends LitElement {
                           <div class="table">
                             ${highestPendingTableCols.map((col) => col.header ? html`<div class="header">${col.header}</div>` : html `<div class="header"></div>` )}
                             ${this.topPendingEntities.map((row) => {
-                                return highestPendingTableCols.map((col) => col.path ? 
-                                html`<div>
-                                  ${
-                                    (col.type && col.type === "datetime") ? 
-                                    html `${new Date(row[col.path]).toLocaleDateString()}`:
-                                    html `${row[col.path]}`
-                                  }
-                                  </div>` : 
-                                html ``);
+                                return highestPendingTableCols.map(col => html`<div>${renderCell(col, row)}</div>`);
                             })}
                         </div>
                         ` : 

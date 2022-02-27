@@ -3,8 +3,9 @@ import "@lion/button/define";
 import { commonStyles } from "../commonStyles";
 import { VisitorService } from "../../services/visitor.service";
 import { AuthService } from "../../services/authentication.service";
-import { grievanceColumns } from "../../configs/table.config";
+import { grievanceColumnsVisitor } from "../../configs/table.config";
 import { grievanceTableStyles } from "../../configs/table.styles";
+import { renderCell } from "../utils";
 
 export class VisitorDetails extends LitElement {
   static properties = {
@@ -15,7 +16,7 @@ export class VisitorDetails extends LitElement {
   constructor(){
     super();
     this.rows = [];
-    this.colDef = [...grievanceColumns];
+    this.colDef = [...grievanceColumnsVisitor];
     this.loadVisitorData();
   }
 
@@ -36,6 +37,19 @@ export class VisitorDetails extends LitElement {
     this.loading = true;
     this.rows = await VisitorService.fetchVisitorData(this.getIdFromURL());
     this.loading = false;
+  }
+
+  printReport(){
+    var divContents = this.shadowRoot.querySelector(".data-table").innerHTML;
+    var a = window.open('', '', 'height=768, width=1024');
+    a.document.write('<html>');
+    a.document.write('<link rel="stylesheet" href="/components/reports/report.print.css" type="text/css" />');
+    a.document.write('<body >');
+    a.document.write(divContents);
+    a.document.write('</body></html>');
+    a.document.close();
+    setTimeout(function(){a.print();},1000);
+    // a.print();
   }
 
   renderError() {
@@ -65,18 +79,15 @@ export class VisitorDetails extends LitElement {
           <h2>${this.rows[0].visitor_name}</h2>
           <h3>Contact: ${this.rows[0].visitor_mobile}</h3>
           <h3>Email: ${this.rows[0].visitor_email}</h3>
-          <div class="table grievance-table">
+          <div class="data-table">
+          <div class="table grievance-table col-8">
             ${this.colDef.map((col) => col.header ? html`<div class="header">${col.header}</div>` : html `<div class="header"></div>` )}
             ${this.rows.map((row) => {
-              return this.colDef.map((col) => col.path ? html`<div>
-                ${
-                  (col.type && col.type === "datetime") ? 
-                  html `${new Date(row[col.path]).toLocaleDateString()}`:
-                  html `${row[col.path]}`
-                }
-              </div>` : html ``);
+              return this.colDef.map((col) => col.path ? html`<div>${renderCell(col, row)}</div>` : html ``);
             })}
           </div>
+          </div><br/><br/>
+          <lion-button @click=${this.printReport}>Print Data</lion-button>
         </div>`
         : 
         html ``}

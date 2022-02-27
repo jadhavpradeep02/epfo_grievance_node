@@ -1,6 +1,7 @@
 import { LitElement, html, css } from "lit-element";
 import { classMap } from "lit/directives/class-map.js";
 import "./../spinner.js";
+import { renderDate } from "../utils.js";
 
 class CloseGrvncModal extends LitElement {
   static get styles() {
@@ -74,6 +75,11 @@ class CloseGrvncModal extends LitElement {
       .details{
         margin-bottom: 10px;
         font-size: 1rem;
+        min-width: 200px;
+        display: inline-block;
+      }
+      .detail-value{
+        display: inline-block;
       }
       .closing-feedback-label{
         margin-bottom: 10px;
@@ -114,10 +120,16 @@ class CloseGrvncModal extends LitElement {
             : html`
                 <div id="content" class="content">
                   <div class="gr_details">
-                    <div class="details"><b>Visitor</b>: ${this.textData.visitor_name} </div>
-                    <div class="details"><b>UAN</b>: ${this.textData.uan} </div>
-                    <div class="details"><b>Details</b>: ${this.textData.grievance_details} </div>
-                    <!-- TODO! ADD GRIEVANCE DETAILS -->
+                    <div><div class="details"><b>Visitor</b>: </div><div class="detail-value">${this.textData?.visitor_name} </div></div>
+                    <div><div class="details"><b>UAN</b>: </div><div class="detail-value">${this.textData?.uan} </div></div>
+                    <div><div class="details"><b>Details</b>: </div><div class="detail-value">${this.textData?.grievance_details} </div></div>
+                    <div><div class="details"><b>Created on</b>: </div><div class="detail-value">${renderDate(this.textData?.created_at)} </div></div>
+                    <div><div class="details"><b>Member name</b>: </div><div class="detail-value">${this.textData?.member_name} </div></div>
+                    <div><div class="details"><b>Section</b>: </div><div class="detail-value">${this.textData?.section} </div></div>
+                    <div><div class="details"><b>Category</b>: </div><div class="detail-value">${this.textData?.grievance_category} </div></div>
+                    <div><div class="details"><b>PF Account number</b>:</div><div class="detail-value"> ${this.textData?.pf_account_no} </div></div>
+                    <div><div class="details"><b>PPO </b>:</div><div class="detail-value">${this.textData?.ppo_number} </div></div>
+                    <div><div class="details"><b>Task ID </b>:</div><div class="detail-value">${this.textData?.estb_account_task_id} </div></div>
                   </div>
                   <div class="closing-feedback-label">Provide info on closing grievance: </div>
                   <textarea cols="80" name="closing_text" rows="10" class="clsing-details-text"></textarea>  

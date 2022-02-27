@@ -6,8 +6,8 @@ export const visitorColumns = [
     path: "visitor_name",
   },
   {
-    header: "Id",
-    path: "visitor_id",
+    header: "No. of Visits",
+    path: "no_of_visit",
   },
   {
     header: "Contact",
@@ -52,12 +52,12 @@ export const visitorColumns = [
 
   export const highestVisitorTableCols = [
     {
-      header: "Member Name",
-      path: "member_name",
+      header: "Visitor Name",
+      path: "visitor_name",
     },
     {
-      header: "member mobile number",
-      path: "member_phone",
+      header: "Visitor mobile number",
+      path: "visitor_mobile",
     },
     {
       header: "Last Visit",
@@ -65,28 +65,27 @@ export const visitorColumns = [
       type: "datetime"
     },
     { 
-      header: "Total Visit", 
+      header: "Total Visits", 
       path: "no_of_visit"
     }
   ]
 
   export const highestPendingTableCols = [
     {
-      header: "Establishment Name",
-      path: "establishment_name",
+      header: "Member Name",
+      path: "member_name",
     },
     {
-      header: "Section",
-      path: "section",
+      header: "Status",
+      path: "status",
     },
     {
-      header: "First Entry",
-      path: "created_at",
-      type: "datetime"
+      header: "Grievance Category",
+      path: "grievance_category",
     },
     { 
-      header: "Total Visit", 
-      path: "no_of_visit"
+      header: "Task id", 
+      path: "estb_account_task_id"
     }
   ]
 
@@ -135,13 +134,48 @@ export const visitorColumns = [
     }
   ]
 
-  export const grievanceColumns = [
+  export const grievanceColumnsVisitor = [
+    {
+      header: "Establishment",
+      path: "establishment_name",
+    },
+    {
+      header: "Details",
+      path: "grievance_details"
+    },
+    {
+      header: "UAN",
+      path: "uan",
+    },
+    {
+      header: "PF Account Number",
+      path: "pf_account_no",
+    },
+    {
+      header: "Section",
+      path: "section",
+    },
+    {
+      header: "Grievance Category",
+      path: "grievance_category",
+    },
+    {
+      header: "Date Visited",
+      path: "visit_at",
+      type: "datetime"
+    },
+    { 
+      header: "Status", 
+      path: "status" 
+    }
+  ]
+  export const grievanceColumnsMember = [
     {
       header: "Grievance ID",
       path: "grievance_id"
     },
     {
-      header: "Organisation",
+      header: "Establishment",
       path: "establishment_name",
     },
     {
@@ -161,8 +195,8 @@ export const visitorColumns = [
       path: "grievance_category",
     },
     {
-      header: "Date Created",
-      path: "created_at",
+      header: "Date Visited",
+      path: "visit_at",
       type: "datetime"
     },
     { 

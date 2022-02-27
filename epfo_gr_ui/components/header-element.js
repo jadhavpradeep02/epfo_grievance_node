@@ -80,8 +80,9 @@ export class HeaderElement extends LitElement {
     AuthService.logout();
   }
 
-  toggleMenu(){
+  toggleMenu(e){
     this.expandMenu = !this.expandMenu;
+    e.stopPropagation();
   }
 
   toPage(pageName){

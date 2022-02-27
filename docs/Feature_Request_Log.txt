@@ -131,3 +131,32 @@ Grievances :
 	3.
 	4.
 	
+--------------- 24-02-2022 -----------------------------------------------------------------------------------
+
+Seach people page >> In result table Add No of visits |  ( remove id ) DONE
+Search and close page > Enter shold be disabled DONE
+Search and close page > Add PPO checkbox DONE
+Search and close page >> Call members API instead of Search ( and members result is grievances ) DONE
+Search and close page > Result table > Instead of Status > Show pending since DONE
+On close girevance popup : Show created date( Label : Created on), Member name , Section ,Category, PF Account number, PPO, Task ID : DONE
+
+Rename : PAF to PF DONE
+Rename EPFO to PF Account number in checkbox names DONE
+
+Visitor Page > In thetable > Add Grievance details | Date is not showing ( get date from visit_at and rename header to Date visited ) |  DONE
+Member Page > get date from visit_at and rename header to Date visited DONE
+If n progress > Pending days DONE
+If closed > Last closed DONE
+Rename Organisation header to establishment DONE
+Visitor Page > Printable table DONE
+Members Page > Printable table DONE
+
+
+
+Reports page > Top visitor > make link in the name : DONE
+Top pending griavances > member name ( remove est name > link ) | Add Pending since( days ) |  Remove total visit | Remove first entry | Add grievance category | Add task id ( it only exist for account ) DONE
+
+Pending :
+
+> Menu should go away on page click
+[Create user form ]
