@@ -417,7 +417,7 @@ function searchMembers(req) {
 
     try {
         if(req.body.pendingOnly) {
-            select_query = 'SELECT g.grievance_id, visitor_name, visitor_mobile, created_at, visitor_id, member_name, member_mobile as member_phone, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, grievance_category, section, max(no_of_visit) as no_of_visit, attended_at_level, grievance_details, status, visit_at FROM grievance as g INNER JOIN visitors as v ON g.visitor_id = v.visitor_id INNER JOIN visits as vs ON g.grievance_id = vs.grievance_id WHERE ' + column + ' like "%' + value + '%" and status != "resolved" group by grievance_id';
+            select_query = 'SELECT g.grievance_id, visitor_name, visitor_mobile, created_at, v.visitor_id, member_name, member_mobile as member_phone, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, grievance_category, section, max(no_of_visit) as no_of_visit, attended_at_level, grievance_details, status, visit_at FROM grievance as g INNER JOIN visitors as v ON g.visitor_id = v.visitor_id INNER JOIN visits as vs ON g.grievance_id = vs.grievance_id WHERE ' + column + ' like "%' + value + '%" and status != "resolved" group by grievance_id';
         } else {
             select_query = 'SELECT g.grievance_id, visitor_id, member_name, member_mobile as member_phone, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, grievance_category, section, max(no_of_visit) as no_of_visit, attended_at_level, grievance_details, status, visit_at FROM grievance as g INNER JOIN visits as vs ON g.grievance_id = vs.grievance_id WHERE ' + column + ' like "%' + value + '%" group by grievance_id';
         }
@@ -445,7 +445,7 @@ function getMemberData(req) {
     let select_query = "";
 
     try {
-        select_query = 'SELECT g.grievance_id, visitor_name, visitor_mobile, visitor_email, created_at, visitor_id, member_name, member_mobile as member_phone, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, grievance_category, section, no_of_visit, attended_at_level, grievance_details, status, visit_at FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id INNER JOIN grievance as g visits as vs ON g.grievance_id = vs.grievance_id WHERE ' + column + ' like "%' + value + '%"';
+        select_query = 'SELECT g.grievance_id, visitor_name, visitor_mobile, visitor_email, created_at, v.visitor_id, member_name, member_mobile as member_phone, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, grievance_category, section, no_of_visit, attended_at_level, grievance_details, status, visit_at FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id INNER JOIN visits as vs ON g.grievance_id = vs.grievance_id WHERE ' + column + ' like "%' + value + '%"';
 
         console.log(select_query);
         connection.query(select_query, (err, rows) => {

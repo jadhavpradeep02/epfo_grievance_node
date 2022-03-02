@@ -82,7 +82,7 @@ export class HeaderElement extends LitElement {
 
   toggleMenu(e){
     this.expandMenu = !this.expandMenu;
-    e.stopPropagation();
+    //e.stopPropagation();
   }
 
   toPage(pageName){
