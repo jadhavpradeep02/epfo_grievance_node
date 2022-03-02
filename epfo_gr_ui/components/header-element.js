@@ -22,6 +22,20 @@ export class HeaderElement extends LitElement {
         margin-top: 0px;
       }
 
+      .home-button{
+        position: absolute;
+        top: 20px;
+        left: 10px;
+        font-weight: bold;
+        color: white;
+      }
+
+      .home-button a,
+      .home-button a:visited{
+        text-decoration: none;
+        color: white;
+      }
+
       .elem-shadow{
         -webkit-box-shadow: -1px 3px 5px 0px rgba(0,0,0,0.75);
         -moz-box-shadow: -1px 3px 5px 0px rgba(0,0,0,0.75);
@@ -94,9 +108,14 @@ export class HeaderElement extends LitElement {
     return AuthService.getUserRole() === 'admin';
   }
 
+  get isHome() {
+    return AuthService.checkAuth() && !window.location.href.includes('add');
+  }
+
   render() {
     return html`
       <h1 class="container elem-shadow">Grievance Portal</h1>
+      ${this.isHome ? html `<div class="home-button"><i class="fas fas fa-chevron-left"></i><a href="#add" >&nbsp;Home</a></div>` : html ``}
       
       ${AuthService.checkAuth() ? html `
         <div class="menu" @click=${this.toggleMenu}><i class="fas fa-bars"></i></div>
