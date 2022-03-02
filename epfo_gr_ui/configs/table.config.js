@@ -134,6 +134,21 @@ export const visitorColumns = [
     }
   ]
 
+  export const usersColumns = [
+    {
+      header: "User Name",
+      path: "username",
+    },
+    {
+      header: "User email",
+      path: "email",
+    },
+    {
+      header: "Role",
+      path: "role",
+    }
+  ]
+
   export const grievanceColumnsVisitor = [
     {
       header: "Establishment",

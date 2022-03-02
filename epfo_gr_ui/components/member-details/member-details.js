@@ -4,7 +4,6 @@ import { commonStyles } from "../commonStyles";
 import { VisitorService } from "../../services/visitor.service";
 import { AuthService } from "../../services/authentication.service";
 import { grievanceColumnsMember } from "../../configs/table.config";
-import { grievanceTableStyles } from "../../configs/table.styles";
 import { renderCell } from "../utils";
 
 export class MemberDetails extends LitElement {
@@ -22,7 +21,6 @@ export class MemberDetails extends LitElement {
 
   static styles = [
     commonStyles,
-    grievanceTableStyles,
     css`
     .member-details{
         padding: 1em;
@@ -33,6 +31,9 @@ export class MemberDetails extends LitElement {
     }
     h3{
       text-align: left;
+    }
+    .table {
+      grid-template-columns: 12% 12% 12% 12% 12% 12% 12% 12%; 
     }
     `,
   ];

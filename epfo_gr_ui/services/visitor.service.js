@@ -1,4 +1,4 @@
-import { addVisitorURL, deleteUserUrl, updateVisitorUrl, getAllVisitorsUrl, getVisitorDataURL, getMemberDataURL, commonAPIConfig, closeGrievanceUrl } from "../configs/api.config";
+import { addVisitorURL, deleteUserUrl, getUsersURL, addUserURL, updateVisitorUrl, getAllVisitorsUrl, getVisitorDataURL, getMemberDataURL, commonAPIConfig, closeGrievanceUrl } from "../configs/api.config";
 import { AuthService } from './authentication.service.js';
 
 let currentEditVisitor = null;
@@ -9,6 +9,33 @@ const getCommonHeaders = () => {
         'Content-Type': 'application/json',
         'Authorization': AuthService.addBearerAuth()
     };
+}
+
+const addNewUser = async (userData, successCallbackFn, errCallabackFn) => {
+    try {
+        const resp = await fetch( addUserURL(), {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': AuthService.addBearerAuth()
+            },
+            redirect: 'follow',
+            body: JSON.stringify(userData)
+        })
+        .then((respose) => {
+            if(successCallbackFn){
+                successCallbackFn(userData);
+            }
+        })
+    } catch (error) {
+        if(errCallabackFn){
+            errCallabackFn(userData, error);
+        }
+    }
+    
 }
 
 const addNewVisitor = async (visitorData, callbackFn) => {
@@ -62,6 +89,13 @@ const closeGriavance = async (visitorData, callbackFn) => {
     })
 }
 
+const fetchUsersData = async (uan) => {
+    const userData = await fetch(getUsersURL(),{
+        headers: getCommonHeaders(),
+    });
+    return userData.json();
+}
+
 const fetchMemberData = async (uan) => {
     const userData = await fetch(getMemberDataURL()+'?uan='+uan,{
         headers: getCommonHeaders(),
@@ -75,14 +109,6 @@ const fetchVisitors = async () => {
     });
     return userData.json();
 }
-
-/* const fetchMemberData = async () => {
-    // TODO : Mmodify this to load members data when API is available
-    const userData = await fetch(getAllVisitorsUrl(),{
-        headers: getCommonHeaders(),
-    });
-    return userData.json();
-} */
 
 const fetchVisitorData = async (visitor_id) => {
     const userData = await fetch(getVisitorDataURL()+'?visitor_id='+visitor_id,{
@@ -149,5 +175,7 @@ export const VisitorService = {
     setEstBlishment,
     closeGriavance,
     fetchMemberData,
-    fetchVisitorData
+    fetchVisitorData,
+    addNewUser,
+    fetchUsersData
 }

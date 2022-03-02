@@ -604,6 +604,8 @@ Response :
 
 === Add User API ===========
 
+```
+
 API : http://localhost:3000/api/user/addUser
 
 Post Request Object:
@@ -619,3 +621,5 @@ Response:
     "status": "200",
     "message": "User Added successfully"
 }
+
+```

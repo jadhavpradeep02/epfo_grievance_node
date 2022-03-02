@@ -90,6 +90,10 @@ export class HeaderElement extends LitElement {
     window.location.href = "#"+pageName;
   }
 
+  get isAdmin() {
+    return AuthService.getUserRole() === 'admin';
+  }
+
   render() {
     return html`
       <h1 class="container elem-shadow">Grievance Portal</h1>
@@ -102,7 +106,7 @@ export class HeaderElement extends LitElement {
           <div class="menu-item"  @click=${() => this.toPage('Search&close')}><i class="fas fas fa-search"></i>&nbsp;&nbsp;Search & Close</div>
           <div class="menu-item"  @click=${() => this.toPage('SearchPeople')}><i class="fas fas fa-search"></i>&nbsp;&nbsp;Search Entities</div>
           <div class="menu-item"  @click=${() => this.toPage('reports')}><i class="fas fa-file-alt"></i>&nbsp;&nbsp;Reports</div>
-          <div class="menu-item"><i class="fas fa-user"></i>&nbsp;&nbsp;Profile</div>
+          ${this.isAdmin ? html `<div class="menu-item" @click=${() => this.toPage('addUser')}><i class="fas fa-user"></i>&nbsp;&nbsp;Users</div>` : html ``}
           <div class="menu-item" title="log out" @click=${this.logout}><i class="fas fa-power-off"></i>&nbsp;&nbsp;Logout</div>
         </div>` : ``}
         <!-- <div class="logout" title="log out" @click=${this.logout}> <i class="fas fa-power-off"></i></div> -->` 

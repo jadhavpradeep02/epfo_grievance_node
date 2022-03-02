@@ -55,9 +55,10 @@ export class GrvncApp extends RouterMixin {
     return html`
       <header-element .showUser=${AuthService.checkAuth()}></header-element>
       ${this.renderRoute()}
-      <div class="env-selector">
+      <!-- Enable for Debugging -->
+      <!-- <div class="env-selector">
         <label class="footer-label" @click="${this.onChange}">[ ${this.mode} ]</label>
-      </div>
+      </div> -->
     `;
   }
 }

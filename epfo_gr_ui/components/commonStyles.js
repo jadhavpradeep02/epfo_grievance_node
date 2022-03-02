@@ -49,7 +49,8 @@ button{
     margin: 2em;
 }
 
-.error-close{
+.error-close,
+.success-close{
     float: right;
     font-weight: bold;
     cursor: pointer;
@@ -126,6 +127,27 @@ a.btn:hover{
 .input-prefix{
     font-size: 1em;
     padding-bottom: 4px;
+}
+
+.table {
+    display: grid; 
+    width: 100%;
+    margin: auto;
+}
+
+.table > div {
+    margin: 0px;
+    background: var(--honeydew);
+    padding: 5px;
+    border: 1px solid white;
+    word-break: break-word;
+    text-overflow: ellipsis;
+}
+
+.table .header{
+    font-weight: bold;
+    background: var(--british-racing-green);
+    color: white;
 }
 
 /* .table > div:nth-child(6n+2) {

@@ -1,6 +1,7 @@
 
 const BaseURL= 'http://localhost';
 const onlineURLBase = 'https://61707f6123781c0017289a77.mockapi.io/api';
+const newLocalServer = 'http://localhost:3000';
 const BasePort= "3000";
 let onlineMode = false;
 import { AuthService } from "../services/authentication.service";
@@ -41,6 +42,14 @@ export const commonAPIConfig = {
 
 export const addVisitorURL = () => {
     return onlineMode ? `${onlineURLBase}/visitor` : `${localURLBase()}/visitor/add`;
+}
+
+export const addUserURL = () => {
+    return onlineMode ? `${onlineURLBase}/visitor` : `${localURLBase()}/user/addUser`;
+}
+
+export const getUsersURL = () => {
+    return onlineMode ? `${newLocalServer}/users` : `${localURLBase()}/user`;
 }
 
 export const loginUrl = () => {

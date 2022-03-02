@@ -23,6 +23,8 @@ const clearLogin = () => {
 
 const addBearerAuth = () => `bearer ${loginData?.token}`;
 
+const getUserRole = () => loginData.userData?.role;
+
 
 const login = async (loginDetails, successFn, failFn) => {
     // await fetch()
@@ -42,6 +44,7 @@ const login = async (loginDetails, successFn, failFn) => {
             loginData = {
                 authenticated: true,
                 loggedIn: true,
+                userData:  isOnline() ? jsonResp : jsonResp.user,
                 token: isOnline() ? jsonResp.token : jsonResp.response.token
             };
             successFn(jsonResp);
@@ -67,5 +70,6 @@ export const AuthService = {
     checkAuth,
     login,
     logout,
-    addBearerAuth
+    addBearerAuth,
+    getUserRole
 }
