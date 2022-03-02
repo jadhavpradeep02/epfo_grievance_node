@@ -10,6 +10,7 @@ service = {};
 service.getAllusers = getAllusers;
 service.login = login;
 service.logout = logout;
+service.addUser = addUser;
 
 module.exports = service;
 
@@ -73,4 +74,48 @@ function logout(req) {
     connection.end();
 
     return deferred.promise;
+}
+
+function addUser(req) {
+    var deferred = Q.defer();
+    let response = {};
+    let username = req.body.username.trim();
+    let email = req.body.email.trim();
+    let password = req.body.password.trim();
+    let role = req.body.role.trim();
+
+    if(username == "" || email == "" || password == "" || role == "") {
+        response.status = "405";
+        response.message = "Empty values are not allowed";
+        deferred.resolve(response);
+        return deferred.promise;
+    } else {
+        try {
+            //before add new search for existing
+            var select_query = `SELECT * FROM users WHERE username= '${username}'`;
+            console.log(select_query);
+            connection.query(select_query, function (err, data) {
+                if (data.length > 0) {
+                    response.status = "200";
+                    response.message = "Username already exists!";
+                    deferred.resolve(response);
+                } else {
+                    var insert_sql = `INSERT INTO users (user_id, username, email, password, role,  created_at) VALUES (NULL, '${username}', '${email}', '${password}', '${role}', now())`;
+                    console.log("insert query 1 -", insert_sql)
+                    connection.query(insert_sql, function (err, result) {
+                        if (err) throw err;
+                        console.log('The data is inserted successfully into users table');   
+                        response.status = "200";
+                        response.message = "User Added successfully";
+                        deferred.resolve(response);
+                    });
+                    return deferred.promise;
+                }
+            });
+            return deferred.promise;
+        } catch (error) {
+            console.error(error.message);
+            return res.status(500).send("Internal Server Error");
+        }
+    }
 }

@@ -601,3 +601,21 @@ Response :
     }
 ]
 ``` 
+
+=== Add User API ===========
+
+API : http://localhost:3000/api/user/addUser
+
+Post Request Object:
+{
+    "username": "username",
+    "email":"abcd@def.com",
+    "password": "abc@123",
+    "role":"admin"
+}
+
+Response:
+{
+    "status": "200",
+    "message": "User Added successfully"
+}

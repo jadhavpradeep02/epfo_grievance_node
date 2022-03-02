@@ -7,7 +7,8 @@ const authenticate = require('../middleware/auth');
 
 router.get('/', authenticate,getAllUsers);
 router.post('/login', login);
-router.post('/logout', logout);
+router.post('/logout', authenticate, logout);
+router.post('/addUser', authenticate,  addUser);
 // router.post('/changePassword', changePW);
 // router.put('/forgetPassword', forgotUpdatePW);
 // router.put('/updateUser', updateUser);
@@ -56,6 +57,14 @@ function logout(req, res) {
     // })
     userService.logout(req.body).then(response => {
         res.send({ message: "Successfully Logout..." })
+    }).catch(function (err) {
+        res.send(err);
+    });
+}
+
+function addUser(req, res) {
+    userService.addUser(req).then(response => {
+        res.send({ status : response.status, message: response.message })
     }).catch(function (err) {
         res.send(err);
     });
