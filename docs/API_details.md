@@ -621,5 +621,3 @@ Response:
     "status": "200",
     "message": "User Added successfully"
 }
-
-```

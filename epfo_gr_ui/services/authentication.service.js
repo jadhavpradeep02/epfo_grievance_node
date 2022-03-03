@@ -44,7 +44,7 @@ const login = async (loginDetails, successFn, failFn) => {
             loginData = {
                 authenticated: true,
                 loggedIn: true,
-                userData:  isOnline() ? jsonResp : jsonResp.user,
+                userData:  isOnline() ? jsonResp : jsonResp.response.user,
                 token: isOnline() ? jsonResp.token : jsonResp.response.token
             };
             successFn(jsonResp);
