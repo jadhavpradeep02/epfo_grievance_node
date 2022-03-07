@@ -66,4 +66,5 @@ body{
     background-color: var(--light-gray);
     padding: 0px;
     margin: 0px;
+    color: var(--oxford-blue);
 }

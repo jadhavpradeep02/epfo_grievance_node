@@ -155,10 +155,6 @@ export const visitorColumns = [
       path: "establishment_name",
     },
     {
-      header: "Details",
-      path: "grievance_details"
-    },
-    {
       header: "UAN",
       path: "uan",
     },
@@ -173,6 +169,10 @@ export const visitorColumns = [
     {
       header: "Grievance Category",
       path: "grievance_category",
+    },
+    {
+      header: "Details",
+      path: "grievance_details"
     },
     {
       header: "Date Visited",
@@ -208,6 +208,10 @@ export const visitorColumns = [
     {
       header: "Grievance Category",
       path: "grievance_category",
+    },
+    {
+      header: "Details",
+      path: "grievance_details"
     },
     {
       header: "Date Visited",

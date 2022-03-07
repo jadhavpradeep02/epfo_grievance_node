@@ -72,8 +72,9 @@ export class VisitorDetails extends LitElement {
   render() {
     console.log('Rendering ....', this.rows);
     return html`
-      <div class="visitor-details launch-block">
-      <h2>Visitor Data:</h2>
+      <div class="visitor-details launch-block wide">
+      <h2 class="entity-header">Visitor Details</h2>
+      <hr/>
      
       ${this.rows.length ? 
         html `<div>

@@ -133,7 +133,8 @@ export class SearchPerson extends LitElement {
   render() {
     return html`
       <div class="launch-block">
-          <h3>Search for:</h3>
+          <h3 class="page-title">Search Entities</h3>
+          <hr class="head-separator"/>
           <div class="mode-choice">
             <input type="radio" id="member" @click=${() => this.setMode('member')} name="mode" value="member" /><label for="member">Member</label>
             <input type="radio" id="visitor" @click=${() => this.setMode('visitor')} name="mode" value="visitor" checked/><label for="visitor">Visitor</label>

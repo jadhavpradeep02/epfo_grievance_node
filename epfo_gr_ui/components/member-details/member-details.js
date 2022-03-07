@@ -23,8 +23,8 @@ export class MemberDetails extends LitElement {
     commonStyles,
     css`
     .member-details{
-        padding: 1em;
-        text-align: center;
+      padding: 1em;
+      text-align: center;
     }
     h2{
       text-align: center;
@@ -33,7 +33,7 @@ export class MemberDetails extends LitElement {
       text-align: left;
     }
     .table {
-      grid-template-columns: 12% 12% 12% 12% 12% 12% 12% 12%; 
+      grid-template-columns: 11% 11% 11% 11% 11% 11% 11% 11% 11%; 
     }
     `,
   ];
@@ -75,8 +75,9 @@ export class MemberDetails extends LitElement {
 
   render() {
     return html`
-      <div class="member-details launch-block">
-          <h2>Member Data</h2>
+      <div class="member-details launch-block wide">
+          <h2 class="entity-header">Member Data</h2>
+          <hr/>
           ${this.rows.length ? 
         html `
           <h2>${this.rows[0].member_name}</h2>

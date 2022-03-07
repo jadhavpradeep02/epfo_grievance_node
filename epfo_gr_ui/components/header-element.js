@@ -104,6 +104,12 @@ export class HeaderElement extends LitElement {
     window.location.href = "#"+pageName;
   }
 
+
+  blurred(e){
+    debugger;
+    this.expandMenu = !this.expandMenu;
+  }
+
   get isAdmin() {
     return AuthService.getUserRole() === 'admin';
   }
@@ -120,7 +126,7 @@ export class HeaderElement extends LitElement {
       ${AuthService.checkAuth() ? html `
         <div class="menu" @click=${this.toggleMenu}><i class="fas fa-bars"></i></div>
         ${ this.expandMenu ? html`<div class="menu-items elem-shadow">
-          <div class="menu-item"  @click=${() => this.toPage('add')}><i class="fas fa-home"></i>&nbsp;&nbsp;Home</div>
+          <a class="menu-item"  @click=${() => this.toPage('add')} @blur=${this.blurred} style="tabindex: 80;"><i class="fas fa-home"></i>&nbsp;&nbsp;Home</a>
           <div class="menu-item"  @click=${() => this.toPage('dashboard')}><i class="fas fa-tachometer-alt"></i>&nbsp;&nbsp;Dashboard</div>
           <div class="menu-item"  @click=${() => this.toPage('Search&close')}><i class="fas fas fa-search"></i>&nbsp;&nbsp;Search & Close</div>
           <div class="menu-item"  @click=${() => this.toPage('SearchPeople')}><i class="fas fas fa-search"></i>&nbsp;&nbsp;Search Entities</div>

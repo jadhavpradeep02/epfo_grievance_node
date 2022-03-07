@@ -17,6 +17,18 @@ export const commonStyles = css `
     min-width: 600px;
 }
 
+.launch-block.wide{
+    width: 90%;
+}
+
+.head-separator{
+    width:80%;
+}
+
+.entity-header{
+    font-weight: normal;
+}
+
 lion-button,
 .link-button,
 button{
