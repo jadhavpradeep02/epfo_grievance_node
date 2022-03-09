@@ -61,7 +61,7 @@ export const visitorColumns = [
     },
     {
       header: "Last Visit",
-      path: "visited_at",
+      path: "visit_at",
       type: "datetime"
     },
     { 
