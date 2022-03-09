@@ -3,7 +3,7 @@
 ## Required Softwares:
 - MySql
 - NodeJs
-
+- Git
 ### Steps to setup api code:
 1. Install NodeJs
 2. Unzip folder epfo_gr_node.zip into any folder
@@ -71,11 +71,13 @@ create table establishment (
 	PRIMARY KEY ( estb_id )
 ) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+#insert this records to create login users
 insert into users (username,email,password,role, created_at) values ("pradeep", "jadhavpradeep02@gmail.com", "pradeep", "admin",now());
 insert into users (username,email,password,role, created_at) values ("sunil", "sunilchivate@gmail.com", "sunil", "admin",now());
 insert into users (username,email,password,role, created_at) values ("suhas", "suhassanmukh@gmail.com", "suhas", "admin",now());
 insert into users (username,email,password,role, created_at) values ("chetan", "chetankekade@gmail.com", "chetan", "admin", now());
 
+# No need to insert this records - as this are testing purpose
 INSERT INTO visitors (visitor_id, visitor_name, visitor_mobile, visitor_email, uan, pf_account_no, establishment_name, created_at) VALUES (NULL,"Mohan","9867153742","mohan@abc.com","1122334455","MH/BAN/0002/25788/29882","9/10/2021 0:24:16");
 
 INSERT INTO visitors (visitor_id, visitor_name, visitor_mobile, visitor_email, uan, pf_account_no, establishment_name, created_at) VALUES (NULL,'Amol Kumar', '9867452312', 'amol.kumar@gmail.com', '112233445566771', 'MH/BAN/0002/25788/12234', 'Infosys', now());
