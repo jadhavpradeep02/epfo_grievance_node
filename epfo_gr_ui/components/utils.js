@@ -1,5 +1,16 @@
 import { html } from "lit";
 
+const grvnc_category_map = {
+    "Death_case": "Death Case",
+    "Withdraw_F19": "Withdrawal Form 19",
+    "Transfer_F13":"Transfer Form13",
+    "Advance_F31": "Advanced Form31",
+    "Pension": "Pension",
+    "KYC_Update": "Modify KYC",
+    "Non_Enrollment": "Non enrollment",
+    "Other": "Misc",
+}
+
 export const getStatus = function (grvncObj){
     if(grvncObj.status){
         if(String(grvncObj.status).toLowerCase() === "in_progress"){
@@ -10,7 +21,7 @@ export const getStatus = function (grvncObj){
                 const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
                 return 'Pending since '+diffDays+' days';
             }
-            return 'pending since [No date]';
+            return 'Pending since [No date]';
         } else if(String(grvncObj.status).toLowerCase() === "resolved") { //resolved
             return 'Resolved on '+new Date(grvncObj.visit_at).toLocaleDateString();
         }  else {
@@ -29,6 +40,9 @@ export const renderCell = function (col, row){
     }
     if(col.path === 'status'){
         return getStatus(row)
+    }
+    if(col.path === "grievance_category"){
+        return grvnc_category_map[col.path] ? grvnc_category_map[col.path] : 'Invalid category'
     }
     if(col.type && col.type === "datetime"){
         return html `${renderDate(row[col.path])}`

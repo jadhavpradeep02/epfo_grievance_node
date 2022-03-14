@@ -7,6 +7,14 @@
     font-family: 'Calibri', Courier, monospace;
 }
 
+.table.top-entries-table{
+  grid-template-columns: 25% 25% 25% 25% ;
+}
+
+.action-container{
+  display: none;
+}
+
 .table.col-7{
   grid-template-columns: 14% 14% 14% 14% 14% 14% 14%;
 }

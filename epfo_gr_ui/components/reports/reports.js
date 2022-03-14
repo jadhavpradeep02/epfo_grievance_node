@@ -85,8 +85,17 @@ export class Reports extends LitElement {
       }
   }
 
+  printTopEntries(selector){
+    this.printContent(selector);
+  }
+
   printReport(){
-    var divContents = this.shadowRoot.querySelector(".printable").innerHTML;
+    this.printContent(".printable");
+    // a.print();
+  }
+
+  printContent(selector){
+    var divContents = this.shadowRoot.querySelector(selector).innerHTML;
     var a = window.open('', '', 'height=768, width=1024');
     a.document.write('<html>');
     a.document.write('<link rel="stylesheet" href="/components/reports/report.print.css" type="text/css" />');
@@ -95,7 +104,6 @@ export class Reports extends LitElement {
     a.document.write('</body></html>');
     a.document.close();
     setTimeout(function(){a.print();},1000);
-    // a.print();
   }
 
   downloadReport(){
@@ -150,8 +158,8 @@ export class Reports extends LitElement {
                 <div class="form-element grvnc-category" style="display: none">
                     <label>Grievance Category</label><br>
                     <select name="category" required placeholder=" ">
-                    <option value="minor">Death Case</option>
-                    <option value="withdraw_F19">Withdrawal Form 19 </option>
+                    <option value="Death_case">Death Case</option>
+                    <option value="Withdraw_F19">Withdrawal Form 19 </option>
                     <option value="Transfer_F13">Transfer Form13</option>
                     <option value="Advance_F31">Advanced Form31</option>
                     <option value="Pension">Pension</option>
@@ -175,7 +183,7 @@ export class Reports extends LitElement {
                         <div class="table">
                             ${reportColumns.map((col) => col.header ? html`<div class="header">${col.header}</div>` : html `<div class="header"></div>` )}
                             ${this.reportData.map((row) => {
-                                return reportColumns.map((col) => col.path ? html`<div>${row[col.path]}</div>` : html `<div class="edit-cell" title="Edit user" @click=${() => this.editVisitor(row)}><i class="fas fa-user-edit edit-icon"></i></div>`);
+                                return reportColumns.map((col) => col.path ? html`<div>${renderCell(col, row)}</div>` : html `<div class="edit-cell" title="Edit user" @click=${() => this.editVisitor(row)}><i class="fas fa-user-edit edit-icon"></i></div>`);
                             })}
                         </div>
 
@@ -189,28 +197,33 @@ export class Reports extends LitElement {
                     <div class="top-visitors">
                       ${this.topEntities ?
                       html `
-                        <div class="table">
+                      <div class="top-visitors-table">
+                        <div class="table top-entries-table">
                           ${highestVisitorTableCols.map((col) => col.header ? html`<div class="header">${col.header}</div>` : html `<div class="header"></div>` )}
                           ${this.topEntities.map((row) => {
                               return highestVisitorTableCols.map(col => html`<div>${renderCell(col, row)}</div>`);
                           })}
                       </div>
+                      </div>
+                      <div class="action-container"><lion-button @click=${() => this.printTopEntries('.left-section')}>Print</lion-button></div>
                       ` : 
                       html ``}
                   </div>
                 </div>
                 <div class="right-section">
-
                   <h3>Top Pending Grievances</h3>
                     <div class="top-grivances">
                     ${this.topPendingEntities ?
                         html `
-                          <div class="table">
+                        <div class="top-grievances-table"></div>
+                          <div class="table top-entries-table">
                             ${highestPendingTableCols.map((col) => col.header ? html`<div class="header">${col.header}</div>` : html `<div class="header"></div>` )}
                             ${this.topPendingEntities.map((row) => {
                                 return highestPendingTableCols.map(col => html`<div>${renderCell(col, row)}</div>`);
                             })}
                         </div>
+                        </div>
+                        <div class="action-container"><lion-button @click=${() => this.printTopEntries('.right-section')}>Print</lion-button></div>
                         ` : 
                         html ``}
                     </div>

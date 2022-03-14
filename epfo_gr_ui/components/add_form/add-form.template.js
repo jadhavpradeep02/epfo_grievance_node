@@ -131,8 +131,8 @@ export const renderAddForm = ({resetForm, findby, findEstablishmentBy, trySubmit
           <div class="form-element">
             <label>Grievance Category</label><br>
             <select name="grievance_category" required placeholder=" ">
-              <option value="minor">Death Case</option>
-              <option value="withdraw_F19">Withdrawal Form 19 </option>
+              <option value="Death_case">Death Case</option>
+              <option value="Withdraw_F19">Withdrawal Form 19 </option>
               <option value="Transfer_F13">Transfer Form13</option>
               <option value="Advance_F31">Advanced Form31</option>
               <option value="Pension">Pension</option>
