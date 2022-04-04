@@ -1,9 +1,11 @@
 import { LitElement, html, css } from "lit-element";
 import { classMap } from "lit/directives/class-map.js";
+import Fontawesome from 'lit-fontawesome';
 
 class AboutModal extends LitElement {
   static get styles() {
-    return css`
+    return [ Fontawesome,
+    css`
       :host {
         font-family: Arial, Helvetica, sans-serif;
       }
@@ -76,7 +78,13 @@ class AboutModal extends LitElement {
       .licence{
         font-size: 12px;
       }
-    `;
+      .suhas{
+        color: #16cc9f;
+      }
+      .suhas:visited{
+        color: #16cc9f;
+      }
+    `]
   }
 
   static get properties() {
@@ -100,7 +108,7 @@ class AboutModal extends LitElement {
           <div class="content">
             Developers:<br>
             <b>Pradeep Jadhav</b><br>
-            <b>Suhas Sanmukh</b>
+            <b><i class="fas fa-angle-right"></i>&nbsp;<a class="suhas" target="_blank" href="https://suhassanmukh.com/">Suhas Sanmukh</a></b>
             <br/><br/><br/>
             Built using: NodeJS, Lit, Web Components, MySQL
             <br/><br/>
