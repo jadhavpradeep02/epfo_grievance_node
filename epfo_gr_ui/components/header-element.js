@@ -1,6 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import { AuthService } from '../services/authentication.service';
 import Fontawesome from 'lit-fontawesome';
+import '../components/about-modal/about-modal.js';
 
 /* @customElement('first-element') */
 export class HeaderElement extends LitElement {
@@ -13,13 +14,22 @@ export class HeaderElement extends LitElement {
   static get styles() {
     return [ Fontawesome,
       css`
-      h1{
+      .header-div{
         background-color: var(--british-racing-green);
         color: white;
         text-align: center;
         padding: 12px;
         margin-bottom: 24px;
         margin-top: 0px;
+      }
+      .header-div h2{
+        margin: 0;
+        margin-bottom: 5px;
+      }
+
+      .branch{
+        font-weight: normal;
+        font-size: 20px;
       }
 
       .home-button{
@@ -104,6 +114,10 @@ export class HeaderElement extends LitElement {
     window.location.href = "#"+pageName;
   }
 
+  showAboutDialog(){
+    const modal = this.shadowRoot.querySelector("about-modal");
+    modal.open = true;
+  }
 
   blurred(e){
     debugger;
@@ -120,18 +134,23 @@ export class HeaderElement extends LitElement {
 
   render() {
     return html`
-      <h1 class="container elem-shadow">Grievance Portal</h1>
+    <div class="container elem-shadow header-div">
+      <h2>Grievance Portal <span class="branch">(EPFO, RO, PUNE-I)</span></h2>
+    </div>
+    <about-modal></about-modal>
+    <!--  <h1 class="container elem-shadow header-div">Grievance Portal</h1> -->
       ${this.isHome ? html `<div class="home-button"><i class="fas fas fa-chevron-left"></i><a href="#add" >&nbsp;Home</a></div>` : html ``}
       
       ${AuthService.checkAuth() ? html `
         <div class="menu" @click=${this.toggleMenu}><i class="fas fa-bars"></i></div>
         ${ this.expandMenu ? html`<div class="menu-items elem-shadow">
-          <a class="menu-item"  @click=${() => this.toPage('add')} @blur=${this.blurred} style="tabindex: 80;"><i class="fas fa-home"></i>&nbsp;&nbsp;Home</a>
+          <div class="menu-item"  @click=${() => this.toPage('add')} @blur=${this.blurred} style="tabindex: 80;"><i class="fas fa-home"></i>&nbsp;&nbsp;Home</div>
           <div class="menu-item"  @click=${() => this.toPage('dashboard')}><i class="fas fa-tachometer-alt"></i>&nbsp;&nbsp;Dashboard</div>
           <div class="menu-item"  @click=${() => this.toPage('Search&close')}><i class="fas fas fa-search"></i>&nbsp;&nbsp;Search & Close</div>
           <div class="menu-item"  @click=${() => this.toPage('SearchPeople')}><i class="fas fas fa-search"></i>&nbsp;&nbsp;Search Entities</div>
           <div class="menu-item"  @click=${() => this.toPage('reports')}><i class="fas fa-file-alt"></i>&nbsp;&nbsp;Reports</div>
           ${this.isAdmin ? html `<div class="menu-item" @click=${() => this.toPage('addUser')}><i class="fas fa-user"></i>&nbsp;&nbsp;Users</div>` : html ``}
+          <div class="menu-item" title="About" @click=${this.showAboutDialog}>&nbsp;<i class="fas fa-info"></i>&nbsp;&nbsp;&nbsp;About</div>
           <div class="menu-item" title="log out" @click=${this.logout}><i class="fas fa-power-off"></i>&nbsp;&nbsp;Logout</div>
         </div>` : ``}
         <!-- <div class="logout" title="log out" @click=${this.logout}> <i class="fas fa-power-off"></i></div> -->` 

@@ -1,9 +1,7 @@
 import { LitElement, html, css } from "lit-element";
 import { classMap } from "lit/directives/class-map.js";
-import "../search_result/search-result.js";
-import "./../spinner.js";
 
-class SearchModal extends LitElement {
+class AboutModal extends LitElement {
   static get styles() {
     return css`
       :host {
@@ -51,53 +49,39 @@ class SearchModal extends LitElement {
         margin-bottom: 20px;
         color: var(--british-racing-green);
       }
-      .dialog button {
+      .close-btn{
+        position: absolute;
+        right: 10px;
+        padding: 3px 6px;
+        border-radius: 20px;
         background-color: var(--british-racing-green);
-        color: white;
-        padding: 12px 24px;
-        border-radius: 8px;
         cursor: pointer;
-        border-width: 0px;
+        color: white;
+        display: inline;
+        top: 10px;
+        font-weight: bold;
       }
-      .action-section {
-        width: 100%;
-        text-align: center;
-        min-height: 400px;
-        margin-bottom: 25px;
-      }
-      .spinner-container{
-        text-align: center;
+      .close-btn:hover{
+        background-color: var(--oxford-blue);
       }
       .content {
         margin: auto;
         padding: 20px;
         color: var(--british-racing-green);
+        text-align: center;
+        padding: 2em;
+        border: 1px solid var(--british-racing-green);
+        border-radius: 1em;
       }
-      .close-btn{
-          position: absolute;
-          right: 20px;
-          top: 20px;
-          padding: 4px 7px;
-          border-radius: 25px;
-          background-color: var(--british-racing-green);
-          cursor: pointer;
-          color: white;
-          display: inline;
-          font-weight: bold;
-      }
-      .close-btn:hover{
-          background-color: var(--oxford-blue);
+      .licence{
+        font-size: 12px;
       }
     `;
   }
+
   static get properties() {
     return {
-      open: { type: Boolean },
-      title: { type: String },
-      text: { type: String },
-      clickAction: { type: String },
-      data: { type: Object },
-      loading: { type: Boolean },
+      open: { type: Boolean }
     };
   }
 
@@ -111,20 +95,17 @@ class SearchModal extends LitElement {
       <div class="${classMap({ wrapper: true, open: this.open })}">
         <div class="overlay" @click="${this.close}"></div>
         <div class="dialog">
-          <h1 id="title">${this.title}</h1>
+          <h1 id="title">Grievance Portal v1.0</h1>
           <div class="close-btn" @click="${this.close}">X</div>
-          ${this.loading
-            ? html`<div class="spinner-container">
-                <loading-spinner></loading-spinner>
-              </div>`
-            : html`
-                <div id="content" class="content">${this.text}</div>
-                <div class="action-section">
-                  ${this.mode === 'establishment' ? html `<search-result @estselected=${this.close} .rows=${this.data} .mode=${`establishment`}></search-result> <button @click=${this.close}>${this.clickAction}</button>` : html ``}
-                  ${this.mode === 'visitor' ? html `<search-result @rowselected=${this.close} .rows=${this.data}></search-result> <button @click=${this.handleClick}>${this.clickAction}</button>` : html ``}
-                  
-                </div>
-              `}
+          <div class="content">
+            Developers:<br>
+            <b>Pradeep Jadhav</b><br>
+            <b>Suhas Sanmukh</b>
+            <br/><br/><br/>
+            Built using: NodeJS, Lit, Web Components, MySQL
+            <br/><br/>
+            <span class="licence"> Licenced under <a href="https://opensource.org/licenses/MIT">MIT</a></span>
+          </div>
         </div>
       </div>
     `;
@@ -140,4 +121,4 @@ class SearchModal extends LitElement {
   }
 }
 
-customElements.define("search-modal", SearchModal);
+customElements.define("about-modal", AboutModal);

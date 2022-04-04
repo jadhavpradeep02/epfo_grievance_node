@@ -88,6 +88,21 @@ class CloseGrvncModal extends LitElement {
       .gr_details{
         text-align: left;
       }
+      .close-btn{
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        padding: 4px 7px;
+        border-radius: 25px;
+        background-color: var(--british-racing-green);
+        cursor: pointer;
+        color: white;
+        display: inline;
+        font-weight: bold;
+      }
+      .close-btn:hover{
+          background-color: var(--oxford-blue);
+      }
     `;
   }
   static get properties() {
@@ -112,6 +127,7 @@ class CloseGrvncModal extends LitElement {
         <div class="overlay" @click="${this.close}"></div>
         <div class="dialog">
           <h1 id="title">${this.title}</h1>
+          <div class="close-btn" @click="${this.close}">X</div>
           <hr/>
           ${this.loading
             ? html`<div class="spinner-container">
