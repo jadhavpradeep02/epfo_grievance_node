@@ -40,6 +40,10 @@ export const visitorColumns = [
       header: "Section",
       path: "section",
     },
+    { 
+      header: "Task id", 
+      path: "estb_account_task_id"
+    },
     {
       header: "Grievance Category",
       path: "grievance_category",
@@ -208,6 +212,10 @@ export const visitorColumns = [
     {
       header: "Grievance Category",
       path: "grievance_category",
+    },
+    { 
+      header: "Task id", 
+      path: "estb_account_task_id"
     },
     {
       header: "Details",

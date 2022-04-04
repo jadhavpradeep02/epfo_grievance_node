@@ -6,7 +6,12 @@ const BasePort= "3000";
 let onlineMode = false;
 import { AuthService } from "../services/authentication.service";
 
-const localURLBase = () => BaseURL + ":" + BasePort + '/api';
+const localURLBase = () => {
+    var c = new URL(window.location.origin);
+    c.port = '3000';
+    console.log(c);
+    return c.origin + '/api';
+}
 
 export const setLocal = () => {
     onlineMode = false;

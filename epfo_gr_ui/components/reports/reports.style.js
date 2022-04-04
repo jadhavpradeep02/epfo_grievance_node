@@ -49,7 +49,7 @@ label{
 
 .table {
   display: grid;
-  grid-template-columns: 14% 14% 14% 14% 14% 14% 14% ; 
+  grid-template-columns: 12% 12% 12% 12% 12% 12% 12% 12%; 
   width: 100%;
   margin: auto;
   font-size: 1em;
