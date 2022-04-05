@@ -13,6 +13,11 @@
 6. Run the node server application by using ``` npm start ```
 
 ### Database Commands:
+# create database commmands
+> create database epfo_grievance;
+> use epfo_grievance;
+
+# create tables
 
 ```bash
 create table users (
