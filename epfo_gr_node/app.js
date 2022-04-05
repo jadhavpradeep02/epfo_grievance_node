@@ -48,7 +48,7 @@ app.use(function (req, res, next) {
 
 // Temporary text for comparing
 //allow all urls for cors related error
-app.use(cors({ origin: "http://localhost:8000" }));
+app.use(cors( { origin: "*" } ));
 
 //parse request and response
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 }));
