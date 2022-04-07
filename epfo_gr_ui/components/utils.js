@@ -42,7 +42,7 @@ export const renderCell = function (col, row){
         return getStatus(row)
     }
     if(col.path === "grievance_category"){
-        return grvnc_category_map[col.path] ? grvnc_category_map[col.path] : 'Invalid category'
+        return row[col.path] ? row[col.path] : 'Invalid category'
     }
     if(col.type && col.type === "datetime"){
         return html `${renderDate(row[col.path])}`
