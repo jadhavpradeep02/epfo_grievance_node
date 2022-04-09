@@ -74,7 +74,7 @@ function addVisitor(req) {
             if (data.length > 0) {
                 let visitor_id = data[0].visitor_id;
 
-                var insert_grievance = `INSERT INTO grievance (grievance_id, visitor_id, member_name, member_mobile, uan, pf_account_no, ppo_number, establishment_name, establishment_id, task_id, section, grievance_category, status, visited_at) VALUES (NULL, '${visitor_id}', '${member_name}', '${member_phone}', '${uan}', '${pf_account_no}', '${ppo_number}', '${establishment_name}', '${establishment_id}', '${task_id}', '${section}', '${grievance_category}', '${status}', now())`;
+                var insert_grievance = `INSERT INTO grievance (grievance_id, visitor_id, member_name, member_mobile, uan, pf_account_no, ppo_number, establishment_name, establishment_id, task_id, section, grievance_category, status, visited_at, closing_remark) VALUES (NULL, '${visitor_id}', '${member_name}', '${member_phone}', '${uan}', '${pf_account_no}', '${ppo_number}', '${establishment_name}', '${establishment_id}', '${task_id}', '${section}', '${grievance_category}', '${status}', now(), NULL)`;
 
                 console.log("insert query-", insert_grievance)
                 connection.query(insert_grievance, function (err, result) {
@@ -97,7 +97,7 @@ function addVisitor(req) {
                     console.log('The data is inserted successfully into visitor table');
                     let visitor_id = result.insertId;
 
-                    var insert_grievance = `INSERT INTO grievance (grievance_id, visitor_id, member_name, member_mobile, uan, pf_account_no, ppo_number, establishment_name, establishment_id, task_id, section, grievance_category, status, visited_at) VALUES (NULL, '${visitor_id}', '${member_name}', '${member_phone}', '${uan}', '${pf_account_no}', '${ppo_number}', '${establishment_name}', '${establishment_id}', '${task_id}', '${section}', '${grievance_category}', '${status}', now())`;
+                    var insert_grievance = `INSERT INTO grievance (grievance_id, visitor_id, member_name, member_mobile, uan, pf_account_no, ppo_number, establishment_name, establishment_id, task_id, section, grievance_category, status, visited_at, closing_remark) VALUES (NULL, '${visitor_id}', '${member_name}', '${member_phone}', '${uan}', '${pf_account_no}', '${ppo_number}', '${establishment_name}', '${establishment_id}', '${task_id}', '${section}', '${grievance_category}', '${status}', now(), NULL)`;
                     console.log("insert query-", insert_grievance)
                     connection.query(insert_grievance, function (err, result) {
                         if (err) throw err;
@@ -202,19 +202,19 @@ function closeGrievance(req) {
     let grievance_details = req.body.grievance_details;
 
     try {
-        var update_grievance = `UPDATE grievance SET status='${status}' WHERE grievance_id='${grievance_id}'`;
+        var update_grievance = `UPDATE grievance SET status='${status}', visited_at=now(), closing_remark='${grievance_details}' WHERE grievance_id='${grievance_id}'`;
 
         console.log("update query-", update_grievance)
         connection.query(update_grievance, function (err, result) {
             if (err) throw err;
             console.log("Successfully updated grievance: ")
-            var insert_visit = `INSERT INTO visits (visit_id, grievance_id, no_of_visit, attended_at_level, grievance_details, visit_at) VALUES (NULL, '${grievance_id}', '${no_of_visit}', '${attended_at_level}', '${grievance_details}', now())`;
+            // var insert_visit = `INSERT INTO visits (visit_id, grievance_id, no_of_visit, attended_at_level, grievance_details, visit_at) VALUES (NULL, '${grievance_id}', '${no_of_visit}', '${attended_at_level}', '${grievance_details}', now())`;
 
-            connection.query(insert_visit, function (err, result) {
+            //connection.query(insert_visit, function (err, result) {
                 response.status = "200";
-                response.message = "Grievance and Visitor Status closed successfully";
+                response.message = "Grievance Status closed successfully";
                 deferred.resolve(response);
-            });
+            //});
         })
         return deferred.promise;
     } catch (error) {
@@ -237,9 +237,9 @@ function searchVisitor(req) {
             select_query = 'SELECT * FROM establishment WHERE establishment_id like "%' + value + '%"';
         } else {
             if(req.body.search == "visitor") {
-                select_query = 'SELECT v.visitor_id, visitor_name, visitor_mobile, visitor_email, member_name, member_mobile as member_phone, g.grievance_id, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, created_at, grievance_category, section, max(no_of_visit) as no_of_visit, attended_at_level, grievance_details, status, visit_at FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id INNER JOIN visits as vs ON vs.grievance_id = g.grievance_id WHERE ' + column + ' like "%' + value + '%" group by visitor_id';
+                select_query = 'SELECT v.visitor_id, visitor_name, visitor_mobile, visitor_email, member_name, member_mobile as member_phone, g.grievance_id, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, created_at, grievance_category, section, max(no_of_visit) as no_of_visit, attended_at_level, grievance_details, status, closing_remark, visit_at FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id INNER JOIN visits as vs ON vs.grievance_id = g.grievance_id WHERE ' + column + ' like "%' + value + '%" group by visitor_id';
             } else {
-                select_query = 'SELECT v.visitor_id, visitor_name, visitor_mobile, visitor_email, member_name, member_mobile as member_phone, g.grievance_id, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, created_at, grievance_category, section, max(no_of_visit) as no_of_visit, attended_at_level, grievance_details, status, visit_at FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id INNER JOIN visits as vs ON vs.grievance_id = g.grievance_id WHERE ' + column + ' like "%' + value + '%" and status != "resolved" group by grievance_id';
+                select_query = 'SELECT v.visitor_id, visitor_name, visitor_mobile, visitor_email, member_name, member_mobile as member_phone, g.grievance_id, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, created_at, grievance_category, section, max(no_of_visit) as no_of_visit, attended_at_level, grievance_details, status, closing_remark, visit_at FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id INNER JOIN visits as vs ON vs.grievance_id = g.grievance_id WHERE ' + column + ' like "%' + value + '%" and status != "resolved" group by grievance_id';
             }
         }
 
@@ -262,7 +262,7 @@ function searchVisitor(req) {
 function getTopVisits(req) {
     var deferred = Q.defer();
     let LIMIT = 50; //default limit set as 50    
-    let select_query = 'SELECT v.visitor_id, visitor_name, visitor_mobile, visitor_email, member_name, member_mobile as member_phone, g.grievance_id, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, created_at, grievance_category, section, max(no_of_visit) as no_of_visit, attended_at_level, grievance_details, status, visit_at FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id INNER JOIN visits as vs ON vs.grievance_id = g.grievance_id group by vs.grievance_id order by no_of_visit desc limit 50';
+    let select_query = 'SELECT v.visitor_id, visitor_name, visitor_mobile, visitor_email, member_name, member_mobile as member_phone, g.grievance_id, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, created_at, grievance_category, section, max(no_of_visit) as no_of_visit, attended_at_level, grievance_details, status, closing_remark, visit_at FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id INNER JOIN visits as vs ON vs.grievance_id = g.grievance_id group by vs.grievance_id order by no_of_visit desc limit 50';
 
     try {
         connection.query(select_query, (err, rows) => {
@@ -278,7 +278,7 @@ function getTopVisits(req) {
 function getTopPending(req) {
     var deferred = Q.defer();
     let LIMIT = 50; //default limit set as 50    
-    let select_query = 'SELECT v.visitor_id, visitor_name, visitor_mobile, visitor_email, member_name, member_mobile as member_phone, g.grievance_id, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, created_at, grievance_category, section, max(no_of_visit) as no_of_visit, attended_at_level, grievance_details, status, visit_at FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id INNER JOIN visits as vs ON vs.grievance_id = g.grievance_id where status!="resolved" group by vs.grievance_id order by created_at asc limit ' + LIMIT;
+    let select_query = 'SELECT v.visitor_id, visitor_name, visitor_mobile, visitor_email, member_name, member_mobile as member_phone, g.grievance_id, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, created_at, grievance_category, section, max(no_of_visit) as no_of_visit, attended_at_level, grievance_details, status, closing_remark, visit_at FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id INNER JOIN visits as vs ON vs.grievance_id = g.grievance_id where status!="resolved" group by vs.grievance_id order by created_at asc limit ' + LIMIT;
 
     try {
         connection.query(select_query, (err, rows) => {
@@ -300,7 +300,7 @@ function getReport(req) {
     let value = req.body.value;
 
     try {
-        let select_query = 'SELECT v.visitor_id, visitor_name, visitor_mobile, visitor_email, member_name, member_mobile as member_phone, g.grievance_id, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, created_at, grievance_category, section, status, visited_at FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id where created_at >= "' + start_date + '" and created_at <= "' + end_date + '" and ' + type + ' = "' + value + '"';
+        let select_query = 'SELECT v.visitor_id, visitor_name, visitor_mobile, visitor_email, member_name, member_mobile as member_phone, g.grievance_id, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, created_at, grievance_category, section, status, closing_remark, visited_at FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id where created_at >= "' + start_date + '" and created_at <= "' + end_date + '" and ' + type + ' = "' + value + '"';
         console.log(select_query);
         connection.query(select_query, (err, rows) => {
             console.log('The data from visitors table are: \n');
@@ -417,9 +417,9 @@ function searchMembers(req) {
 
     try {
         if(req.body.pendingOnly) {
-            select_query = 'SELECT g.grievance_id, visitor_name, visitor_mobile, created_at, v.visitor_id, member_name, member_mobile as member_phone, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, grievance_category, section, max(no_of_visit) as no_of_visit, attended_at_level, grievance_details, status, visit_at FROM grievance as g INNER JOIN visitors as v ON g.visitor_id = v.visitor_id INNER JOIN visits as vs ON g.grievance_id = vs.grievance_id WHERE ' + column + ' like "%' + value + '%" and status != "resolved" group by grievance_id';
+            select_query = 'SELECT g.grievance_id, visitor_name, visitor_mobile, created_at, v.visitor_id, member_name, member_mobile as member_phone, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, grievance_category, section, max(no_of_visit) as no_of_visit, attended_at_level, grievance_details, status, closing_remark, visit_at FROM grievance as g INNER JOIN visitors as v ON g.visitor_id = v.visitor_id INNER JOIN visits as vs ON g.grievance_id = vs.grievance_id WHERE ' + column + ' like "%' + value + '%" and status != "resolved" group by grievance_id';
         } else {
-            select_query = 'SELECT g.grievance_id, visitor_id, member_name, member_mobile as member_phone, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, grievance_category, section, max(no_of_visit) as no_of_visit, attended_at_level, grievance_details, status, visit_at FROM grievance as g INNER JOIN visits as vs ON g.grievance_id = vs.grievance_id WHERE ' + column + ' like "%' + value + '%" group by grievance_id';
+            select_query = 'SELECT g.grievance_id, visitor_id, member_name, member_mobile as member_phone, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, grievance_category, section, max(no_of_visit) as no_of_visit, attended_at_level, grievance_details, status, closing_remark, visit_at FROM grievance as g INNER JOIN visits as vs ON g.grievance_id = vs.grievance_id WHERE ' + column + ' like "%' + value + '%" group by grievance_id';
         }
 
         if (req.body.limit) {
@@ -445,7 +445,7 @@ function getMemberData(req) {
     let select_query = "";
 
     try {
-        select_query = 'SELECT g.grievance_id, visitor_name, visitor_mobile, visitor_email, created_at, v.visitor_id, member_name, member_mobile as member_phone, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, grievance_category, section, no_of_visit, attended_at_level, grievance_details, status, visit_at FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id INNER JOIN visits as vs ON g.grievance_id = vs.grievance_id WHERE ' + column + ' like "%' + value + '%"';
+        select_query = 'SELECT g.grievance_id, visitor_name, visitor_mobile, visitor_email, created_at, v.visitor_id, member_name, member_mobile as member_phone, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, grievance_category, closing_remark, section, no_of_visit, attended_at_level, grievance_details, status, visit_at FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id INNER JOIN visits as vs ON g.grievance_id = vs.grievance_id WHERE ' + column + ' like "%' + value + '%"';
 
         console.log(select_query);
         connection.query(select_query, (err, rows) => {
@@ -467,7 +467,7 @@ function getVisitorData(req) {
     let select_query = "";
 
     try {
-        select_query = 'SELECT v.visitor_id, visitor_name, visitor_mobile, visitor_email, created_at, g.grievance_id, member_name, member_mobile as member_phone, uan, pf_account_no, ppo_number, establishment_name, establishment_id, task_id as estb_account_task_id, section,grievance_category,  status, vs.visit_id, no_of_visit, attended_at_level, grievance_details, visit_at FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id INNER JOIN visits as vs ON g.grievance_id = vs.grievance_id WHERE v.visitor_id = "' + value + '" order by v.visitor_id';
+        select_query = 'SELECT v.visitor_id, visitor_name, visitor_mobile, visitor_email, created_at, g.grievance_id, member_name, member_mobile as member_phone, uan, pf_account_no, ppo_number, establishment_name, establishment_id, task_id as estb_account_task_id, section,grievance_category,  status, closing_remark, visited_at, vs.visit_id, no_of_visit, attended_at_level, grievance_details, visit_at FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id INNER JOIN visits as vs ON g.grievance_id = vs.grievance_id WHERE v.visitor_id = "' + value + '" order by v.visitor_id';
 
         console.log(select_query);
         connection.query(select_query, (err, rows) => {

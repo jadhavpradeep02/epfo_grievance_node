@@ -54,6 +54,7 @@ create table grievance (
 	grievance_category VARCHAR(100),
 	status VARCHAR(20),
 	visited_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	closing_remark VARCHAR(500),
 	PRIMARY KEY ( grievance_id ),
 	FOREIGN KEY ( visitor_id ) REFERENCES visitors(visitor_id) ON DELETE CASCADE
 ) ENGINE=INNODB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8;
@@ -104,5 +105,9 @@ INSERT INTO grievance (grievance_id, visitor_id, grievance_category, no_of_visit
 - Once you have done ```npm install```, do ```npm run start```
 - The front-end server will start on port ```8000``` and will launch page : ```http://localhost:8000/#login```
 - Done!
+
+
+### Add column into grievance table
+alter table grievance add column closing_remark VARCHAR(500);
 
 ***Note:***  Backend server need to be running for front-end to work properly.
