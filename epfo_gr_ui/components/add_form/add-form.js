@@ -82,7 +82,8 @@ export class AddForm extends LitElement {
   }
 
   addDisabledFields(form, formData) {
-    formData.no_of_visit = Number(form.no_of_visit.value) + 1;
+    // formData.no_of_visit = Number(form.no_of_visit.value) + 1;
+    formData.no_of_visit = Number(form.no_of_visit.value);
     formData.attended_at_level = form.attended_at_level.value;
     formData.status = form.status.value;
   }
@@ -147,6 +148,7 @@ export class AddForm extends LitElement {
   }
 
   preFillForm() {
+    debugger;
     const form = this.shadowRoot.querySelector("form");
     this.prefillData = VisitorService.getEditData();
     let elem = null;
@@ -169,6 +171,7 @@ export class AddForm extends LitElement {
         }
       }
       if(this.prefillData.no_of_visit){
+        this.prefillData.no_of_visit = this.prefillData.no_of_visit + 1;
         this.setAttendLevel(this.prefillData.no_of_visit);
       }
     }

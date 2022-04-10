@@ -11,7 +11,7 @@ const grvnc_category_map = {
     "Other": "Misc",
 }
 
-export const getStatus = function (grvncObj){
+export const getStatus = function (grvncObj, col){
     if(grvncObj.status){
         if(String(grvncObj.status).toLowerCase() === "in_progress"){
             if(grvncObj.visit_at){
@@ -22,8 +22,9 @@ export const getStatus = function (grvncObj){
                 return 'Pending since '+diffDays+' days';
             }
             return 'Pending since [No date]';
-        } else if(String(grvncObj.status).toLowerCase() === "resolved") { //resolved
-            return 'Resolved on '+new Date(grvncObj.visit_at).toLocaleDateString();
+        } else if(String(grvncObj.status).toLowerCase() === "resolved") {
+            let calculator = col.calculateAttrib ? col.calculateAttrib : 'visit_at'
+            return 'Resolved on '+ renderDate(grvncObj[calculator]);
         }  else {
             return 'Unkown status: '+grvncObj.status;
         }
@@ -39,10 +40,10 @@ export const renderCell = function (col, row){
         return html `<a href=${`#member?uan=${row.uan}`}>${row[col.path]}</a>`
     }
     if(col.path === 'status'){
-        return getStatus(row)
+        return getStatus(row, col)
     }
     if(col.path === "grievance_category"){
-        return row[col.path] ? row[col.path] : 'Invalid category'
+        return grvnc_category_map[row[col.path]] ? grvnc_category_map[row[col.path]] : 'Invalid category'
     }
     if(col.type && col.type === "datetime"){
         return html `${renderDate(row[col.path])}`
@@ -51,5 +52,15 @@ export const renderCell = function (col, row){
 }
 
 export const renderDate = function (dateStr){
-    return dateStr ? new Date(dateStr).toLocaleDateString() : 'Invalid date';
+    if(!dateStr){
+        return 'Invalid date';
+    }
+    let date = new Date(dateStr);
+    let dateNum = date.toLocaleDateString('en-us',{day: 'numeric'});
+    let month = date.toLocaleDateString('en-us',{month: 'numeric'});
+    let year = date.toLocaleDateString('en-us',{year: 'numeric'});
+    const FormattedDate = `${dateNum}-${month}-${year}`
+    // console.log(FormattedDate) // 26-03-2022
+    return FormattedDate;
+    // return dateStr ? new Date(dateStr).toLocaleDateString() : 'Invalid date';
 }

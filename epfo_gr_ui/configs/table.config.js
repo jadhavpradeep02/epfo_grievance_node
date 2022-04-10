@@ -37,6 +37,10 @@ export const visitorColumns = [
       path: "pf_account_no",
     },
     {
+      header: "PPO",
+      path: "ppo_number",
+    },
+    {
       header: "Section",
       path: "section",
     },
@@ -48,9 +52,15 @@ export const visitorColumns = [
       header: "Grievance Category",
       path: "grievance_category",
     },
+    {
+      header: "Last Visit",
+      path: "visit_at",
+      type: "datetime"
+    },
     { 
       header: "Status", 
-      path: "status" 
+      path: "status",
+      calculateAttrib: "visited_at"
     }
   ]
 
@@ -167,6 +177,10 @@ export const visitorColumns = [
       path: "pf_account_no",
     },
     {
+      header: "PPO",
+      path: "ppo_number",
+    },
+    {
       header: "Section",
       path: "section",
     },
@@ -204,6 +218,10 @@ export const visitorColumns = [
     {
       header: "PF Account Number",
       path: "pf_account_no",
+    },
+    {
+      header: "PPO",
+      path: "ppo_number",
     },
     {
       header: "Section",

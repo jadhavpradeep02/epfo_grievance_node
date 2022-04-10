@@ -160,3 +160,32 @@ Pending :
 
 > Menu should go away on page click
 [Create user form ]
+
+--------------------------------------- 07-04-2022 --------------------------------------------------------------------
+
+Search and Close >> Add PPO number in the result
+Grievance category doesnt work : test data -------------- DONE
+
+[{"grievance_id":1020,"visitor_name":"datta deore","visitor_mobile":"9860488501","created_at":"2022-02-15T13:16:23.000Z","visitor_id":20,"member_name":"datta deore","member_phone":"9860488501","uan":"101329554559","pf_account_no":"","ppo_number":"","establishment_name":"","estb_account_task_id":"1122","establishment_id":"","grievance_category":"Transfer_F13","section":"account","no_of_visit":2,"attended_at_level":"DA","grievance_details":"f 13 settled but but cheque return now while doing f 13 error showing already tranfr to other member id","status":"in_progress","visit_at":"2022-02-15T13:16:23.000Z"},{"grievance_id":1052,"visitor_name":"sunil","visitor_mobile":"8850196880","created_at":"2022-02-23T19:34:06.000Z","visitor_id":52,"member_name":"ruya","member_phone":"9423252059","uan":"100123456789","pf_account_no":"PU/PUN/1234/123/123","ppo_number":"","establishment_name":"BAJAJ FINANCE LIMITED","estb_account_task_id":"10102","establishment_id":"PUPUN1549842000","grievance_category":"Transfer_F13","section":"account","no_of_visit":2,"attended_at_level":"DA","grievance_details":"only pf transfer and not pension","status":"in_progress","visit_at":"2022-02-23T19:34:06.000Z"}]
+
+
+Date format is : Month/Day/year >> Make it Day/Month/Year ---------------- DONE
+
+Reports page : Top visitor and girevances tables align to top when one is bigger ----------------- DONE
+
+Add form submits 2 as no.of.visit for first visitor enrty ( make it 1 ) ------------------ DONE
+
+
+Visitor Details page : Add PPO column in the table
+Report table > Add PPO column
+Basically Add PPO in all tables where there is UAN PFO number ----------------- DONE
+
+Only Report table > Use visited_at instead of visit_at for the status column ------------- DONE
+
+
+Add pradeeps linkedin link in about ---------------------------- DONE 
+
+Reports page > Reports table > Add last visited Date ------------------- DONE
+
+Add option for Daily reports in Reports page >> 
+Add "all" options in Reports of Section as well as category

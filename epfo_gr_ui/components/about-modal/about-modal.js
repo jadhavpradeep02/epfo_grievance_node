@@ -107,7 +107,7 @@ class AboutModal extends LitElement {
           <div class="close-btn" @click="${this.close}">X</div>
           <div class="content">
             Developers:<br>
-            <b>Pradeep Jadhav</b><br>
+            <b><i class="fas fa-angle-right"></i>&nbsp;<a class="suhas" target="_blank" href="https://www.linkedin.com/in/pradeep-jadhav-347ba325/">Pradeep Jadhav</a></b><br/>
             <b><i class="fas fa-angle-right"></i>&nbsp;<a class="suhas" target="_blank" href="https://suhassanmukh.com/">Suhas Sanmukh</a></b>
             <br/><br/><br/>
             Built using: NodeJS, Lit, Web Components, MySQL

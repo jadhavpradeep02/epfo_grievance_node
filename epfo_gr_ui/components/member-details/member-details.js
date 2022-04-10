@@ -33,7 +33,7 @@ export class MemberDetails extends LitElement {
       text-align: left;
     }
     .table {
-      grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%; 
+      grid-template-columns: 9% 9% 9% 9% 9% 9% 9% 9% 9% 9% 9%; 
     }
     `,
   ];

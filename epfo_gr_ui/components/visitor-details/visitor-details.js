@@ -26,7 +26,7 @@ export class VisitorDetails extends LitElement {
       text-align: left;
     }
     .table {
-      grid-template-columns: 12% 12% 12% 12% 12% 12% 12% 12%; 
+      grid-template-columns: 11% 11% 11% 11% 11% 11% 11% 11% 11%; 
     }
     .visitor-details{
         padding: 1em;
