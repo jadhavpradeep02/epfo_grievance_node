@@ -45,7 +45,7 @@ export class SearchResult extends LitElement {
       /* Results table */
 
       .table {
-        grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%; 
+        grid-template-columns: 9% 9% 9% 9% 9% 9% 9% 9% 9% 9% 9%; 
       }
 
       .table.est-table {
