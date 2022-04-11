@@ -70,7 +70,7 @@ export class MemberDetails extends LitElement {
   getUANFromURL(){
     var url_string = window.location.href.split('?')[1]; //window.location.href
     var url = new URLSearchParams(url_string);
-    return url.get("uan");
+    return url.get("grievance_id");
   }
 
   render() {

@@ -96,8 +96,8 @@ const fetchUsersData = async (uan) => {
     return userData.json();
 }
 
-const fetchMemberData = async (uan) => {
-    const userData = await fetch(getMemberDataURL()+'?uan='+uan,{
+const fetchMemberData = async (grievance_id) => {
+    const userData = await fetch(getMemberDataURL()+'?grievance_id='+grievance_id,{
         headers: getCommonHeaders(),
     });
     return userData.json();

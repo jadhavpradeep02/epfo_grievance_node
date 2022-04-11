@@ -36,8 +36,8 @@ export const renderCell = function (col, row){
     if(col.path === 'visitor_name'){
         return html `<a href=${`#visitor?id=${row.visitor_id}`}>${row[col.path]}</a>`
     }
-    if(col.path === 'member_name'){
-        return html `<a href=${`#member?uan=${row.uan}`}>${row[col.path]}</a>`
+    if(col.path === 'member_name'){ // Add grievance id here as Member can have no UAN
+        return html `<a href=${`#member?grievance_id=${row.grievance_id}`}>${row[col.path]}</a>`
     }
     if(col.path === 'status'){
         return getStatus(row, col)
