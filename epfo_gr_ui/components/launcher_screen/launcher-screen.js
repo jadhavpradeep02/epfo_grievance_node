@@ -92,7 +92,8 @@ export class LauncherScreen extends LitElement {
   }
 
   closeSuccess(){
-    this.successMsg = "Closed grievance successfully"
+    this.successMsg = "Closed grievance successfully";
+    this.onSearch();
   }
 
   addEntry() {

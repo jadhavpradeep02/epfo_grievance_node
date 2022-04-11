@@ -7,7 +7,7 @@ import { ReportsService } from "../../services/reports.service";
 import "../search_result/search-result";
 import { reportColumns, highestVisitorTableCols, highestPendingTableCols } from "../../configs/table.config";
 import { formStyles } from "./reports.style";
-import { renderCell } from "../utils";
+import { renderCell, getTodayDateSelectorValue } from "../utils";
 
 export class Reports extends LitElement {
   static get properties() { 
@@ -64,14 +64,25 @@ export class Reports extends LitElement {
   }
 
   showDropdown(){
-      if(this.shadowRoot.querySelector('input[name="type"]:checked').value === 'grievance_section'){
-        this.shadowRoot.querySelector('.grvnc-section').style.display = 'block';
-        this.shadowRoot.querySelector('.grvnc-category').style.display = 'none';
-      } else {
-        this.shadowRoot.querySelector('.grvnc-section').style.display = 'none';
-        this.shadowRoot.querySelector('.grvnc-category').style.display = 'block';
-      }
+    if(this.shadowRoot.querySelector('input[name="type"]:checked').value === 'grievance_section'){
+      this.shadowRoot.querySelector('.grvnc-section').style.display = 'block';
+      this.shadowRoot.querySelector('.grvnc-category').style.display = 'none';
+    } else {
+      this.shadowRoot.querySelector('.grvnc-section').style.display = 'none';
+      this.shadowRoot.querySelector('.grvnc-category').style.display = 'block';
+    }
+  }
 
+  selectDaily(){
+    this.shadowRoot.querySelector('input[name="fromDate"]').value = getTodayDateSelectorValue();
+    this.shadowRoot.querySelector('input[name="fromDate"]').disabled = true;
+    this.shadowRoot.querySelector('input[name="toDate"]').value = getTodayDateSelectorValue();
+    this.shadowRoot.querySelector('input[name="toDate"]').disabled = true;
+  }
+
+  selectRange(){
+    this.shadowRoot.querySelector('input[name="fromDate"]').disabled = false;
+    this.shadowRoot.querySelector('input[name="toDate"]').disabled = false;
   }
 
   getReportType(){
@@ -133,6 +144,12 @@ export class Reports extends LitElement {
             <div class="main">
                 <h1>Generate Reports</h1>
                 <label class="step-label">Step 1: Select time period</label>
+                <div class="type-select">
+                    <input type="radio" id="daily" @click=${this.selectDaily} name="rangeType" value="daily">
+                    <label for="section">Daily Report</label>
+                    <input type="radio" checked id="range" @click=${this.selectRange} name="rangeType" value="range">
+                    <label for="category">Select Dates</label>
+                </div>
                 <div class="range-select">
                     From: <input name="fromDate" type="date"/>
                     To: <input name="toDate" type="date"/>
