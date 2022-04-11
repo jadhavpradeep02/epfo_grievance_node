@@ -298,9 +298,17 @@ function getReport(req) {
     let end_date = req.body.end_date;
     let type = req.body.type;
     let value = req.body.value;
+    let sub_query = "";
 
+    if(value == 'all' && type == 'section') {
+       sub_query = ' and ' + type + ' IN ("account","pension","compliance","cash","exemption","other")';
+    } else if (value == 'all' && type == 'grievance_category') {
+        sub_query = ' and ' + type + ' IN ("Death_case","Withdraw_F19","Transfer_F13","Advance_F31","Pension","KYC_Update","Non_Enrollment","Other")';
+    } else {
+        sub_query = ' and ' + type + ' = "' + value + '"';
+    }
     try {
-        let select_query = 'SELECT v.visitor_id, visitor_name, visitor_mobile, visitor_email, member_name, member_mobile as member_phone, g.grievance_id, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, created_at, grievance_category, section, status, closing_remark, visited_at FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id where created_at >= "' + start_date + '" and created_at <= "' + end_date + '" and ' + type + ' = "' + value + '"';
+        let select_query = 'SELECT v.visitor_id, visitor_name, visitor_mobile, visitor_email, member_name, member_mobile as member_phone, g.grievance_id, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, created_at, grievance_category, section, status, closing_remark, visited_at FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id where created_at >= "' + start_date + '" and created_at <= "' + end_date + '"' + sub_query;
         console.log(select_query);
         connection.query(select_query, (err, rows) => {
             console.log('The data from visitors table are: \n');
@@ -440,8 +448,8 @@ function searchMembers(req) {
 
 function getMemberData(req) {
     var deferred = Q.defer();
-    let value = req.query.uan;
-    let column = 'uan';
+    let value = req.query.grievance_id;
+    let column = 'grievance_id';
     let select_query = "";
 
     try {
