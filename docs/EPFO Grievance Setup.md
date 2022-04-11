@@ -110,4 +110,10 @@ INSERT INTO grievance (grievance_id, visitor_id, grievance_category, no_of_visit
 ### Add column into grievance table
 alter table grievance add column closing_remark VARCHAR(500);
 
+
+### update no of visits after fix
+update visits set no_of_visit = 1 where no_of_visit = 2;
+
+update visits set no_of_visit = 2 where no_of_visit = 3;
+
 ***Note:***  Backend server need to be running for front-end to work properly.
