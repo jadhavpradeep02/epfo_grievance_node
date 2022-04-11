@@ -147,6 +147,7 @@ export class Reports extends LitElement {
                 <div class="form-element grvnc-section" style="display: none">
                     <label>Section</label><br>
                     <select name="section" required placeholder=" ">
+                    <option value="all">All</option>
                     <option value="account">Account</option>
                     <option value="pension">Pension </option>
                     <option value="compliance">Compliance</option>
@@ -158,6 +159,7 @@ export class Reports extends LitElement {
                 <div class="form-element grvnc-category" style="display: none">
                     <label>Grievance Category</label><br>
                     <select name="category" required placeholder=" ">
+                    <option value="all">All</option>
                     <option value="Death_case">Death Case</option>
                     <option value="Withdraw_F19">Withdrawal Form 19 </option>
                     <option value="Transfer_F13">Transfer Form13</option>

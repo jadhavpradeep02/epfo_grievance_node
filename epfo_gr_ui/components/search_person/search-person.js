@@ -147,16 +147,22 @@ export class SearchPerson extends LitElement {
             placeholder="Enter text to search"
             name="search"
           /><br />
-        ${this.mode === "visitor" ? html `<div class="visitor-area"><input type="radio" id="phone" name="by" value="phone" data-name="visitor_mobile" checked/><label for="phone">Visitor Phone</label>
+        ${this.mode === "visitor" ? html `<div class="visitor-area">
+          <input type="radio" id="phone" name="by" value="phone" data-name="visitor_mobile" checked/><label for="phone">Visitor Phone</label>
           <input type="radio" id="name" name="by" value="name" data-name="visitor_name" /><label for="name">Visitor Name</label>
           <input type="radio" id="email" name="by" value="email" data-name="visitor_email" /><label for="email">Visitor Email</label>
           <input type="radio" id="uan" name="by" value="uan" data-name="uan" /><label for="uan">UAN</label>
-          <input type="radio" id="epfo" name="by" value="epfo" data-name="pf_account_no" /><label for="pf_account_no">PF Account No.</label></div>`
+          <input type="radio" id="epfo" name="by" value="epfo" data-name="pf_account_no" /><label for="pf_account_no">PF Account No.</label>
+          <input type="radio" id="ppo" name="by" value="ppo" data-name="ppo_number" /><label for="ppo">PPO</label>
+          </div>`
         :
-        html `<div class="member-area"><input type="radio" id="phone" name="by" value="phone" data-name="member_mobile" checked/><label for="phone">Member Phone</label>
+        html `<div class="member-area">
+          <input type="radio" id="phone" name="by" value="phone" data-name="member_mobile" checked/><label for="phone">Member Phone</label>
           <input type="radio" id="name" name="by" value="name" data-name="member_name" /><label for="name">Member Name</label>
           <input type="radio" id="uan" name="by" value="uan" data-name="uan" /><label for="uan">UAN</label>
-          <input type="radio" id="epfo" name="by" value="epfo" data-name="pf_account_no" /><label for="pf_account_no">PF Account No.</label></div>`}
+          <input type="radio" id="epfo" name="by" value="epfo" data-name="pf_account_no" /><label for="pf_account_no">PF Account No.</label>
+          <input type="radio" id="ppo" name="by" value="ppo" data-name="ppo_number" /><label for="ppo">PPO</label>
+        </div>`}
           
           <div class="options-container">
             <lion-button @click=${this.onSearch}>Search</lion-button>
