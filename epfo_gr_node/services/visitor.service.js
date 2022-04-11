@@ -449,7 +449,7 @@ function searchMembers(req) {
 function getMemberData(req) {
     var deferred = Q.defer();
     let value = req.query.uan;
-    let column = 'uan';
+    let column = 'grievance_id';
     let select_query = "";
 
     try {
