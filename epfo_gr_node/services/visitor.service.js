@@ -301,7 +301,7 @@ function getReport(req) {
     let sub_query = "";
 
     if(value == 'all' && type == 'section') {
-       sub_query = ' and ' + type + ' IN ("pension","compliance","cash","exemption","other")';
+       sub_query = ' and ' + type + ' IN ("account","pension","compliance","cash","exemption","other")';
     } else if (value == 'all' && type == 'grievance_category') {
         sub_query = ' and ' + type + ' IN ("Death_case","Withdraw_F19","Transfer_F13","Advance_F31","Pension","KYC_Update","Non_Enrollment","Other")';
     } else {
