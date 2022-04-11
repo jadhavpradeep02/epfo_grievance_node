@@ -14,8 +14,8 @@ const grvnc_category_map = {
 export const getStatus = function (grvncObj, col){
     if(grvncObj.status){
         if(String(grvncObj.status).toLowerCase() === "in_progress"){
-            if(grvncObj.visit_at){
-                var last_visit = new Date(grvncObj.visit_at);
+            if(grvncObj.created_at){
+                var last_visit = new Date(grvncObj.created_at);
                 var todayDate = new Date();
                 const diffTime = Math.abs(todayDate - last_visit);
                 const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
