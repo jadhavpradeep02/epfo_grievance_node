@@ -199,7 +199,8 @@ export const visitorColumns = [
     },
     { 
       header: "Status", 
-      path: "status" 
+      path: "status",
+      calculateAttrib: "visited_at" 
     }
   ]
   export const grievanceColumnsMember = [
