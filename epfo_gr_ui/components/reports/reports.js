@@ -7,7 +7,7 @@ import { ReportsService } from "../../services/reports.service";
 import "../search_result/search-result";
 import { reportColumns, highestVisitorTableCols, highestPendingTableCols } from "../../configs/table.config";
 import { formStyles } from "./reports.style";
-import { renderCell, getTodayDateSelectorValue } from "../utils";
+import { renderCell, getTodayDateSelectorValue, renderDate } from "../utils";
 
 export class Reports extends LitElement {
   static get properties() { 
@@ -196,8 +196,8 @@ export class Reports extends LitElement {
                     <div class="printable">
                         <div class="report-header"> Report Name : ${this.shadowRoot.querySelector('input[name="type"]:checked').value === 'grievance_section' ? 'Section Report' : 'Category report'} </div>
                         <div class="report-header">${this.getReportType()}</div>
-                        <div class="report-header">Period of report : from ${this.shadowRoot.querySelector('input[name="fromDate"]').value} to ${this.shadowRoot.querySelector('input[name="toDate"]').value}</div>
-                        <div class="report-header">Report generated On : ${ new Date().toLocaleDateString() + new Date().toLocaleTimeString() }</div>
+                        <div class="report-header">Period of report : from ${renderDate(this.shadowRoot.querySelector('input[name="fromDate"]').value)} to ${renderDate(this.shadowRoot.querySelector('input[name="toDate"]').value)}</div>
+                        <div class="report-header">Report generated On : ${ renderDate(new Date().toLocaleDateString()) + ' ' + new Date().toLocaleTimeString() }</div>
 
                         <div class="table">
                             ${reportColumns.map((col) => col.header ? html`<div class="header">${col.header}</div>` : html `<div class="header"></div>` )}
