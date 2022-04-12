@@ -18,7 +18,8 @@ class CloseGrvncModal extends LitElement {
         transition: opacity 0.25s ease-in;
       }
       .wrapper:not(.open) {
-        visibility: hidden;
+        /* visibility: hidden; */
+        display: none;
       }
       .wrapper.open {
         align-items: center;

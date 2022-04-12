@@ -18,7 +18,8 @@ class SearchModal extends LitElement {
         transition: opacity 0.25s ease-in;
       }
       .wrapper:not(.open) {
-        visibility: hidden;
+        /* visibility: hidden; */
+        display: none;
       }
       .wrapper.open {
         align-items: center;
@@ -31,8 +32,8 @@ class SearchModal extends LitElement {
       }
       .overlay {
         background: rgba(0, 0, 0, 0.8);
-        height: 100vh;
-        width: 100vw;
+        height: 100%;
+        width: 100%;
         position: fixed;
         top: 0;
         left: 0;
