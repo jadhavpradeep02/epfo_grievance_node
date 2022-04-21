@@ -308,7 +308,7 @@ function getReport(req) {
         sub_query = ' and ' + type + ' = "' + value + '"';
     }
     try {
-        let select_query = 'SELECT v.visitor_id, visitor_name, visitor_mobile, visitor_email, member_name, member_mobile as member_phone, g.grievance_id, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, created_at, grievance_category, section, status, closing_remark, visited_at FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id where created_at >= "' + start_date + '" and created_at <= "' + end_date + '"' + sub_query;
+        let select_query = 'SELECT v.visitor_id, visitor_name, visitor_mobile, visitor_email, member_name, member_mobile as member_phone, g.grievance_id, uan, pf_account_no, ppo_number, establishment_name, task_id as estb_account_task_id, establishment_id, created_at, grievance_category, section, status, closing_remark, visited_at, max(no_of_visit) as no_of_visit, max(visit_at) as visit_at FROM visitors as v INNER JOIN grievance as g ON v.visitor_id = g.visitor_id INNER JOIN visits as vs ON vs.grievance_id=g.grievance_id where created_at >= "' + start_date + '" and created_at <= "' + end_date + '"' + sub_query + " group by vs.grievance_id";
         console.log(select_query);
         connection.query(select_query, (err, rows) => {
             console.log('The data from visitors table are: \n');
