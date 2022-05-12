@@ -82,11 +82,21 @@ class AboutModal extends LitElement {
       .licence{
         font-size: 12px;
       }
-      .suhas{
+      .dev{
+        color: #16cc9f;
+        font-weight: bold;
+        padding: 5px;
+      }
+      a,
+      a:visited{
+        color: #196350;
+        text-decoration: none;
+      }
+      .dev:visited{
         color: #16cc9f;
       }
-      .suhas:visited{
-        color: #16cc9f;
+      .dev-container{
+        margin: 5px;
       }
     `]
   }
@@ -111,10 +121,21 @@ class AboutModal extends LitElement {
           <div class="close-btn" @click="${this.close}">X</div>
           <div class="content">
             Developers:<br>
-            <b><i class="fas fa-angle-right"></i>&nbsp;<a class="suhas" target="_blank" href="https://www.linkedin.com/in/pradeep-jadhav-347ba325/">Pradeep Jadhav</a></b><br/>
-            <b><i class="fas fa-angle-right"></i>&nbsp;<a class="suhas" target="_blank" href="https://suhassanmukh.com/">Suhas Sanmukh</a></b>
-            <br/><br/><br/>
-            Built using: NodeJS, Lit, Web Components, MySQL
+            <div class="dev-container">
+            <i class="fas fa-user-astronaut"></i>&nbsp;<a class="dev" target="_blank" href="https://www.linkedin.com/in/pradeep-jadhav-347ba325/">Pradeep Jadhav</a>
+            </div>
+            <div  class="dev-container">
+            <i class="fas fa-user-astronaut"></i>&nbsp;<a class="dev" target="_blank" href="https://suhassanmukh.com/">Suhas Sanmukh</a>
+            </div>
+            
+            
+            <br/>
+            Built using: <b><a href="https://nodejs.org/en/" target="_blank">NodeJS</a>, 
+            <a href="https://lit.dev/" target="_blank">Lit</a>, 
+            <a href="https://www.webcomponents.org/" target="_blank">Web Components </a>
+          </b>& <b>
+          <a href="https://www.mysql.com/" target="_blank">MySQL</a>
+          </b>
             <br/><br/>
             <span class="licence"> Licenced under <a href="https://opensource.org/licenses/MIT">MIT</a></span>
           </div>
