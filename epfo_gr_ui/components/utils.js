@@ -48,6 +48,9 @@ export const renderCell = function (col, row){
     if(col.type && col.type === "datetime"){
         return html `${renderDate(row[col.path])}`
     }
+    if(col.type && col.type === "empty"){
+        return html `<span></span>`
+    }
     return  html `${row[col.path]}`
 }
 

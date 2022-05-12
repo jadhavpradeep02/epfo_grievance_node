@@ -25,10 +25,6 @@ export const visitorColumns = [
       path: "visitor_name",
     },
     {
-      header: "Organisation",
-      path: "establishment_name",
-    },
-    {
       header: "UAN",
       path: "uan",
     },
@@ -53,14 +49,17 @@ export const visitorColumns = [
       path: "grievance_category",
     },
     {
+      header: "Details",
+      path: "grievance_details"
+    },
+    {
       header: "Last Visit",
       path: "visit_at",
       type: "datetime"
     },
     { 
-      header: "Status", 
-      path: "status",
-      calculateAttrib: "visited_at"
+      header: "Remarks",
+      type: "empty"
     }
   ]
 
@@ -104,8 +103,48 @@ export const visitorColumns = [
   ]
 
   export const columnDefinition = [
-    ...reportColumns
-    ,
+    {
+      header: "Name",
+      path: "visitor_name",
+    },
+    {
+      header: "Organisation",
+      path: "establishment_name",
+    },
+    {
+      header: "UAN",
+      path: "uan",
+    },
+    {
+      header: "PF Account Number",
+      path: "pf_account_no",
+    },
+    {
+      header: "PPO",
+      path: "ppo_number",
+    },
+    {
+      header: "Section",
+      path: "section",
+    },
+    { 
+      header: "Task id", 
+      path: "estb_account_task_id"
+    },
+    {
+      header: "Grievance Category",
+      path: "grievance_category",
+    },
+    {
+      header: "Last Visit",
+      path: "visit_at",
+      type: "datetime"
+    },
+    { 
+      header: "Status", 
+      path: "status",
+      calculateAttrib: "visited_at"
+    },
     {
       action: "edit",
     },

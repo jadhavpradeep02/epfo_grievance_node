@@ -109,12 +109,21 @@ export class Reports extends LitElement {
     var divContents = this.shadowRoot.querySelector(selector).innerHTML;
     var a = window.open('', '', 'height=768, width=1024');
     a.document.write('<html>');
-    a.document.write('<link rel="stylesheet" href="/components/reports/report.print.css" type="text/css" />');
-    a.document.write('<body >');
+    a.document.write('<link rel="stylesheet" href="/components/reports/report.print.css" type="text/css" media="all" />');
+    a.document.write('<body>');
     a.document.write(divContents);
     a.document.write('</body></html>');
-    a.document.close();
-    setTimeout(function(){a.print();},1000);
+
+    a.document.close(); // necessary for IE >= 10
+    a.focus(); // necessary for IE >= 10*/
+
+    setTimeout(function(){
+      a.print();
+      a.close();
+    },
+    1000);
+
+    return true;
   }
 
   downloadReport(){
@@ -146,9 +155,9 @@ export class Reports extends LitElement {
                 <label class="step-label">Step 1: Select time period</label>
                 <div class="type-select">
                     <input type="radio" id="daily" @click=${this.selectDaily} name="rangeType" value="daily">
-                    <label for="section">Daily Report</label>
+                    <label for="daily">Daily Report</label>
                     <input type="radio" checked id="range" @click=${this.selectRange} name="rangeType" value="range">
-                    <label for="category">Select Dates</label>
+                    <label for="range">Select Dates</label>
                 </div>
                 <div class="range-select">
                     From: <input name="fromDate" type="date"/>
@@ -202,7 +211,7 @@ export class Reports extends LitElement {
                         <div class="table">
                             ${reportColumns.map((col) => col.header ? html`<div class="header">${col.header}</div>` : html `<div class="header"></div>` )}
                             ${this.reportData.map((row) => {
-                                return reportColumns.map((col) => col.path ? html`<div>${renderCell(col, row)}</div>` : html `<div class="edit-cell" title="Edit user" @click=${() => this.editVisitor(row)}><i class="fas fa-user-edit edit-icon"></i></div>`);
+                                return reportColumns.map((col) => html`<div>${renderCell(col, row)}</div>`);
                             })}
                         </div>
 

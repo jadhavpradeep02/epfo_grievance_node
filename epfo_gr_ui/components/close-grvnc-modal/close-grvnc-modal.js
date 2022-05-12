@@ -104,6 +104,10 @@ class CloseGrvncModal extends LitElement {
       .close-btn:hover{
           background-color: var(--oxford-blue);
       }
+      .clsing-details-text{
+        width: 90%;
+        max-width: 600px;
+      }
     `;
   }
   static get properties() {
@@ -149,7 +153,7 @@ class CloseGrvncModal extends LitElement {
                     <div><div class="details"><b>Task ID </b>:</div><div class="detail-value">${this.textData?.estb_account_task_id} </div></div>
                   </div>
                   <div class="closing-feedback-label">Provide info on closing grievance: </div>
-                  <textarea cols="80" name="closing_text" rows="10" class="clsing-details-text"></textarea>  
+                  <textarea name="closing_text" rows="10" class="clsing-details-text"></textarea>  
                 </div>
                 <div class="action-section">
                   <button @click=${this.close}>Back</button>    

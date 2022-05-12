@@ -74,7 +74,7 @@ export class SearchResult extends LitElement {
   }
 
   defineColumns(){
-    if(this.mode === "report"){
+    if(this.mode === "report"){ /* Not used: Remove later */
       this.colDef = [ ...reportColumns ];
     } 
     else if(this.mode === "members"){

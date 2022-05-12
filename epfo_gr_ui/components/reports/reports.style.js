@@ -49,7 +49,7 @@ label{
 
 .table {
   display: grid;
-  grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%; 
+  grid-template-columns: 9% 9% 9% 9% 9% 9% 9% 9% 9% 19%; 
   width: 100%;
   margin: auto;
   font-size: 1em;
@@ -77,6 +77,11 @@ text-overflow: ellipsis;
 }
 .type-select{
     text-align: center;
+}
+
+.type-select input,
+.type-select label{
+    cursor: pointer;
 }
 
 .report-header{

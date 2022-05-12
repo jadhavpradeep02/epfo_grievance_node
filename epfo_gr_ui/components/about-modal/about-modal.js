@@ -41,7 +41,7 @@ class AboutModal extends LitElement {
       .dialog {
         background: #ffffff;
         border-radius: 13px;
-        width: 80%;
+        width: 500px;
         padding: 1rem;
         position: absolute;
       }
@@ -74,7 +74,10 @@ class AboutModal extends LitElement {
         text-align: center;
         padding: 2em;
         border: 1px solid var(--british-racing-green);
-        border-radius: 1em;
+        border-radius: 0.5em;
+        -moz-box-shadow: inset 0 0 5px #000000;
+        -webkit-box-shadow: inset 0 0 5px #000000;
+        box-shadow: inset 0 0 5px #000000;
       }
       .licence{
         font-size: 12px;
@@ -103,7 +106,7 @@ class AboutModal extends LitElement {
     return html`
       <div class="${classMap({ wrapper: true, open: this.open })}">
         <div class="overlay" @click="${this.close}"></div>
-        <div class="dialog">
+        <div class="dialog small">
           <h1 id="title">Grievance Portal v1.0</h1>
           <div class="close-btn" @click="${this.close}">X</div>
           <div class="content">

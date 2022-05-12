@@ -189,3 +189,9 @@ Reports page > Reports table > Add last visited Date ------------------- DONE
 
 Add option for Daily reports in Reports page >> 
 Add "all" options in Reports of Section as well as category
+
+------------------------------------------ 12-05-2022 ---------------------------------------
+
+- Remove Organizstion and status from reports table and Add grievance_details and closing remark ( blank space for actual writing )
+
+-----------------------------------------------------------------------------------------------------
